@@ -12,6 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+use App\Location;
 use App\Survey;
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
@@ -30,9 +31,17 @@ $factory->define(Survey::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'surname' => $faker->name,
-        'phone-office' => $faker->phoneNumber,
-        'phone-home' => $faker->phoneNumber,
-        'phone-mobile' => $faker->phoneNumber,
+        'phone_office' => $faker->phoneNumber,
+        'phone_home' => $faker->phoneNumber,
+        'phone_mobile' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
+        'location_id'=>function(){return factory(Location::class)->create()->id;}
+    ];
+});
+
+$factory->define(Location::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->city,
     ];
 });

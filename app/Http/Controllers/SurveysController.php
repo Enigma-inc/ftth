@@ -8,10 +8,15 @@ use Illuminate\Http\Request;
 
 class SurveysController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware(['auth'])->except(['create','store']);
+    }
 
     public function index()
     {
-        //
+        $surveys=Survey::all();
+        return view('surveys.index',compact('surveys'));
     }
 
 
@@ -23,14 +28,17 @@ class SurveysController extends Controller
 
     public function store(SurveyRequest $request)
     {
-        Survey::create([
+      $survey=  Survey::create([
             'name'=>request('name'),
             'surname'=>request('surname'),
             'email'=>request('email'),
             'phone_home'=>request('phone-home'),
             'phone_office'=>request('phone-office'),
             'phone_mobile'=>request('phone-mobile'),
+            'location_id'=>1
         ]);
+     
+        return back();
 
     }
 

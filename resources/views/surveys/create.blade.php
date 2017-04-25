@@ -53,6 +53,17 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="location_id" class="col-md-4 control-label">Select Your Location</label>
+
+                                <div class="col-md-6">
+                                    <select name="location" id="location_id" class="form-control">
+                                        @foreach(\App\Location::all() as $location)
+                                           <option value="{{$location->id}}}">{{$location->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-md-offset-4 col-md-6">
                                 <button type="submit" class="btn btn-primary">Place Your Request</button>
                                 </div>

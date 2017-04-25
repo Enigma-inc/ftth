@@ -17,10 +17,12 @@ class CreateSurveysTable extends Migration
             $table->increments('id');
             $table->string('name',150);
             $table->string('surname',150);
-            $table->string('phone_home',20)->nullable();
-            $table->string('phone_office',20)->nullable();
-            $table->string('phone_mobile',20);
+            $table->string('phone_home',50)->nullable();
+            $table->string('phone_office',50)->nullable();
+            $table->string('phone_mobile',50);
             $table->string('email')->unique();
+
+            $table->unsignedInteger('location_id');
             $table->timestamps();
         });
     }

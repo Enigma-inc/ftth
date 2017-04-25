@@ -19,5 +19,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 Route::get('/application', 'ApplicationsController@create');
+Route::get('/surveys', 'SurveysController@index');
 Route::get('/surveys/create', 'SurveysController@create');
 Route::post('/surveys', 'SurveysController@store');

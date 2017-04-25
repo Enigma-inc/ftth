@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Survey extends Model
 {
     protected $guarded=['id'];
-    //
+
+
+    function location()
+    {
+        return $this->belongsTo(Location::class,'location_id');
+    }
+
 }
