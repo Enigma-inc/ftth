@@ -2,5 +2,6 @@
   "/js/app.js": "/js/app.js",
   "/css/material-kit.css": "/css/material-kit.css",
   "/css/app.css": "/css/app.css",
+  "/js/bundle.js": "/js/bundle.js",
   "/css/all.css": "/css/all.css"
 }
