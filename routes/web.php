@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/application', 'ApplicationsController@create');
-Route::get('/surveys', 'SurveysController@index');
-Route::get('/surveys/create', 'SurveysController@create');
-Route::post('/surveys', 'SurveysController@store');
+Route::get('/application', 'ApplicationsController@create')->name('ftth.apply');
+Route::get('/ftth-requests', 'SurveysController@index')->name('list.request');
+Route::get('/ftth-requests/create', 'SurveysController@create')->name('create.request');
+Route::post('/ftth-requests', 'SurveysController@store')->name('store.request');

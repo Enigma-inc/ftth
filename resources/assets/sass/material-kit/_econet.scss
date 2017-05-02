@@ -15,6 +15,7 @@
   @include shadow-16dp();
 }
 
+
 .title{
   font-weight: $font-weight-bold;
   color: $black-color;
@@ -234,4 +235,22 @@ h2.title{
     margin-left: 10px;
     margin-right: 10px;
   }
+}
+
+
+.inner-page{
+  h1{
+    font-size: 2em !important;
+    line-height: 1em;
+    font-family: Raleway, sans-serif !important;
+
+
+  }
+  h3{
+    font-size: 1em !important;
+  }
+}
+
+.form-group .help-block {
+   display: inline;
 }

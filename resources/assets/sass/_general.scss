@@ -1,0 +1,102 @@
+.contracts-page {
+    font-family: Raleway, sans-serif !important;
+    hr {
+        height: 2px;
+        border: rgba(0, 0, 0, 0.1) 1px solid;
+        background-color: rgba(0, 0, 0, 0.1);
+        margin-right: 10px;
+        margin-top: 0;
+    }
+    h4 {
+        font-weight: 400;
+        font-size: 1.6em;
+        line-height: 1em;
+        font-family: Raleway, sans-serif !important;
+        span {
+            font-size: 0.6em;
+            font-weight: 600;
+            color: rgba(255, 0, 0, 0.7);
+        }
+    }
+    .contract-title {
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+    .contract-header {
+        display: flex;
+        justify-content: space-between;
+        border: rgba(0, 0, 0, 0.3) 1px solid;
+        padding: 10px;
+        .contract {
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.7);
+            font-size: 1.5em;
+        }
+    }
+    .contract-details {
+        display: flex;
+        justify-content: space-between;
+        border: rgba(0, 0, 0, 0.3) 1px solid;
+        padding: 10px;
+        .contract {
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.7);
+            font-size: 2em;
+            span {
+                font-size: 0.6em;
+            }
+        }
+    }
+    .contract-container {
+        margin-bottom: 20px;
+        .contract {
+            font-weight: 400;
+            color: rgba(0, 0, 0, 0.7);
+            font-size: 1.5em;
+            span {
+                font-size: 0.7em;
+                font-weight: 600;
+            }
+        }
+    }
+    .info {
+        display: inline;
+        p {
+            font-size: 1.5em;
+            color: rgba(0, 0, 0, 0.7);
+            span,
+            a {
+                color: #e53935;
+            }
+        }
+    }
+}
+
+.title {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 300;
+    line-height: 1.5em;
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+    box-shadow: none !important;
+    background-color: rgba(255, 0, 0, 0.7);
+}
+
+.nav-pills>li>a {
+    border-radius: 0;
+}
+
+.level {
+    display: flex;
+}
+
+.flex {
+    flex: 1;
+}
+
+.required-star {
+    color: rgba(255, 0, 0, 0.5)
+}

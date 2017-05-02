@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SurveyRequest;
 use App\Survey;
+use App\Location;
 use Illuminate\Http\Request;
 
 class SurveysController extends Controller
@@ -22,7 +23,8 @@ class SurveysController extends Controller
 
     public function create()
     {
-        return view('surveys.create');
+        $locations= Location::all();
+        return view('surveys.create')->with(['locations'=>$locations]);
     }
 
 
@@ -35,10 +37,12 @@ class SurveysController extends Controller
             'phone_home'=>request('phone-home'),
             'phone_office'=>request('phone-office'),
             'phone_mobile'=>request('phone-mobile'),
-            'location_id'=>1
+            'location_id'=>request('location')
         ]);
-     
+
         return back();
+
+  
 
     }
 

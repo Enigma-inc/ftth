@@ -20,7 +20,7 @@ class CreateSurveysTable extends Migration
             $table->string('phone_home',50)->nullable();
             $table->string('phone_office',50)->nullable();
             $table->string('phone_mobile',50);
-            $table->string('email')->unique();
+            $table->string('email');
 
             $table->unsignedInteger('location_id');
             $table->timestamps();

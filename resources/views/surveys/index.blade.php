@@ -1,12 +1,16 @@
-@extends('layouts.app')
+@extends('layouts.master')
+@component('partials.inner-pages-banner')
+@slot('title')
+<h5>Surveys</h5>
+@endslot
+
+@endcomponent
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Surveys</div>
-
                     <div class="panel-body" >
                         <table class="table">
                             <thead>

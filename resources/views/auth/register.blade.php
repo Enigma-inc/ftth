@@ -1,11 +1,24 @@
-@extends('layouts.app')
+@extends('layouts.master')
+@component('partials.inner-pages-banner')
+@slot('title')
+Register
+@endslot
 
+@endcomponent
 @section('content')
-<div class="container">
-    <div class="row">
+<div class="container ">
+    <div class="row margin-top-10">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+                <div class="panel-heading" style="text-align: right;">
+                    <div >
+                        Already have an Account?
+                        <a class="btn btn-primary btn-xs" href="{{ route('login') }}">
+                            Login
+                        </a>
+
+                    </div>
+                </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
@@ -69,6 +82,7 @@
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>
