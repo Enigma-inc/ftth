@@ -40,7 +40,9 @@ class SurveysController extends Controller
             'location_id'=>request('location')
         ]);
 
-        return back();
+        $locationName=Location::find(request('location'))->name;
+        $request->session()->flash('flash',"Thank you, we have received your FTTH request for ".$locationName);
+        return redirect('/');
 
   
 

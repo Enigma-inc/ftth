@@ -22,3 +22,5 @@ Route::get('/application', 'ApplicationsController@create')->name('ftth.apply');
 Route::get('/ftth-requests', 'SurveysController@index')->name('list.request');
 Route::get('/ftth-requests/create', 'SurveysController@create')->name('create.request');
 Route::post('/ftth-requests', 'SurveysController@store')->name('store.request');
+
+

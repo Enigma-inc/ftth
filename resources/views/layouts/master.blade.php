@@ -36,11 +36,13 @@
 </nav>
 <!-- End Navbar -->
 
-<div class="wrapper">
+<div class="wrapper" id="app">
     @yield('banner')
     <div class="main main-raised">
         @yield('content')
-
+    @if(Session::has('flash'))
+         <flash-message message="{{session('flash')}}"></flash-message>       
+    @endif
 
     </div>
     @include('partials.footer')
@@ -51,6 +53,8 @@
 <script src="{{url('js/bootstrap.min.js')}}" type="text/javascript"></script>
 <script src="{{url('js/material.min.js')}}"></script>
 <script src="{{url('js/material-kit.js')}}" type="text/javascript"></script>
+<script src="{{mix('js/app.js')}}"></script>
+
 @yield('scripts')
 </body>
 

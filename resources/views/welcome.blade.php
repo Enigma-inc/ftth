@@ -13,7 +13,7 @@
         <div class="container">
             @include('partials.pricing.pricing')
         </div>
-
+  
     </div>
 @stop
 

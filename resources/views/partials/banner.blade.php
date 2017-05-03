@@ -6,7 +6,7 @@
                 <div class="brand">
                     <h1>ECONET - FTTH</h1>
                     <h3>Fiber To The Home</h3>
-                    <a href="#" class="btn btn-danger btn-round"><i class="material-icons">assignment</i> Request FTTH For Your Area
+                    <a href="{{route('create.request')}}" class="btn btn-danger btn-round"><i class="material-icons">assignment</i> Request FTTH For Your Area
                         <div class="ripple-container"></div>
                     </a>
                 </div>

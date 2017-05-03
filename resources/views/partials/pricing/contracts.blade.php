@@ -17,7 +17,8 @@
              <div class="contract"><span>M</span> 550</div>
              <div class="contract">30 <span>GB</span></div>
          </div>
-         <div class="row  margin-top-50">
+         <div class="row  margin-top-20">
+         <img src="{{url('images/fiber2hme-logo.png')}}" alt="FTTH" height="230">
              <a href="" class="btn btn-info btn-round col-xs-12"> <i class="material-icons">remove_red_eye</i> View areas where FTTH is  available</a>
          </div>
      </div>
@@ -70,8 +71,8 @@
      </div>
  </div>
 
-    <div class="row info  ">
-        <div class="">
+    <div class="row info ">
+        <div class="margin-top-50 ">
             <p >Dial <span>*100#</span> for more pricing on low end daily, weekly and monthly bundles</p>
             <h2 class=" title  margin-top-20 margin-bottom-10">Promotions</h2>
             <p>Click <a target="_blank" href="http://www.etl.co.ls/index.php?option=com_content&view=article&id=76:promotions&catid=10:deals&Itemid=105">here</a> to view current promotions</p>

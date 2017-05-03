@@ -1,17 +1,5 @@
-@extends('layouts.master') @component('partials.inner-pages-banner') @slot('title')
-      <img src="{{url('images/fiber2hme-logo.png')}}" alt="FTTH" height="200">
-    <h2>Request <strong>FTTH</strong> For Your Area</h2>
-@endslot
- @endcomponent 
- 
- @section('content')
 
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 ">
-            <div class="panel panel-default margin-top-10">
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{route('store.request')}}">
+             <form class="form-horizontal" role="form" method="POST" action="{{route('create.request')}}">
                         {{ csrf_field() }}
 
                         <div class="col-xs-12 col-md-6 ">
@@ -102,10 +90,3 @@
                         </div>
 
                     </form>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
