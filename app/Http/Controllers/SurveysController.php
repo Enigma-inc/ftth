@@ -19,8 +19,8 @@ class SurveysController extends Controller
 
     public function index()
     {
-        $surveys=Survey::all();
-        return view('surveys.index',compact('surveys'));
+        $surveys=Survey::latest()->paginate(15);
+        return view('surveys.index')->with(['surveys'=>$surveys]);
     }
 
 

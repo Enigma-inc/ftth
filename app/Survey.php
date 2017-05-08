@@ -17,4 +17,8 @@ class Survey extends Model
         return $this->belongsTo(District::class,'district_id');
     }
 
+    function fullNames(){
+        return $this->name." ".$this->surname;
+    }
+
 }

@@ -106,3 +106,17 @@
         height: 325px;
     }
 }
+
+.ftth-requests {
+    .table-condensed {
+        font-size: 0.9em;
+    }
+    .action-bar {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .flex {
+        flex: 1;
+    }
+}

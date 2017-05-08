@@ -1,36 +1,61 @@
-@extends('layouts.master')
+@extends('layouts.master') 
 @component('partials.inner-pages-banner')
-@slot('title')
-<h5>Surveys</h5>
+ @slot('title')
+      <img src="{{url('images/fiber2hme-logo.png')}}" alt="FTTH" height="200">
+    <h2> <strong>FTTH</strong> Requests</h2>
 @endslot
+ @endcomponent 
 
-@endcomponent
+
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
+    <div class="">
+        <div class="row ftth-requests">
+            <div class="col-xs-12 ">
+                <div class="panel panel-default margin-top-20">
                     <div class="panel-body" >
-                        <table class="table">
+                    <div class="row action-bar">
+                       <div class="flex"><span class="label label-danger margin-top-10 margin-left-20">{{$surveys->total()}} Requests</span></div>
+                            <div class="margin-right-40">
+                            <button class="btn btn-primary btn-xs ">Export To Excel</button>
+                       </div>
+                    </div>
+                        <div class="table-responsive">
+                        <table class="table table-condensed">
                             <thead>
                             <tr>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Surname</th>
                                 <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Home</th>                                
+                                <th>Work</th>
+                                <th>Requested For</th>
+                                <th>Requested On</th>
                             </tr>
                             </thead>
                             <tbody>
-                              @foreach($surveys as $survey)
+                              @foreach($surveys as $index => $survey)
                                   <tr>
+                                      <td>{{(($surveys->currentPage()-1)* $surveys->perPage())+$index +1}}</td>                                  
                                       <td>{{$survey->name}}</td>
                                       <td>{{$survey->surname}}</td>
                                       <td>{{$survey->email}}</td>
+                                      <td>{{$survey->phone_mobile}}</td>
+                                      <td>{{$survey->phone_home}}</td>                                      
+                                      <td>{{$survey->phone_office}}</td>
+                                      <td><span class="{{ $survey->type =='Business' ? 'color-primary' : 'color-danger' }}">{{$survey->type}}</span> </td>
+                                      <td>{{$survey->created_at->diffForHumans()}}</td>
                                   </tr>
 
                                   @endforeach
                             </tbody>
-                        </table>
+                        </table> </div>
+                        <div class="col-xs-12 text-center">
+                        {{$surveys->links()}}
+                        
+                        </div>
                     </div>
                 </div>
             </div>
