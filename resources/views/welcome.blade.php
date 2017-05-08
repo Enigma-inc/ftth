@@ -5,7 +5,7 @@
 
 @stop
 @section('content')
-    <div class="section section-basic padding-top-0">
+    <div class="section section-basic padding-top-0 padding-bottom-0">
         @include('partials.slider')
 
     </div>

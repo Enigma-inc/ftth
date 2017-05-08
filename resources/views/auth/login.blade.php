@@ -9,11 +9,11 @@
     <div class="container margin-top-10">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default ">
+                <div class="panel panel-primary margin-top-20">
                     <div class="panel-heading" style="text-align: right;">
                         <div >
                             Don't have an Account?
-                            <a class="btn btn-primary btn-xs" href="{{ route('register') }}">
+                            <a class="btn btn-danger btn-xs" href="{{ route('register') }}">
                                 Register
                             </a>
 

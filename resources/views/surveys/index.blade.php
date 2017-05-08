@@ -17,7 +17,17 @@
                     <div class="row action-bar">
                        <div class="flex"><span class="label label-danger margin-top-10 margin-left-20">{{$surveys->total()}} Requests</span></div>
                             <div class="margin-right-40">
-                            <button class="btn btn-primary btn-xs ">Export To Excel</button>
+                            <div class="col-md-3 dropdown">
+                                <a href="#" class="btn  btn-primary btn-xs  dropdown-toggle" data-toggle="dropdown">
+                                   Export
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{route('export.excel',["type"=>"xls"])}}">Excel</a></li>
+                                    <li><a href="{{route('export.excel',["type"=>"pdf"])}}">PDF</a></li>
+                                    
+                                </ul>
+                            </div>
                        </div>
                     </div>
                         <div class="table-responsive">

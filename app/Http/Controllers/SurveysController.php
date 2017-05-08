@@ -9,6 +9,7 @@ use App\Location;
 use App\District;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SurveysController extends Controller
 {
@@ -64,9 +65,28 @@ class SurveysController extends Controller
     }
 
 
-    public function show($id)
+    public function export($type)
     {
-        //
+        $ftthRequests=Survey::latest()->get();
+
+        return Excel::create('FTTH-Requests',function($excel) use ($ftthRequests){
+            $excel->sheet('FTTH Requests',function($sheet) use ($ftthRequests){
+                $sheet->setOrientation('landscape');
+                $sheet->setPageMargin(0.25);
+                $sheet->setFontSize(9);
+                $sheet->setAllBorders('thin');
+                $sheet->fromArray($ftthRequests);
+
+                $sheet->row(1,function($row){
+                    $row->setBackground('#0d47a1');
+                    $row->setFontColor('#ffffff');
+                    $row->setFontSize(12);
+                    $row->setFontWeight('bold');
+                    $row->setFontFamily('Calibri');
+                });
+            });
+
+        })->download($type);
     }
 
 

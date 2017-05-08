@@ -1,6 +1,6 @@
 
-    <div class="title margin-top-5 margin-bottom-5 text-center">
-        <h2>FTTH Pricing</h2>
+    <div class="title  margin-bottom-5 text-center">
+        <h2>Pricing</h2>
     </div>
 
     <!-- Tabs with icons on Card -->
@@ -31,6 +31,19 @@
                 </div>
 
             </div>
+            <div class="row sharing-area text-center">
+	                
+						<a href="#" class="btn btn-just-icon btn-twitter">
+	                        <i class="fa fa-twitter"></i>
+	                    </a>
+						<a href="#" class="btn btn-just-icon btn-facebook">
+	                        <i class="fa fa-facebook"></i>
+	                    </a>
+						<a href="#" class="btn btn-just-icon btn-google-plus">
+	                        <i class="fa fa-google-plus"></i>
+	                    </a>
+						
+	            </div>
         </div>
     </div>
 
