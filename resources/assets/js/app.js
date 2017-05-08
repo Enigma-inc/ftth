@@ -13,6 +13,7 @@ require('./bootstrap');
  */
 
 Vue.component('flash-message', require('./components/Flash-message.vue'));
+Vue.component('application', require('./components/Application.vue'));
 
 const app = new Vue({
     el: '#app'

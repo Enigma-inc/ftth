@@ -9,6 +9,7 @@ class DatabaseSeeder extends Seeder
     private $tables = [
         'surveys',
         'locations',
+        'districts',
         'users'
 
     ];

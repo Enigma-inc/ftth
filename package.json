@@ -19,6 +19,7 @@
   "dependencies": {
     "owl.carousel": "^2.2.0",
     "select2": "^4.0.3",
-    "sweetalert2": "^6.6.2"
+    "sweetalert2": "^6.6.2",
+    "vee-validate": "^2.0.0-rc.3"
   }
 }

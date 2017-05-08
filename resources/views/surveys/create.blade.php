@@ -1,4 +1,6 @@
-@extends('layouts.master') @component('partials.inner-pages-banner') @slot('title')
+@extends('layouts.master') 
+@component('partials.inner-pages-banner')
+ @slot('title')
       <img src="{{url('images/fiber2hme-logo.png')}}" alt="FTTH" height="200">
     <h2>Request <strong>FTTH</strong> For Your Area</h2>
 @endslot
@@ -75,7 +77,7 @@
 
 
                         </div>
-                        <div class="col-xs-12 col-md-12">
+                        <div class="col-xs-12 col-md-6">
 
                             <div class="form-group label-floating padding-right-10 {{ $errors->has('location') ? ' has-error' : '' }}">
                                 <label for="location" class="control-label ">Select Your Location<span class="required-star">*</span></label>
@@ -85,12 +87,47 @@
                                             @foreach($locations as $location)
                                                 <option value="{{$location->id}}">{{$location->name}}</option>
                                             @endforeach
-                                        </select> @if ($errors->has('location'))
+                                        </select>
+                                         @if ($errors->has('location'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('location') }}</strong>
                                     </span> @endif
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+
+                            <div class="form-group label-floating padding-right-10 {{ $errors->has('district') ? ' has-error' : '' }}">
+                                <label for="district" class="control-label ">Select District<span class="required-star">*</span></label>
+
+                                <div class="">
+                                    <select name="district" id="district_id" class="form-control ">
+                                            @foreach($districts as $district)
+                                                <option value="{{$district->id}}">{{$district->name}}</option>
+                                            @endforeach
+                                        </select> @if ($errors->has('district'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('district') }}</strong>
+                                    </span> @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12">
+                                   <div class="form-group label-floating padding-right-10 {{ $errors->has('type') ? ' has-error' : '' }}">
+                               <p>Service requested for home or business?  </p>
+                                    <label class="radio-inline">
+                                    <input v-validate="'required'" type="radio" name="type"  value="Home">Home
+                                    </label>
+                                    <label class="radio-inline">
+                                    <input v-validate="'required'" type="radio" name="type" value="Business">Business
+                                    </label>
+                                    <p>
+                                      @if ($errors->has('type'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('type') }}</strong>
+                                    </span> @endif
+                                    </p>
+                          </div>
                         </div>
                         <div class="col-xs-12 text-center">
 

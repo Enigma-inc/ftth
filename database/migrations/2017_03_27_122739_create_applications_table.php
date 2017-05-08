@@ -15,12 +15,17 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title',50);
             $table->string('name',50);
             $table->string('surname',50);
             $table->string('email',30);
             $table->string('phone_home',20)->nullable();
             $table->string('phone_office',20)->nullable();
             $table->string('phone_mobile',20);
+            $table->string('id_number',50);
+            $table->boolean('existing_customer');
+            $table->string('postal_address');
+            $table->string('physical_address');
             $table->timestamps();
         });
     }

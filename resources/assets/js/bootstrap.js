@@ -12,6 +12,23 @@
  */
 
 window.Vue = require('vue');
+import VeeValidate from 'vee-validate';
+
+const dictionary = {
+
+    en: {
+        messages: {
+            required: function() {
+                return "This field is required"
+            }
+        }
+    }
+
+};
+
+VeeValidate.Validator.updateDictionary(dictionary);
+
+Vue.use(VeeValidate);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

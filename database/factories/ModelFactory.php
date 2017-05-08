@@ -14,6 +14,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use App\Location;
 use App\Survey;
+use App\District;
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
@@ -35,7 +36,8 @@ $factory->define(Survey::class, function (Faker\Generator $faker) {
         'phone_home' => $faker->phoneNumber,
         'phone_mobile' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
-        'location_id'=>function(){return factory(Location::class)->create()->id;}
+        'location_id'=>function(){return factory(Location::class)->create()->id;},
+        'district_id'=>function(){return factory(District::class)->create()->id;}
     ];
 });
 
@@ -43,5 +45,12 @@ $factory->define(Location::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->city,
+    ];
+});
+$factory->define(District::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->city,
+        'code' => $faker->word,
     ];
 });

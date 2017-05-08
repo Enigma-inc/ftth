@@ -21,8 +21,9 @@ class CreateSurveysTable extends Migration
             $table->string('phone_office',50)->nullable();
             $table->string('phone_mobile',50);
             $table->string('email');
-
+            $table->string('type');
             $table->unsignedInteger('location_id');
+            $table->unsignedInteger('district_id');
             $table->timestamps();
         });
     }
