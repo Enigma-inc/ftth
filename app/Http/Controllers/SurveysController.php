@@ -15,7 +15,7 @@ class SurveysController extends Controller
 {
     function __construct()
     {
-        $this->middleware(['auth'])->except(['create','store']);
+        $this->middleware(['auth'])->except(['create','store','ftthAreas']);
     }
 
     public function index()
@@ -90,9 +90,9 @@ class SurveysController extends Controller
     }
 
 
-    public function edit($id)
+    public function ftthAreas()
     {
-        //
+        return view('ftth-areas');
     }
 
 

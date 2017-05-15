@@ -10,20 +10,23 @@
                     phoneMobile: '',
                     phoneHome: '',
                     phoneOffice: '',
-                    passport:''
+                    passport:'',
+                    serviceType:'contract',
+                    contractPackage:''
                 },
             }
         },
         methods: {
             placeApplication(){
+                console.log("App details...",this.application);
                    this.$validator.validateAll().then(() => {
-                        axios.post('./application',this.application)
+                   /*     axios.post('./application',this.application)
                             .then(res=>{
                                 console.log(res);
                             })
                             .catch(error=>{
                                 console.log(error)                
-                                });                        
+                                });     */                   
                 }); 
             }
                  

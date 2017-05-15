@@ -28,7 +28,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{route('ftth.areas')}}">
                  <i class="material-icons">remove_red_eye</i>View Areas With FTTH
             </a>
 

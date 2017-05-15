@@ -1878,21 +1878,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 phoneMobile: '',
                 phoneHome: '',
                 phoneOffice: '',
-                passport: ''
+                passport: '',
+                serviceType: 'contract',
+                contractPackage: ''
             }
         };
     },
 
     methods: {
         placeApplication: function placeApplication() {
-            var _this = this;
-
+            console.log("App details...", this.application);
             this.$validator.validateAll().then(function () {
-                axios.post('./application', _this.application).then(function (res) {
-                    console.log(res);
-                }).catch(function (error) {
-                    console.log(error);
-                });
+                /*     axios.post('./application',this.application)
+                         .then(res=>{
+                             console.log(res);
+                         })
+                         .catch(error=>{
+                             console.log(error)                
+                             });     */
             });
         }
     }

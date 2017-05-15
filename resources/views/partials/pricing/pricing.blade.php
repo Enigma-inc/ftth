@@ -31,6 +31,7 @@
                 </div>
 
             </div>
+            
             <div class="row sharing-area text-center">
 	                
 						<a href="#" class="btn btn-just-icon btn-twitter">

@@ -15,7 +15,7 @@ Below are the details of submission
 | **Mobile Phone**  | {{$survey->phone_mobile}}     |
 | **Request For**  | {{$survey->type}}    |
 @endcomponent
-@component('mail::button', ['url' => './ftth-requests', 'color' => 'blue'])
+@component('mail::button', ['url' => 'http://localhost:8000/ftth-requests', 'color' => 'blue'])
 View All Submitted Requests
 @endcomponent
 @endcomponent

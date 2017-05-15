@@ -23,6 +23,7 @@ Route::post('/application', 'ApplicationsController@store')->name('application.s
 Route::get('/ftth-requests', 'SurveysController@index')->name('list.request');
 Route::get('/ftth-requests/create', 'SurveysController@create')->name('create.request');
 Route::post('/ftth-requests', 'SurveysController@store')->name('store.request');
+Route::get('/ftth-areas', 'SurveysController@ftthAreas')->name('ftth.areas');
 Route::get('/ftth-requests/export/{type}', 'SurveysController@export')->name('export.excel');
 
 

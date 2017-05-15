@@ -19,7 +19,7 @@
          </div>
          <div class="row  margin-top-20">
          <img src="{{url('images/fiber2hme-logo.png')}}" alt="FTTH" height="230">
-             <a href="" class="btn btn-info btn-round col-xs-12"> <i class="material-icons">remove_red_eye</i> View areas where FTTH is  available</a>
+             <a href="{{route('ftth.areas')}}" class="btn btn-info btn-round col-xs-12"> <i class="material-icons">remove_red_eye</i> View areas where FTTH is  available</a>
          </div>
      </div>
 
