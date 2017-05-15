@@ -27,7 +27,7 @@ class SurveysController extends Controller
 
     public function create()
     {
-        $locations= Location::all();
+        $locations= Location::orderBy('name', 'ASC')->get();
         $districts=District::all();
         return view('surveys.create')->with(['locations'=>$locations,'districts'=>$districts]);
     }

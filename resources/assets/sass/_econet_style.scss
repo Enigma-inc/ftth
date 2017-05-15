@@ -510,3 +510,17 @@
         flex: 1;
     }
 }
+
+@media (max-width: 496px) {
+    .contentBox {
+        width: 90vw !important;
+        height: auto !important;
+        img {
+            width: 90vw !important;
+            height: auto !important;
+        }
+    }
+    #mixedContent {
+        height: auto !important;
+    }
+}
