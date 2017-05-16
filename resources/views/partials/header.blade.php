@@ -8,8 +8,7 @@
     <a href="{{url('/')}}">
         <div class="logo-container">
             <div class="logo margin-left-10">
-                <img class="" src="{{url('/images/logo.png')}}" alt="Econet Logo" rel="tooltip"
-                     title="Econet FTTH - Fiber To The Home" data-placement="bottom" data-html="true">
+                <img class="" src="{{url('/images/logo.png')}}" alt="Econet Logo"  data-html="true">
             </div>
             <!-- <div class="brand">
                  ECONET - FTTH
