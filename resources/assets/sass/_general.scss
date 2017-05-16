@@ -70,6 +70,16 @@
             }
         }
     }
+    @media (max-width: 496px) {
+        img {
+            width: 100% !important;
+            height: auto !important;
+        }
+        .btn-info {
+            padding: 4px 10px;
+            font-size: 3vw;
+        }
+    }
 }
 
 .title {

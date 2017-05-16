@@ -83,7 +83,7 @@
                                 <label for="location" class="control-label ">Select Your Location<span class="required-star">*</span></label>
 
                                 <div class="">
-                                    <select name="location" id="location_id" class="form-control ">
+                                    <select name="location" id="location_id" class="form-control padding-left-10">
                                             @foreach($locations as $location)
                                                 <option value="{{$location->id}}">{{$location->name}}</option>
                                             @endforeach
@@ -101,7 +101,7 @@
                                 <label for="district" class="control-label ">Select District<span class="required-star">*</span></label>
 
                                 <div class="">
-                                    <select name="district" id="district_id" class="form-control ">
+                                    <select name="district" id="district_id" class="form-control padding-left-10">
                                             @foreach($districts as $district)
                                                 <option value="{{$district->id}}">{{$district->name}}</option>
                                             @endforeach
