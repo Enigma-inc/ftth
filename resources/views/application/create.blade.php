@@ -39,8 +39,9 @@
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">3. Payment Details</a>
                                 </h4>
                             </div>
-                            <div id="collapseThree" class="panel-collapse collapse">
+                            <div id="collapseThree" class="panel-collapse">
                                 <div class="panel-body">
+                                    @include('application.banking-details-form')
                                 </div>
                             </div>
                         </div>

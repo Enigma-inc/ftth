@@ -12,7 +12,12 @@
                     phoneOffice: '',
                     passport:'',
                     serviceType:'contract',
-                    contractPackage:''
+                    contractPackage:'',
+
+                    //Banking Details
+                    bankName:'',
+                    branchCode:'',
+                    accountHolderName:''
                 },
             }
         },

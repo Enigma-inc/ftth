@@ -1880,7 +1880,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 phoneOffice: '',
                 passport: '',
                 serviceType: 'contract',
-                contractPackage: ''
+                contractPackage: '',
+
+                //Banking Details
+                bankName: '',
+                branchCode: '',
+                accountHolderName: ''
             }
         };
     },
