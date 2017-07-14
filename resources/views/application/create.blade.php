@@ -1,7 +1,10 @@
 @extends('layouts.master') @component('partials.inner-pages-banner') @slot('title')
 <img src="{{url('images/fiber2hme-logo.png')}}" alt="FTTH" height="200">
 <h2>Apply For <strong>FTTH</strong></h2>
-@endslot @endcomponent @section('content')
+@endslot 
+@endcomponent
+
+ @section('content')
 <application inline-template>
     <div class="container">
         <div class="row">

@@ -20,6 +20,10 @@ class ApplicationsController extends Controller
 
     public function store(ApplicationRequest $request)
     {
+        dd($request->toArray());
+
+            $table->string('postal_address');
+            $table->string('physical_address');
         $application=  Application::create([
             'name'=>request('name'),
             'surname'=>request('surname'),
@@ -27,6 +31,10 @@ class ApplicationsController extends Controller
             'phone_home'=>request('phoneHome'),
             'phone_office'=>request('phoneOffice'),
             'phone_mobile'=>request('phoneMobile'),
+            'id_number'=>request('passport'),
+            'existing_customer'=>true,
+            'postal_address'=>request(),
+
            // 'location_id'=>request('location')
         ]);
 

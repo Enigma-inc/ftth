@@ -10,6 +10,11 @@ use App\District;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use Spatie\Fractal\FractalFacade\Fractal;
+use App\Transformers\SurveyListTransformer;
+use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class SurveysController extends Controller
 {
@@ -20,9 +25,14 @@ class SurveysController extends Controller
 
     public function index()
     {
+        
         //$surveys=Survey::latest()->paginate(15);
         $surveys=Survey::latest()->get();
-        return $surveys;
+  $jsonSurveys= $surveys->toJson();
+Storage::put('app-data/data.json',$jsonSurveys);
+ echo asset('storage/app-data/data.json');
+return "Done!";
+     //   return Fractal::colletion($surveys,new SurveyListTransformer());
      //   return view('surveys.index')->with(['surveys'=>$surveys]);
     }
 

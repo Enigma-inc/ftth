@@ -44,7 +44,7 @@
                             </div>
                                <div class="form-group label-floating padding-right-10 margin-top-80">
                              <label for="postal-address" class=" control-label">Postal Address</label>
-                               <textarea id="postal-address" class="form-control"  rows="5"></textarea>
+                               <textarea id="postal-address" class="form-control"  rows="5" v-model="application.postalAddress"></textarea>
                           </div>
                         </div>
                         <div class="col-xs-12 col-md-6">
@@ -77,13 +77,13 @@
                               <div class="col-md-4">
                                 <div class="radio">
                                     <label>
-                                        <input  v-validate="'required'" type="radio" name="existing-customer">
+                                        <input  v-validate="'required'" type="radio" value=true name="existing-customer" v-model="application.adslCustomer">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input v-validate="'required'" type="radio" name="existing-customer">
+                                        <input v-validate="'required'" type="radio" value=false name="existing-customer" v-model="application.adslCustomer">
                                         No
                                     </label>
                                 </div>
@@ -96,7 +96,7 @@
                             
                                 <label for="adslNumber" class="control-label">Your telephone number for your ADSL connection<span class="required-star">*</span></label>
 
-                                <div class="">
+                                <div class="" v-if="isAdslCutomer">
                                     <input id="adslNumber" type="text" class="form-control" name="adslNumber" v-model="application.adslNumber" > 
                                      <span class="help-block" v-show="errors.has('adslNumber')">
                                         <strong>Please fill in your number </strong>
@@ -108,7 +108,7 @@
                           </div>
                             <div class="form-group label-floating padding-right-10 ">
                              <label for="physical-address" class=" control-label">Physical Address</label>
-                               <textarea id="physical-address" class="form-control"  rows="5"></textarea>
+                               <textarea id="physical-address" class="form-control"  rows="5" v-model="application.physicalAddress"></textarea>
                           </div>
 
 

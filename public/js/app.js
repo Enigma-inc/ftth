@@ -1870,38 +1870,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            isAdslCutomer: false,
             application: {
                 title: '',
-                name: '',
-                surname: '',
-                email: '',
-                phoneMobile: '',
-                phoneHome: '',
-                phoneOffice: '',
-                passport: '',
+                name: 'Neo',
+                surname: 'Mokoena',
+                email: 'neo@enigma.co.ls',
+                phoneMobile: '62333344',
+                phoneHome: '28503344',
+                phoneOffice: '28503344',
+                postalAddress: 'Ha Mphele, Box 25, Teyateyaneng',
+                physicalAddress: 'Maseru East Next to Maseru High School',
+                passport: 'RA403389',
                 serviceType: 'contract',
-                contractPackage: '',
+                contractPackage: '2GB',
+                adslCustomer: true,
+                adslNumber: '679384939',
 
                 //Banking Details
-                bankName: '',
-                branchCode: '',
-                accountHolderName: ''
+                bankName: 'FNB',
+                branchCode: '06602',
+                accountHolderName: 'Neo Mokoena',
+                accountType: 'savings',
+                accountNumber: '01439293940'
             }
         };
     },
 
     methods: {
         placeApplication: function placeApplication() {
+            var _this = this;
+
             console.log("App details...", this.application);
             this.$validator.validateAll().then(function () {
-                /*     axios.post('./application',this.application)
-                         .then(res=>{
-                             console.log(res);
-                         })
-                         .catch(error=>{
-                             console.log(error)                
-                             });     */
+                axios.post('./application', _this.application).then(function (res) {
+                    console.log(res);
+                }).catch(function (error) {
+                    console.log(error);
+                });
             });
+        }
+    },
+    watch: {
+        'application.adslCustomer': function applicationAdslCustomer() {
+            console.log(!this.isAdslCutomer);
+            this.isAdslCutomer = !this.isAdslCutomer;
+            this.application.adslCustomer = '';
         }
     }
 
