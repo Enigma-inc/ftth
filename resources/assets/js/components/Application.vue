@@ -3,7 +3,7 @@
         data() {
             return {
                 isAdslCutomer:false,
-                application: {
+                personalDetails: {
                     title: '',
                     name: 'Neo',
                     surname: 'Mokoena',
@@ -14,40 +14,73 @@
                     postalAddress:'Ha Mphele, Box 25, Teyateyaneng',
                     physicalAddress:'Maseru East Next to Maseru High School',
                     passport:'RA403389',
+                   
+                  
+                },
+                serviceTypeDetails:{
                     serviceType:'contract',
-                    contractPackage:'2GB',
+                    package:'2GB',
                     adslCustomer:false,
-                    adslNumber:'679384939',
+                    adslNumber:'679384939'
 
-                    //Banking Details
+                },
+                bankingDetails:{
                     bankName:'FNB',
                     branchCode:'06602',
                     accountHolderName:'Neo Mokoena',
                     accountType:'savings',
                     accountNumber:'01439293940'
-                },
+                }
             }
         },
         mounted(){
         },
         methods: {
-            placeApplication(){
-                   this.$validator.validateAll().then(() => {
-                        axios.post('./application',this.application)
-                            .then(res=>{
-                                console.log(res);
-                            })
-                            .catch(error=>{
-                                console.log(error)                
-                                });                      
+            submitPersonalDetails(scope){
+                   this.$validator.validateAll(scope).then(() => {
+                       console.log(this.personalDetails);
+                       alert('Valide....');
+                        // axios.post('./application',this.application)
+                        //     .then(res=>{
+                        //         console.log(res);
+                        //     })
+                        //     .catch(error=>{
+                        //         console.log(error)                
+                        //         });                      
+                }); 
+            },
+            submitServiceType(scope){
+                   this.$validator.validateAll(scope).then(() => {
+                       console.log(this.serviceTypeDetails);
+                       alert('Valide....');
+                        // axios.post('./application',this.application)
+                        //     .then(res=>{
+                        //         console.log(res);
+                        //     })
+                        //     .catch(error=>{
+                        //         console.log(error)                
+                        //         });                      
+                }); 
+            },
+            submitBankingDetails(scope){
+                   this.$validator.validateAll(scope).then(() => {
+                       console.log(this.bankingDetails);
+                       alert('submitted');
+                        // axios.post('./application',this.application)
+                        //     .then(res=>{
+                        //         console.log(res);
+                        //     })
+                        //     .catch(error=>{
+                        //         console.log(error)                
+                        //         });                      
                 }); 
             }
                  
         },
         watch:{
-            'application.adslCustomer': function(){
-                this.isAdslCutomer=this.application.adslCustomer;
-                this.application.adslNumber='';
+            'serviceTypeDetails.adslCustomer': function(){
+                this.isAdslCutomer=this.serviceTypeDetails.adslCustomer;
+                this.serviceTypeDetails.adslNumber='';
             }
         }
 

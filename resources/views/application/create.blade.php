@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 ">
-                <form class="form-horizontal" role="form" @submit.prevent="placeApplication()">
+                <div  >
                     {{ csrf_field() }}
                     <div id="accordion" class="panel-group">
                         <div class="panel panel-primary">
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

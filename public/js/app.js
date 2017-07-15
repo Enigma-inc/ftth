@@ -1871,7 +1871,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             isAdslCutomer: false,
-            application: {
+            personalDetails: {
                 title: '',
                 name: 'Neo',
                 surname: 'Mokoena',
@@ -1881,13 +1881,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 phoneOffice: '28503344',
                 postalAddress: 'Ha Mphele, Box 25, Teyateyaneng',
                 physicalAddress: 'Maseru East Next to Maseru High School',
-                passport: 'RA403389',
-                serviceType: 'contract',
-                contractPackage: '2GB',
-                adslCustomer: false,
-                adslNumber: '679384939',
+                passport: 'RA403389'
 
-                //Banking Details
+            },
+            serviceTypeDetails: {
+                serviceType: 'contract',
+                package: '2GB',
+                adslCustomer: false,
+                adslNumber: '679384939'
+
+            },
+            bankingDetails: {
                 bankName: 'FNB',
                 branchCode: '06602',
                 accountHolderName: 'Neo Mokoena',
@@ -1899,22 +1903,56 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {},
 
     methods: {
-        placeApplication: function placeApplication() {
+        submitPersonalDetails: function submitPersonalDetails(scope) {
             var _this = this;
 
-            this.$validator.validateAll().then(function () {
-                axios.post('./application', _this.application).then(function (res) {
-                    console.log(res);
-                }).catch(function (error) {
-                    console.log(error);
-                });
+            this.$validator.validateAll(scope).then(function () {
+                console.log(_this.personalDetails);
+                alert('Valide....');
+                // axios.post('./application',this.application)
+                //     .then(res=>{
+                //         console.log(res);
+                //     })
+                //     .catch(error=>{
+                //         console.log(error)                
+                //         });                      
+            });
+        },
+        submitServiceType: function submitServiceType(scope) {
+            var _this2 = this;
+
+            this.$validator.validateAll(scope).then(function () {
+                console.log(_this2.serviceTypeDetails);
+                alert('Valide....');
+                // axios.post('./application',this.application)
+                //     .then(res=>{
+                //         console.log(res);
+                //     })
+                //     .catch(error=>{
+                //         console.log(error)                
+                //         });                      
+            });
+        },
+        submitBankingDetails: function submitBankingDetails(scope) {
+            var _this3 = this;
+
+            this.$validator.validateAll(scope).then(function () {
+                console.log(_this3.bankingDetails);
+                alert('submitted');
+                // axios.post('./application',this.application)
+                //     .then(res=>{
+                //         console.log(res);
+                //     })
+                //     .catch(error=>{
+                //         console.log(error)                
+                //         });                      
             });
         }
     },
     watch: {
-        'application.adslCustomer': function applicationAdslCustomer() {
-            this.isAdslCutomer = this.application.adslCustomer;
-            this.application.adslNumber = '';
+        'serviceTypeDetails.adslCustomer': function serviceTypeDetailsAdslCustomer() {
+            this.isAdslCutomer = this.serviceTypeDetails.adslCustomer;
+            this.serviceTypeDetails.adslNumber = '';
         }
     }
 
