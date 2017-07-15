@@ -17,4 +17,7 @@ class Application extends Model
      public function serviceTYpe(){
          return $this->hasOne(ApplicantServiceType::class);
      }
+     public function location(){
+         return $this->belongsTo(Location::class);
+     }
 }

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use Illuminate\Http\Request;
-use \App\Http\Requests\ApplicationRequest;
+use App\Http\Requests\ApplicationRequest;
+use App\ApplicantPersonalDetail;
 
 class ApplicationsController extends Controller
 {
@@ -18,24 +19,25 @@ class ApplicationsController extends Controller
         return view('application.create');
     }
 
-    public function store(ApplicationRequest $request)
+    public function addApplication(ApplicationRequest $request)
     {
         dd($request->toArray());
 
-            $table->string('postal_address');
-            $table->string('physical_address');
-        $application=  Application::create([
+        $personaDetails=ApplicantPersonalDetail::create([
             'name'=>request('name'),
             'surname'=>request('surname'),
             'email'=>request('email'),
             'phone_home'=>request('phoneHome'),
             'phone_office'=>request('phoneOffice'),
             'phone_mobile'=>request('phoneMobile'),
-            'id_number'=>request('passport'),
-            'existing_customer'=>true,
-            'postal_address'=>request(),
-
-           // 'location_id'=>request('location')
+            'identity_number'=>request('passport'),
+            'postal_address'=>request('postalAddress'),
+            'physical_address'=>request('physicalAddress'),
+        ]);
+        $application=  Application::create([
+           'user_id'=>Auth::User()->id,
+           'applicant_personal_info_id'=>$personaDetails->id,
+           'location_id'=>request('location')
         ]);
 
        // $locationName=Location::find(request('location'))->name;

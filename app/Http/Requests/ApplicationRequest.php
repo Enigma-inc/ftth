@@ -25,11 +25,11 @@ class ApplicationRequest extends FormRequest
     {
 
         return [
-            'name' => 'required|max:150',
-            'surname' => 'required|max:150',
-            'phoneMobile' => 'required|max:20',
-           // 'location' => 'required|integer|exists:locations,id|unique:surveys,location_id,NULL,id,email,'.$this->input('email'),
-            'email' => 'required|email|max:255'
+        //     'name' => 'required|max:150',
+        //     'surname' => 'required|max:150',
+        //     'phoneMobile' => 'required|max:20',
+        //    // 'location' => 'required|integer|exists:locations,id|unique:surveys,location_id,NULL,id,email,'.$this->input('email'),
+        //     'email' => 'required|email|max:255'
 
         ];
     }

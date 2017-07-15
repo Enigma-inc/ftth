@@ -8,8 +8,12 @@ class Location extends Model
 {
     protected $guarded= ['id'];
 
-    function requests(){
+    public function requests(){
         return $this->hasMany(Survey::class,'location_id');
+    }
+
+    public function applications(){
+        return $this->hasMany(Application::class);
     }
 }
 
