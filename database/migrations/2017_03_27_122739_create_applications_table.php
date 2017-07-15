@@ -15,17 +15,16 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title',50)->nullable();
-            $table->string('name',50);
-            $table->string('surname',50);
-            $table->string('email',30);
-            $table->string('phone_home',20)->nullable();
-            $table->string('phone_office',20)->nullable();
-            $table->string('phone_mobile',20);
-            $table->string('id_number',50);
-            $table->boolean('existing_customer');
-            $table->string('postal_address');
-            $table->string('physical_address');
+            $table->boolean('is_complete')->default(0);
+            $table->float('amount')->default(0);
+            $table->boolean('is_billing_agreed')->default(0);
+            $table->boolean('is_inspected')->default(0);
+            $table->boolean('is_approved')->default(0);
+            $table->boolean('is_installed')->default(0);
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('applicant_personal_info_id');
+            $table->unsignedInteger('applicant_banking_details_id')->nullable();
+            $table->unsignedInteger('applicant_service_type_id')->nullable();
             $table->timestamps();
         });
     }

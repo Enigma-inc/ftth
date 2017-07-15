@@ -4,12 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BankingDetail extends Model
+class ApplicantServiceType extends Model
 {
     protected $guarded=['id'];
 
     public function application(){
-        return $this->belongsTo(Application::class);
+        $this->belongsTo(Application::class);
     }
 }
-
