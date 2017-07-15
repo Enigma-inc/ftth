@@ -42,10 +42,7 @@
                                     </span>
                                 </div>
                             </div>
-                               <div class="form-group label-floating padding-right-10 margin-top-80">
-                             <label for="postal-address" class=" control-label">Postal Address</label>
-                               <textarea id="postal-address" class="form-control"  rows="5" v-model="application.postalAddress"></textarea>
-                          </div>
+                       
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <div class="form-group  label-floating padding-right-10" :class="{ error: errors.has('email')}">
@@ -71,47 +68,25 @@
                                     <input id="phone-office" type="text" class="form-control" v-model="application.phoneOffice" name="phone-office" value="{{old('phone-office')}}">
                                 </div>
                             </div>
-                            <div class="form-group label-floating padding-right-10" :class="{ error: errors.has('existing-customer')}">
-                               <p>Are you an existing customer (Are you currently using ADSL Services)</p>
+                          
+                          
 
-                              <div class="col-md-4">
-                                <div class="radio">
-                                    <label>
-                                        <input  v-validate="'required'" type="radio" value=true name="existing-customer" v-model="application.adslCustomer">
-                                        Yes
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input v-validate="'required'" type="radio" value=false name="existing-customer" v-model="application.adslCustomer">
-                                        No
-                                    </label>
-                                </div>
-                                <span class="help-block" v-show="errors.has('existing-customer')">
-                                      <strong>Please Choose One!</strong>
-                                </span>
-                              </div>
-                              <div class="col-md-8">
-                              <div class="form-group  label-floating padding-right-10" :class="{ error: errors.has('adslNumber')}">
-                            
-                                <label for="adslNumber" class="control-label">Your telephone number for your ADSL connection<span class="required-star">*</span></label>
 
-                                <div class="" v-if="isAdslCutomer">
-                                    <input id="adslNumber" type="text" class="form-control" name="adslNumber" v-model="application.adslNumber" > 
-                                     <span class="help-block" v-show="errors.has('adslNumber')">
-                                        <strong>Please fill in your number </strong>
-                                    </span>
-                                </div>
-                            </div>
-                              </div>
-
+                        </div>
+                        <div class="col-xs-12">
+                        <div class="col-md-6">
+                         <div class="form-group label-floating padding-right-10">
+                             <label for="postal-address" class=" control-label">Postal Address</label>
+                               <textarea id="postal-address" class="form-control"  rows="5" v-model="application.postalAddress"></textarea>
                           </div>
-                            <div class="form-group label-floating padding-right-10 ">
+                        </div>
+                        <div class="col-md-6">
+                        <div class="form-group label-floating padding-right-10 ">
                              <label for="physical-address" class=" control-label">Physical Address</label>
                                <textarea id="physical-address" class="form-control"  rows="5" v-model="application.physicalAddress"></textarea>
                           </div>
-
-
+                        </div>
+                          
                         </div>
               
 

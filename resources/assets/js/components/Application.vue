@@ -16,7 +16,7 @@
                     passport:'RA403389',
                     serviceType:'contract',
                     contractPackage:'2GB',
-                    adslCustomer:true,
+                    adslCustomer:false,
                     adslNumber:'679384939',
 
                     //Banking Details
@@ -28,9 +28,10 @@
                 },
             }
         },
+        mounted(){
+        },
         methods: {
             placeApplication(){
-                console.log("App details...",this.application);
                    this.$validator.validateAll().then(() => {
                         axios.post('./application',this.application)
                             .then(res=>{
@@ -44,10 +45,9 @@
                  
         },
         watch:{
-            'application.adslCustomer'(){
-                console.log(!this.isAdslCutomer);
-                this.isAdslCutomer=!this.isAdslCutomer;
-                this.application.adslCustomer='';
+            'application.adslCustomer': function(){
+                this.isAdslCutomer=this.application.adslCustomer;
+                this.application.adslNumber='';
             }
         }
 

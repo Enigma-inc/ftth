@@ -1884,7 +1884,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 passport: 'RA403389',
                 serviceType: 'contract',
                 contractPackage: '2GB',
-                adslCustomer: true,
+                adslCustomer: false,
                 adslNumber: '679384939',
 
                 //Banking Details
@@ -1896,12 +1896,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         };
     },
+    mounted: function mounted() {},
 
     methods: {
         placeApplication: function placeApplication() {
             var _this = this;
 
-            console.log("App details...", this.application);
             this.$validator.validateAll().then(function () {
                 axios.post('./application', _this.application).then(function (res) {
                     console.log(res);
@@ -1913,9 +1913,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     watch: {
         'application.adslCustomer': function applicationAdslCustomer() {
-            console.log(!this.isAdslCutomer);
-            this.isAdslCutomer = !this.isAdslCutomer;
-            this.application.adslCustomer = '';
+            this.isAdslCutomer = this.application.adslCustomer;
+            this.application.adslNumber = '';
         }
     }
 

@@ -1,6 +1,6 @@
 <div class="col-xs-12 col-md-6">
     <div class="form-group label-floating padding-right-10" :class="{ error: errors.has('application.serviceType')}">
-        <p>Select Preffed Service</p>
+        <p class="label-text">Select Preffed Service</p>
    
      <div class="radio">
         <label>
@@ -18,10 +18,7 @@
               <strong>Please Choose One!</strong>
          </span>
     </div>
-</div>
-    
-    <div class="col-xs-12 col-md-6">
-    <div class="form-group  label-floating padding-right-10" :class="{ error: errors.has('contractPackage')}">
+        <div class="form-group  label-floating padding-right-10" :class="{ error: errors.has('contractPackage')}">
 
         <label for="contractPackage" class="control-label">Select Contract Package<span class="required-star">*</span></label>
 
@@ -37,6 +34,45 @@
               </span>
         </div>
     </div>
+</div>
+    
+    <div class="col-xs-12 col-md-6">
+      <div class="form-group label-floating padding-right-10" :class="{ error: errors.has('existing-customer')}">
+                               <p class="label-text">Are you an existing customer (Are you currently using ADSL Services)</p>
+
+                              <div class="col-md-4">
+                                <div class="radio">
+                                    <label>
+                                        <input  v-validate="'required'" type="radio" :value=true name="existing-customer" v-model="application.adslCustomer">
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input v-validate="'required'" type="radio" :value=false name="existing-customer" v-model="application.adslCustomer">
+                                        No
+                                    </label>
+                                </div>
+                                <span class="help-block" v-show="errors.has('existing-customer')">
+                                      <strong>Please Choose One!</strong>
+                                </span>
+                              </div>
+                              <div class="col-md-8" v-if="isAdslCutomer">
+                              <div class="form-group  label-floating padding-right-10" :class="{ error: errors.has('adslNumber')}">
+                            
+                                <label for="adslNumber" class="control-label">Your telephone number for your ADSL connection<span class="required-star">*</span></label>
+
+                                <div class="" v-if="isAdslCutomer">
+                                    <input id="adslNumber" type="text" class="form-control" name="adslNumber" v-model="application.adslNumber" > 
+                                     <span class="help-block" v-show="errors.has('adslNumber')">
+                                        <strong>Please fill in your number </strong>
+                                    </span>
+                                </div>
+                            </div>
+                              </div>
+
+                          </div>
+
 </div>
 
 
