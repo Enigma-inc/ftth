@@ -10,6 +10,11 @@ class DatabaseSeeder extends Seeder
         'surveys',
         'locations',
         'districts',
+        'applications',
+        'applicant_personal_details',
+        'applicant_banking_details',
+        'applicant_service_types',
+        'ftth_locations',
         'users'
 
     ];

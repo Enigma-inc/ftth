@@ -1,4 +1,4 @@
-    <form class="form-horizontal" role="form" @submit.prevent="submitPersonalDetails('form-personal')" data-vv-scope="form-personal">                    
+    <form class="form-horizontal" role="form"  data-vv-scope="form-personal">                    
                          <div class="col-xs-12 col-md-6 ">
                             <div class="form-group label-floating padding-right-10" :class="{ error: errors.has('form-personal.name')}">
                                 <label for="name" class=" control-label">Name <span class="required-star">*</span></label>
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group label-floating padding-right-10 margin-top-40" :class="{ error: errors.has('form-personal.passport')}">
+                            <div class="form-group label-floating padding-right-10 " :class="{ error: errors.has('form-personal.passport')}">
                                 <label for="passport" class=" control-label">Pasport/ID Number<span class="required-star">*</span> </label>
 
                                 <div class="">
@@ -69,6 +69,23 @@
                                     <input id="phone-office" type="text" class="form-control" v-model="personalDetails.phoneOffice" name="phone-office" value="{{old('phone-office')}}">
                                 </div>
                             </div>
+                               <div class="col-xs-12 col-md-12">
+
+                            <div class="form-group label-floating padding-right-10 " :class="{ error: errors.has('form-personal.location')}">
+                                <label for="location" class="control-label ">Select Your Location<span class="required-star">*</span></label>
+
+                                <div class="">
+                                    <select name="location" id="location_id" class="form-control " v-model="personalDetails.location" v-validate="{ rules: { required: true} }">
+                                            @foreach($locations as $location)
+                                                <option value="{{$location->id}}">{{$location->name}}</option>
+                                            @endforeach
+                                        </select> 
+                                     <span class="help-block" v-show="errors.has('form-personal.location')">
+                                        <strong>@{{ errors.first('form-personal.location') }}</strong>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                           
                           
 
@@ -78,7 +95,7 @@
                         <div class="col-md-6">
                          <div class="form-group label-floating padding-right-10" :class="{ error: errors.has('form-personal.postalAddress')}">
                              <label for="postal-address" class=" control-label">Postal Address<span class="required-star">*</span></label>
-                               <textarea id="postal-address" class="form-control"  rows="5" v-model="personalDetails.postalAddress" v-validate="'required'">
+                               <textarea id="postal-address" class="form-control"  rows="5" v-model="personalDetails.postalAddress" v-validate="{ rules: { required: true} }">
                                </textarea>
                                      <span class="help-block" v-show="errors.has('form-personal.postalAddress')">
                                         <strong>@{{ errors.first('form-personal.postalAddress') }}</strong>
@@ -88,7 +105,7 @@
                         <div class="col-md-6">
                         <div class="form-group label-floating padding-right-10 " :class="{ error: errors.has('form-personal.physicalAddress')}">
                              <label for="physical-address" class=" control-label">Physical Address<span class="required-star">*</span></label>
-                               <textarea id="physical-address" class="form-control"  rows="5" v-model="personalDetails.physicalAddress" v-validate="'required'">
+                               <textarea id="physical-address" class="form-control"  rows="5" v-model="personalDetails.physicalAddress" v-validate="{ rules: { required: true} }">
                                </textarea>
                                      <span class="help-block" v-show="errors.has('form-personal.physicalAddress')">
                                         <strong>@{{ errors.first('form-personal.physicalAddress') }}</strong>
@@ -96,14 +113,6 @@
                           </div>
                         </div>
                           
-                        </div>
-                        <div class="col-xs-12 text-center">
-
-                            <div class="form-group label-floating padding-right-10">
-                                <hr>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-
-                            </div>
                         </div>
               
 

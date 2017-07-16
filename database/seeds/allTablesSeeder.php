@@ -4,6 +4,7 @@ use App\Location;
 use App\Survey;
 use App\User;
 use App\District;
+use App\FtthLocation;
 use Illuminate\Database\Seeder;
 
 class AllTablesSeeder extends Seeder
@@ -21,13 +22,27 @@ class AllTablesSeeder extends Seeder
 
         //Seed Locations
         $locationsStr = file_get_contents('database/data/survey-locations.json');
-        $locationsArr = json_decode($locationsStr, true);     
+        $locationsArr = json_decode($locationsStr, true);   
+
+        $ftthLocationsStr = file_get_contents('database/data/ftth-locations.json');
+        $ftthLocationsArr = json_decode($ftthLocationsStr, true);     
 
 
         foreach ($locationsArr as $location) {
             
             Location::create([
                 'name'=>$location['name'],
+
+            ]);
+
+
+        }
+
+        foreach ($ftthLocationsArr as $location) {
+            
+            FtthLocation::create([
+                'name'=>$location['name'],
+                'description'=>$location['description']
 
             ]);
 
@@ -47,14 +62,7 @@ class AllTablesSeeder extends Seeder
             ]);
         }
 
-        //Seed Default User
-        factory(User::class)->create(
-            [
-                'name' => 'mokoneaneo',
-                'email' => 'neo@enigma.co.ls',
-                'password' => bcrypt('enigma'),
-            ]
-        );
+        
 
     }
 

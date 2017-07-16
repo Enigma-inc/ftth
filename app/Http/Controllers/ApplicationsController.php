@@ -6,6 +6,8 @@ use App\Application;
 use Illuminate\Http\Request;
 use App\Http\Requests\ApplicationRequest;
 use App\ApplicantPersonalDetail;
+use App\FtthLocation;
+use Auth;
 
 class ApplicationsController extends Controller
 {
@@ -16,20 +18,19 @@ class ApplicationsController extends Controller
 
     public function create()
     {
-        return view('application.create');
+        $locations=FtthLocation::all();
+        return view('application.create')->with(['locations'=>$locations]);
     }
 
     public function addApplication(ApplicationRequest $request)
     {
-        dd($request->toArray());
-
         $personaDetails=ApplicantPersonalDetail::create([
             'name'=>request('name'),
             'surname'=>request('surname'),
             'email'=>request('email'),
-            'phone_home'=>request('phoneHome'),
-            'phone_office'=>request('phoneOffice'),
-            'phone_mobile'=>request('phoneMobile'),
+            'home_phone'=>request('phoneHome'),
+            'office_phone'=>request('phoneOffice'),
+            'mobile_phone'=>request('phoneMobile'),
             'identity_number'=>request('passport'),
             'postal_address'=>request('postalAddress'),
             'physical_address'=>request('physicalAddress'),

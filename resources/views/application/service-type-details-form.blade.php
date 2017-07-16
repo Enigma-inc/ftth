@@ -58,15 +58,15 @@
                                       <strong>Please Choose One!</strong>
                                 </span>
                               </div>
-                              <div class="col-md-8" v-if="isAdslCutomer">
+                              <div class="col-md-8" v-show="isAdslCutomer">
                               <div class="form-group  label-floating padding-right-10" :class="{ error: errors.has('form-serviceType.adslNumber')}">
                             
                                 <label for="adslNumber" class="control-label">Your telephone number for your ADSL connection<span class="required-star">*</span></label>
 
-                                <div class="" v-if="isAdslCutomer">
-                                    <input id="adslNumber" type="text" class="form-control" name="adslNumber" v-model="serviceTypeDetails.adslNumber" > 
+                                <div class="" >
+                                    <input id="adslNumber" type="text" class="form-control" name="adslNumber" v-model="serviceTypeDetails.adslNumber" v-validate="rules"> 
                                      <span class="help-block" v-show="errors.has('form-serviceType.adslNumber')">
-                                        <strong>Please fill in your number </strong>
+                                        <strong>Please fill in your ADSL number </strong>
                                     </span>
                                 </div>
                             </div>
