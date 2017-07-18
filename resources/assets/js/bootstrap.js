@@ -12,6 +12,7 @@
  */
 
 window.Vue = require('vue');
+window.EventBus = new Vue();
 import VeeValidate from 'vee-validate';
 
 const dictionary = {

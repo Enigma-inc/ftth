@@ -1,4 +1,4 @@
-    <form class="form-horizontal" role="form"  data-vv-scope="form-personal">                    
+    <form class="form-horizontal" role="form" @submit.prevent="submitPersonalDetails('form-personal')" data-vv-scope="form-personal">                    
                          <div class="col-xs-12 col-md-6 ">
                             <div class="form-group label-floating padding-right-10" :class="{ error: errors.has('form-personal.name')}">
                                 <label for="name" class=" control-label">Name <span class="required-star">*</span></label>
@@ -77,7 +77,7 @@
                                 <div class="">
                                     <select name="location" id="location_id" class="form-control " v-model="personalDetails.location" v-validate="{ rules: { required: true} }">
                                             @foreach($locations as $location)
-                                                <option value="{{$location->id}}">{{$location->name}}</option>
+                                                <option value="{{$location->id}}"><strong>{{$location->name}}</strong></option>
                                             @endforeach
                                         </select> 
                                      <span class="help-block" v-show="errors.has('form-personal.location')">
@@ -113,6 +113,14 @@
                           </div>
                         </div>
                           
+                        </div>
+                        <div class="col-xs-12 text-center">
+
+                            <div class="form-group label-floating padding-right-10">
+                                <hr>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
                         </div>
               
 

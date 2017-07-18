@@ -12,7 +12,7 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('flash-message', require('./components/Flash-message.vue'));
+Vue.component('notifications', require('./components/Notifications.vue'));
 Vue.component('application', require('./components/Application.vue'));
 
 const app = new Vue({

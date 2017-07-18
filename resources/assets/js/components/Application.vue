@@ -1,16 +1,16 @@
 <script>
-import {FormWizard, TabContent} from 'vue-form-wizard';
-import 'vue-form-wizard/dist/vue-form-wizard.min.css';
 
     export default {
-        components: {
-                FormWizard,
-                TabContent
-                },
         data() {
             return {
-                currentStep:1,
+                currentStep:2,
                 isAdslCutomer:false,
+                applicationMeta:{
+                    applicationId:1,
+                    personalDetailsId:1,
+                    serviceTypeId:1,
+                    bankingDetailsId:0,
+                },
                 personalDetails: {
                     title: '',
                     name: 'Neo',
@@ -43,97 +43,65 @@ import 'vue-form-wizard/dist/vue-form-wizard.min.css';
             }
         },
         mounted(){
+            console.log('Notifications'.notifications);
         },
         methods: {
-            submitStep(){
-                console.log("Changing...");
-                switch(this.currentStep){
-                    case 1:{
-                      console.log(this.submitPersonalDetails('form-personal'));
-                        break;
-                    }
-                    default:{
-                        break;
-                    }
-                }
-
-            },
             submitPersonalDetails(scope){
-               return this.$validator.validateAll(scope).then(() => {
-                       this.showNextFormStepMessage('Pick your prefered package on the next step');
-                        // axios.post('./application/personal-details',this.personalDetails)
-                        //     .then(res=>{
-                        //         console.log(res);
-                        //     })
-                        //     .catch(error=>{
-                        //         console.log(error)                
-                        //         });      
-                        return true;                
+                   this.$validator.validateAll(scope).then(() => {
+                        axios.post(`./application/${this.applicationMeta.applicationId}/personal-details/
+                                    ${this.applicationMeta.personalDetailsId}`,
+                                    this.personalDetails)
+                            .then(res=>{
+                                 EventBus.$emit('NEXT_STEP_MESSAGE',{'message':'Pick your prefered package on the next step'});
+                                this.applicationMeta.applicationId=res.data.application.id;
+                                this.applicationMeta.personalDetailsId=res.data.personalDetails.id;
+                                this.currentStep=2;                                             
+                            })
+                            .catch(error=>{
+                                  EventBus.$emit('SUBMISION_ERROR');             
+                                });       
+                          
                 })
                 .catch(()=>{
-                        this.showFormErrorMessage();
-                        return false;
+                       EventBus.$emit('VALIDATION_ERROR');
                 });
             },
             submitServiceType(scope){
-                   this.$validator.validateAll(scope).then((validationResults) => {
-                       alert('Valide....');
-                        // axios.post('./application',this.application)
-                        //     .then(res=>{
-                        //         console.log(res);
-                        //     }) 
-                        //     .catch(error=>{
-                        //         console.log(error)                
-                        //         });                      
+                   this.$validator.validateAll(scope).then(() => {
+                      
+                        axios.post(`./application/${this.applicationMeta.applicationId}/service-type/
+                        ${this.applicationMeta.serviceTypeId}`
+                                    ,this.serviceTypeDetails)
+                            .then(res=>{
+                                  EventBus.$emit('NEXT_STEP_MESSAGE',{'message':'Fill in your banking details on the next step.'});
+                                this.applicationMeta.applicationId=res.data.application.id;
+                                this.applicationMeta.serviceTypeId=res.data.serviceType.id;
+                                this.currentStep=3; 
+                            }) 
+                            .catch(error=>{
+                                 EventBus.$emit('SUBMISION_ERROR');                 
+                                });                      
                 })
                 .catch(()=>{
-                        this.showFormErrorMessage();
+                         EventBus.$emit('VALIDATION_ERROR');
                 }); 
             },
             submitBankingDetails(scope){
                    this.$validator.validateAll(scope).then(() => {
-                       console.log(this.bankingDetails);
-                       alert('submitted');
-                        // axios.post('./application',this.application)
-                        //     .then(res=>{
-                        //         console.log(res);
-                        //     })
-                        //     .catch(error=>{
-                        //         console.log(error)                
-                        //         });                      
+                        axios.post(`./application/${this.applicationMeta.applicationId}/banking/
+                        ${this.applicationMeta.bankingDetailsId}`,this.bankingDetails)
+                            .then(res=>{
+                                console.log(res);
+                            })
+                            .catch(error=>{
+                                console.log(error)                
+                                });                      
                 })
                 .catch(()=>{
-                        this.showFormErrorMessage();
+                         EventBus.$emit('VALIDATION_ERROR');
                 });
-            },
-            showFormErrorMessage(){
-                  swal({
-                    title: 'Oops!',
-                    text: 'There are errors on the form',
-                    type: 'error',
-                    confirmButtonText: 'Ok'
-                    })
-            },
-            showApplicationCompleteMessage(){
-                  swal({
-                    title: 'Success!',
-                    text: 'Thank, You have completed your application for FTTH. We will get back to you',
-                    type: 'success',
-                    confirmButtonText: 'Ok'
-                    })
-            },
-            showNextFormStepMessage(message){
-                  swal({
-                    title: 'Next Step',
-                    text: message,
-                    type: 'info',
-                    confirmButtonText: 'Next Step',
-                    cancelButtonText: 'Finish Later',
-                    showCancelButton:true
-                    })
-            }
-
-                 
+            } ,
+                           
         },
         computed:{
             rules(){

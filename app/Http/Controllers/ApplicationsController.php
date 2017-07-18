@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Application;
 use Illuminate\Http\Request;
 use App\Http\Requests\ApplicationRequest;
+use App\Http\Requests\ServiceTypeRequest;
 use App\ApplicantPersonalDetail;
 use App\FtthLocation;
+use App\ApplicantServiceType;
 use Auth;
 
 class ApplicationsController extends Controller
@@ -22,30 +24,57 @@ class ApplicationsController extends Controller
         return view('application.create')->with(['locations'=>$locations]);
     }
 
-    public function addApplication(ApplicationRequest $request)
+    public function addApplication(ApplicationRequest $request,$applicationId, $personalDetailsId)
     {
-        $personaDetails=ApplicantPersonalDetail::create([
-            'name'=>request('name'),
-            'surname'=>request('surname'),
-            'email'=>request('email'),
-            'home_phone'=>request('phoneHome'),
-            'office_phone'=>request('phoneOffice'),
-            'mobile_phone'=>request('phoneMobile'),
-            'identity_number'=>request('passport'),
-            'postal_address'=>request('postalAddress'),
-            'physical_address'=>request('physicalAddress'),
-        ]);
-        $application=  Application::create([
-           'user_id'=>Auth::User()->id,
-           'applicant_personal_info_id'=>$personaDetails->id,
-           'location_id'=>request('location')
-        ]);
+            $application=Application::firstOrNew(['id'=>$applicationId]);
+            $personalDetails=ApplicantPersonalDetail::firstOrNew(['id'=>$personalDetailsId]); 
+            $personalDetails->name=request('name');
+            $personalDetails->surname=request('surname');
+            $personalDetails->email=request('email');
+            $personalDetails->home_phone=request('phoneHome');
+            $personalDetails->office_phone=request('phoneOffice');
+            $personalDetails->mobile_phone=request('phoneMobile');
+            $personalDetails->identity_number=request('passport');
+            $personalDetails->postal_address=request('postalAddress');
+            $personalDetails->physical_address=request('physicalAddress');
+            $personalDetails->save();
+           
+      
+        
+           $application->user_id = Auth::User()->id;
+           $application->applicant_personal_info_id=$personalDetails->id;
+           $application->location_id=request('location');
+           $application->save();
 
-       // $locationName=Location::find(request('location'))->name;
-        $request->session()->flash('flash',"Thank you, we have received your application for FTTH we will get back to you" );
-        return  $application;
+        return ['application'=>$application,'personalDetails'=>$personalDetails];
     }
+    public function addServiceType(ServiceTypeRequest $request,$applicationId, $serviceTypeId)
+    {
+            $application=Application::find($applicationId);
+            
+            if(is_null($application))
+            {
+                return response('Application Not Found',404);
+            }
+            else
+            {
+                
+                    $serviceType=ApplicantServiceType ::firstOrNew(['id'=>$serviceTypeId]); 
 
+                    $serviceType->service_type=request('serviceType');
+                    $serviceType->data_package=request('package');
+                    $serviceType->is_adsl_customer=request('adslCustomer');
+                    $serviceType->adsl_number=request('adslNumber');
+                    $serviceType->save();
+
+                    $application->applicant_service_type_id=$serviceType->id;
+                    $application->save();
+                    
+
+                    return ['application'=>$application,'serviceType'=>$serviceType];
+            }
+        
+    }
     public function show(Application $application)
     {
         //
