@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index');
 Route::get('/application', 'ApplicationsController@create')->name('application.create');
 Route::post('/application/{applicationId}/personal-details/{personalDetailsId}', 'ApplicationsController@addApplication')->name('application.store.personal');
 Route::post('/application/{applicationId}/service-type/{serviceTypeId}', 'ApplicationsController@addServiceType')->name('application.store.servce');
+Route::post('/application/{applicationId}/banking-details/{bankingDetailsId}', 'ApplicationsController@addBankingDetails')->name('application.store.banking');
 Route::get('/ftth-requests', 'SurveysController@index')->name('list.request');
 Route::get('/ftth-requests/create', 'SurveysController@create')->name('create.request');
 Route::post('/ftth-requests', 'SurveysController@store')->name('store.request');

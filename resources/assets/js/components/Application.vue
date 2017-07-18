@@ -3,7 +3,7 @@
     export default {
         data() {
             return {
-                currentStep:2,
+                currentStep:3,
                 isAdslCutomer:false,
                 applicationMeta:{
                     applicationId:1,
@@ -35,6 +35,7 @@
                 },
                 bankingDetails:{
                     bankName:'FNB',
+                    branchName:'Pioneer',
                     branchCode:'06602',
                     accountHolderName:'Neo Mokoena',
                     accountType:'savings',
@@ -88,13 +89,15 @@
             },
             submitBankingDetails(scope){
                    this.$validator.validateAll(scope).then(() => {
-                        axios.post(`./application/${this.applicationMeta.applicationId}/banking/
-                        ${this.applicationMeta.bankingDetailsId}`,this.bankingDetails)
+                        axios.post(`./application/${this.applicationMeta.applicationId}/banking-details/${this.applicationMeta.bankingDetailsId}`,this.bankingDetails)
                             .then(res=>{
-                                console.log(res);
+                                EventBus.$emit('NEXT_STEP_MESSAGE',{'message':'Fill in your banking details on the next step.'});
+                                this.applicationMeta.applicationId=res.data.application.id;
+                                this.applicationMeta.bankingDetailsId=res.data.bankingDetails.id;
+                                this.currentStep=4; 
                             })
                             .catch(error=>{
-                                console.log(error)                
+                                 EventBus.$emit('SUBMISION_ERROR');                 
                                 });                      
                 })
                 .catch(()=>{

@@ -1871,7 +1871,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            currentStep: 2,
+            currentStep: 3,
             isAdslCutomer: false,
             applicationMeta: {
                 applicationId: 1,
@@ -1902,6 +1902,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             bankingDetails: {
                 bankName: 'FNB',
+                branchName: 'Pioneer',
                 branchCode: '06602',
                 accountHolderName: 'Neo Mokoena',
                 accountType: 'savings',
@@ -1951,10 +1952,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this3 = this;
 
             this.$validator.validateAll(scope).then(function () {
-                axios.post('./application/' + _this3.applicationMeta.applicationId + '/banking/\n                    ' + _this3.applicationMeta.bankingDetailsId, _this3.bankingDetails).then(function (res) {
-                    console.log(res);
+                axios.post('./application/' + _this3.applicationMeta.applicationId + '/banking-details/' + _this3.applicationMeta.bankingDetailsId, _this3.bankingDetails).then(function (res) {
+                    EventBus.$emit('NEXT_STEP_MESSAGE', { 'message': 'Fill in your banking details on the next step.' });
+                    _this3.applicationMeta.applicationId = res.data.application.id;
+                    _this3.applicationMeta.bankingDetailsId = res.data.bankingDetails.id;
+                    _this3.currentStep = 4;
                 }).catch(function (error) {
-                    console.log(error);
+                    EventBus.$emit('SUBMISION_ERROR');
                 });
             }).catch(function () {
                 EventBus.$emit('VALIDATION_ERROR');

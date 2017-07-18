@@ -6,9 +6,11 @@ use App\Application;
 use Illuminate\Http\Request;
 use App\Http\Requests\ApplicationRequest;
 use App\Http\Requests\ServiceTypeRequest;
+use App\Http\Requests\BankingDetailsRequest;
 use App\ApplicantPersonalDetail;
 use App\FtthLocation;
 use App\ApplicantServiceType;
+use App\ApplicantBankingDetail;
 use Auth;
 
 class ApplicationsController extends Controller
@@ -72,6 +74,35 @@ class ApplicationsController extends Controller
                     
 
                     return ['application'=>$application,'serviceType'=>$serviceType];
+            }
+        
+    }
+    public function addBankingDetails(BankingDetailsRequest $request,$applicationId, $BankingDetailsId)
+    {
+            $application=Application::find($applicationId);
+            
+            if(is_null($application))
+            {
+                return response('Application Not Found',404);
+            }
+            else
+            {
+                
+                    $bankingDetails=ApplicantBankingDetail::firstOrNew(['id'=>$BankingDetailsId]); 
+
+                    $bankingDetails->bank_name=request('bankName');
+                    $bankingDetails->branch_name=request('branchName');
+                    $bankingDetails->branch_code=request('branchCode');
+                    $bankingDetails->account_name=request('accountHolderName');
+                    $bankingDetails->account_type=request('accountType');
+                    $bankingDetails->account_number=request('accountNumber');
+                    $bankingDetails->save();
+
+                    $application->applicant_banking_details_id=$bankingDetails->id;
+                    $application->save();
+                    
+
+                    return ['application'=>$application,'bankingDetails'=>$bankingDetails];
             }
         
     }
