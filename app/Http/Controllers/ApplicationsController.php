@@ -46,6 +46,8 @@ class ApplicationsController extends Controller
            $application->user_id = Auth::User()->id;
            $application->applicant_personal_info_id=$personalDetails->id;
            $application->location_id=request('location');
+           $application->next_step=2; //
+           
            $application->save();
 
         return ['application'=>$application,'personalDetails'=>$personalDetails];
@@ -70,6 +72,8 @@ class ApplicationsController extends Controller
                     $serviceType->save();
 
                     $application->applicant_service_type_id=$serviceType->id;
+                    $application->next_step=3; //
+                    
                     $application->save();
                     
 
@@ -99,6 +103,9 @@ class ApplicationsController extends Controller
                     $bankingDetails->save();
 
                     $application->applicant_banking_details_id=$bankingDetails->id;
+                    $application->is_complete=true;
+                    $application->next_step=null; //
+                    $application->mail_send=false; //Mail is ready to be send
                     $application->save();
                     
 

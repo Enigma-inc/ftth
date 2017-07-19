@@ -1915,7 +1915,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.$validator.validateAll(scope).then(function () {
                 axios.post('./application/' + _this3.applicationMeta.applicationId + '/banking-details/' + _this3.applicationMeta.bankingDetailsId, _this3.bankingDetails).then(function (res) {
-                    EventBus.$emit('NEXT_STEP_MESSAGE', { 'message': 'Fill in your banking details on the next step.' });
+                    EventBus.$emit('APPLICATION_COMPLETE_MESSAGE');
                     _this3.applicationMeta.applicationId = res.data.application.id;
                     _this3.applicationMeta.bankingDetailsId = res.data.bankingDetails.id;
                     _this3.currentStep = 4;
@@ -17104,6 +17104,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         EventBus.$on('NEXT_STEP_MESSAGE', function (event) {
             _this.showNextFormStepMessage(event.message);
         });
+        EventBus.$on('APPLICATION_COMPLETE_MESSAGE', function (event) {
+            _this.showApplicaionCompleteMessage();
+        });
     },
 
     methods: {
@@ -17139,6 +17142,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 confirmButtonText: 'Next Step',
                 cancelButtonText: 'Finish Later',
                 showCancelButton: true
+            });
+        },
+        showApplicaionCompleteMessage: function showApplicaionCompleteMessage() {
+            swal({
+                title: 'Congratulations!',
+                text: 'You have completed your application, we will get back to you soon.',
+                type: 'success'
+            }).then(function () {
+                window.location = "../";
             });
         }
     }

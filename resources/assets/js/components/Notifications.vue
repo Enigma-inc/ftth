@@ -20,6 +20,9 @@ export default{
     EventBus.$on('NEXT_STEP_MESSAGE',(event)=>{
         this.showNextFormStepMessage(event.message);
     });
+    EventBus.$on('APPLICATION_COMPLETE_MESSAGE',(event)=>{
+        this.showApplicaionCompleteMessage();
+    });
    },
    methods:{
         showFormValidationErrorMessage(){
@@ -55,6 +58,15 @@ export default{
                     cancelButtonText: 'Finish Later',
                     showCancelButton:true
                     })
+            },
+            showApplicaionCompleteMessage(){
+                  swal({
+                    title: 'Congratulations!',
+                    text: 'You have completed your application, we will get back to you soon.',
+                    type: 'success'
+                    }).then(()=>{
+                        window.location="../";
+                    });
             }
 
    }

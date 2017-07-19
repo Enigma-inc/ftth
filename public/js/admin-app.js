@@ -1915,7 +1915,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.$validator.validateAll(scope).then(function () {
                 axios.post('./application/' + _this3.applicationMeta.applicationId + '/banking-details/' + _this3.applicationMeta.bankingDetailsId, _this3.bankingDetails).then(function (res) {
-                    EventBus.$emit('NEXT_STEP_MESSAGE', { 'message': 'Fill in your banking details on the next step.' });
+                    EventBus.$emit('APPLICATION_COMPLETE_MESSAGE');
                     _this3.applicationMeta.applicationId = res.data.application.id;
                     _this3.applicationMeta.bankingDetailsId = res.data.bankingDetails.id;
                     _this3.currentStep = 4;

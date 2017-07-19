@@ -91,7 +91,7 @@
                    this.$validator.validateAll(scope).then(() => {
                         axios.post(`./application/${this.applicationMeta.applicationId}/banking-details/${this.applicationMeta.bankingDetailsId}`,this.bankingDetails)
                             .then(res=>{
-                                EventBus.$emit('NEXT_STEP_MESSAGE',{'message':'Fill in your banking details on the next step.'});
+                                EventBus.$emit('APPLICATION_COMPLETE_MESSAGE');
                                 this.applicationMeta.applicationId=res.data.application.id;
                                 this.applicationMeta.bankingDetailsId=res.data.bankingDetails.id;
                                 this.currentStep=4; 

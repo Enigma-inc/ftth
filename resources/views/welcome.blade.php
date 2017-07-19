@@ -40,7 +40,6 @@
             $(document).ready(function () {
                 // None of the options are set
                 $("#mixedContent").smoothDivScroll({
-                    mousewheelScrolling: "allDirections",
                     autoScrollingMode: "always",
                     autoScrollingDirection: "backAndForth",
                     autoScrollingStep: 2,
