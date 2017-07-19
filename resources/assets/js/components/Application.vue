@@ -3,12 +3,12 @@
     export default {
         data() {
             return {
-                currentStep:3,
+                currentStep:2,
                 isAdslCutomer:false,
                 applicationMeta:{
-                    applicationId:1,
-                    personalDetailsId:1,
-                    serviceTypeId:1,
+                    applicationId:0,
+                    personalDetailsId:0,
+                    serviceTypeId:0,
                     bankingDetailsId:0,
                 },
                 personalDetails: {

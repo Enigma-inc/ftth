@@ -11,6 +11,7 @@ use App\ApplicantPersonalDetail;
 use App\FtthLocation;
 use App\ApplicantServiceType;
 use App\ApplicantBankingDetail;
+use App\Jobs\SendApplicationEmail;
 use Auth;
 
 class ApplicationsController extends Controller
@@ -22,6 +23,11 @@ class ApplicationsController extends Controller
 
     public function create()
     {
+        // $application=Application::with(['personalDetails','serviceType',
+        //                       'bankingDetails','location'])->find(1);
+        // dispatch(new SendApplicationEmail($application));
+
+
         $locations=FtthLocation::all();
         return view('application.create')->with(['locations'=>$locations]);
     }

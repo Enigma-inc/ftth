@@ -28,5 +28,6 @@ Route::get('/ftth-requests/create', 'SurveysController@create')->name('create.re
 Route::post('/ftth-requests', 'SurveysController@store')->name('store.request');
 Route::get('/ftth-areas', 'SurveysController@ftthAreas')->name('ftth.areas');
 Route::get('/ftth-requests/export/{type}', 'SurveysController@export')->name('export.excel');
+Route::get('/packages','PackagesController@index')->name('packages.list');
 
 

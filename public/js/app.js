@@ -1833,12 +1833,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            currentStep: 3,
+            currentStep: 2,
             isAdslCutomer: false,
             applicationMeta: {
-                applicationId: 1,
-                personalDetailsId: 1,
-                serviceTypeId: 1,
+                applicationId: 0,
+                personalDetailsId: 0,
+                serviceTypeId: 0,
                 bankingDetailsId: 0
             },
             personalDetails: {

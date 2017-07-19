@@ -5,6 +5,7 @@ use App\Survey;
 use App\User;
 use App\District;
 use App\FtthLocation;
+use App\PackagesLookup;
 use Illuminate\Database\Seeder;
 
 class AllTablesSeeder extends Seeder
@@ -25,8 +26,23 @@ class AllTablesSeeder extends Seeder
         $locationsArr = json_decode($locationsStr, true);   
 
         $ftthLocationsStr = file_get_contents('database/data/ftth-locations.json');
-        $ftthLocationsArr = json_decode($ftthLocationsStr, true);     
+        $ftthLocationsArr = json_decode($ftthLocationsStr, true);  
 
+        $packagesStr = file_get_contents('database/data/packages-lookup.json');
+        $packagesArr = json_decode($packagesStr, true);     
+
+
+        foreach ($packagesArr as $package) {
+            
+            PackagesLookup::create([
+                'data_bundle'=>$package['data_bundle'],
+                'price'=>$package['price'],
+                'type'=>$package['type']
+
+            ]);
+
+
+        }
 
         foreach ($locationsArr as $location) {
             

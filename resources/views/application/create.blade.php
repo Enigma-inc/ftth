@@ -49,14 +49,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 text-center">
-
-                            <div class="form-group label-floating padding-right-10">
-                                <hr>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

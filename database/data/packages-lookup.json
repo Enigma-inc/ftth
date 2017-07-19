@@ -1,0 +1,5 @@
+[
+    { "data_bundle": "3GB", "price": "200", "type": "contract" },
+    { "data_bundle": "5GB", "price": "400", "type": "contract" },
+    { "data_bundle": "10GB", "price": "600", "type": "prepaid" }
+]
