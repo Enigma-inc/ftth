@@ -1,19 +1,9 @@
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-
-
-/**
- * Vue is a modern JavaScript library for building interactive web interfaces
- * using reactive data binding and reusable components. Vue's API is clean
- * and simple, leaving you to focus on building your next great project.
- */
-
 window.Vue = require('vue');
 window.EventBus = new Vue();
 import VeeValidate from 'vee-validate';
+import Vuetify from 'vuetify';
+
+
 
 const dictionary = {
 
@@ -30,6 +20,8 @@ const dictionary = {
 VeeValidate.Validator.updateDictionary(dictionary);
 
 Vue.use(VeeValidate);
+Vue.use(Vuetify);
+
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -41,7 +33,7 @@ window.axios = require('axios');
 window.swal = require('sweetalert2');
 
 window.axios.defaults.headers.common = {
-    // 'X-CSRF-TOKEN': window.Laravel.csrfToken,
+    'X-CSRF-TOKEN': window.Laravel.csrfToken,
     'X-Requested-With': 'XMLHttpRequest'
 };
 
