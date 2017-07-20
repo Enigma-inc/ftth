@@ -22,4 +22,5 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/css/bootstrap.min.css',
         'resources/assets/lib/smooth-div-scroll/css/smoothDivScroll.css'
     ], 'public/css/all.css')
-    .js(['node_modules/select2/dist/js/select2.min.js'], 'public/js/bundle.js');
+    .js(['node_modules/select2/dist/js/select2.min.js'], 'public/js/bundle.js')
+    .version();
