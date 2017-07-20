@@ -5,13 +5,13 @@
         
             <div class="radio">
                 <label>
-                    <input  v-validate="'required'" v-bind:value="'contract'" v-model="serviceTypeDetails.serviceType"   type="radio" name="preferred_service" checked>
+                    <input   v-bind:value="'contract'" v-model="serviceTypeDetails.serviceType"   type="radio" name="serviceType" checked>
                         Contract
                 </label>
             </div>
             <div class="radio">
                     <label>
-                        <input v-validate="'required'" v-bind:value="'prepaid'" v-model="serviceTypeDetails.serviceType"   type="radio" name="preferred_service">
+                        <input  v-bind:value="'prepaid'" v-model="serviceTypeDetails.serviceType"   type="radio" name="serviceType">
                         Prepaid
                     </label>
                 </div>
@@ -21,12 +21,12 @@
             </div>
                 <div class="form-group  label-floating padding-right-10" :class="{ error: errors.has('form-serviceType.package')}">
 
-                <label for="package" class="control-label">Select Contract Package<span class="required-star">*</span></label>
+                <label for="package" class="control-label" style="text-transform:capitalize">Select @{{serviceTypeDetails.serviceType}} package<span class="required-star">*</span></label>
 
                 <div class="">
-                    <select name="package" id="package" class="form-control "  v-model="serviceTypeDetails.package">
+                    <select name="package" id="package" class="form-control "  v-model="serviceTypeDetails.package" v-validate="{ rules: { required: true} }">
                                 <option value=""></option>
-                                <option value="2GB">2GB</option>
+                                <option :value="package.data_bundle" v-for="package in packageOptions">@{{package.data_bundle}}</option>
                     
                     </select> 
 
@@ -44,13 +44,13 @@
                                     <div class="col-md-4">
                                         <div class="radio">
                                             <label>
-                                                <input  v-validate="'required'" type="radio" :value=true name="existing-customer" v-model="serviceTypeDetails.adslCustomer">
+                                                <input   type="radio" :value=true name="existing-customer" v-model="serviceTypeDetails.adslCustomer">
                                                 Yes
                                             </label>
                                         </div>
                                         <div class="radio">
                                             <label>
-                                                <input v-validate="'required'" type="radio" :value=false name="existing-customer" v-model="serviceTypeDetails.adslCustomer">
+                                                <input  type="radio" :value=false name="existing-customer" v-model="serviceTypeDetails.adslCustomer">
                                                 No
                                             </label>
                                         </div>
@@ -58,7 +58,7 @@
                                             <strong>Please Choose One!</strong>
                                         </span>
                                     </div>
-                                    <div class="col-md-8" v-show="isAdslCutomer">
+                                    <div class="col-md-8" v-show="serviceTypeDetails.adslCustomer">
                                     <div class="form-group  label-floating padding-right-10" :class="{ error: errors.has('form-serviceType.adslNumber')}">
                                     
                                         <label for="adslNumber" class="control-label">Your telephone number for your ADSL connection<span class="required-star">*</span></label>

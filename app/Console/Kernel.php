@@ -4,6 +4,9 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Application;
+use App\Jobs\SendApplicationEmail;
+
 
 class Kernel extends ConsoleKernel
 {
@@ -24,8 +27,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->call(function(){
+             $this->sendFtthApplicationsEmails();       
+        })->everyMinute();
     }
 
     /**
@@ -36,5 +40,21 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         require base_path('routes/console.php');
+    }
+
+    private function sendFtthApplicationsEmails(){
+
+       $applications=Application::with(['personalDetails','serviceType',
+                               'bankingDetails','location'])->where('mail_send',false)->get();
+        foreach ($applications as $application) {
+            try{
+                dispatch(new SendApplicationEmail($application));
+                 $application->mail_send=1;
+                 $application->save();
+            }catch(\League\Flysystem\Exception $e){
+
+            }
+        }
+    
     }
 }

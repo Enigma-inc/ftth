@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ApplicationReceived;
 use App\Application;
+use App\Mail\ApplicationReceivedClient;
 
 class SendApplicationEmail implements ShouldQueue
 {
@@ -33,8 +34,11 @@ class SendApplicationEmail implements ShouldQueue
      */
     public function handle()
     {
-
-          Mail::to('mokoena.n.a@gmail.com')
+         Mail::to('mokoena.n.a@gmail.com')
                 ->send(new ApplicationReceived($this->application));
+
+         // Send Client Confirmation
+         Mail::to($this->application->personalDetails->email)
+                ->send(new ApplicationReceivedClient($this->application));
     }
 }

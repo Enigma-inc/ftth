@@ -13,7 +13,7 @@
                 <div  >
                     {{ csrf_field() }}
                     <div id="accordion" class="panel-group">
-                        <div class="panel panel-primary" v-if="currentStep==1">
+                        <div class="panel panel-primary" v-show="currentStep==1">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#personal-details">1. Personal Details</a>
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel panel-primary" v-if="currentStep==2">
+                        <div class="panel panel-primary" v-show="currentStep==2">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">2. Service Type</a>
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel panel-primary" v-if="currentStep==3">
+                        <div class="panel panel-primary" v-show="currentStep==3">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">3. Payment Details</a>

@@ -85,8 +85,7 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
-                          
+                        </div>                      
                           
 
 
@@ -95,7 +94,7 @@
                         <div class="col-md-6">
                          <div class="form-group label-floating padding-right-10" :class="{ error: errors.has('form-personal.postalAddress')}">
                              <label for="postal-address" class=" control-label">Postal Address<span class="required-star">*</span></label>
-                               <textarea id="postal-address" class="form-control"  rows="5" v-model="personalDetails.postalAddress" v-validate="{ rules: { required: true} }">
+                               <textarea id="postal-address" class="form-control"  rows="5" v-model="personalDetails.postalAddress" >
                                </textarea>
                                      <span class="help-block" v-show="errors.has('form-personal.postalAddress')">
                                         <strong>@{{ errors.first('form-personal.postalAddress') }}</strong>
@@ -105,7 +104,7 @@
                         <div class="col-md-6">
                         <div class="form-group label-floating padding-right-10 " :class="{ error: errors.has('form-personal.physicalAddress')}">
                              <label for="physical-address" class=" control-label">Physical Address<span class="required-star">*</span></label>
-                               <textarea id="physical-address" class="form-control"  rows="5" v-model="personalDetails.physicalAddress" v-validate="{ rules: { required: true} }">
+                               <textarea id="physical-address" class="form-control"  rows="5" v-model="personalDetails.physicalAddress" >
                                </textarea>
                                      <span class="help-block" v-show="errors.has('form-personal.physicalAddress')">
                                         <strong>@{{ errors.first('form-personal.physicalAddress') }}</strong>

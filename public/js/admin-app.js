@@ -1833,8 +1833,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            currentStep: 2,
-            isAdslCutomer: false,
+            currentStep: 1,
+            packageOptions: [],
             applicationMeta: {
                 applicationId: 0,
                 personalDetailsId: 0,
@@ -1873,7 +1873,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     mounted: function mounted() {
-        console.log('Notifications'.notifications);
+        this.getPackagesFromServer();
     },
 
     methods: {
@@ -1881,7 +1881,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             this.$validator.validateAll(scope).then(function () {
-                axios.post('./application/' + _this.applicationMeta.applicationId + '/personal-details/\n                                ' + _this.applicationMeta.personalDetailsId, _this.personalDetails).then(function (res) {
+                axios.post('./application/' + _this.applicationMeta.applicationId + '/personal-details/' + _this.applicationMeta.personalDetailsId, _this.personalDetails).then(function (res) {
                     EventBus.$emit('NEXT_STEP_MESSAGE', { 'message': 'Pick your prefered package on the next step' });
                     _this.applicationMeta.applicationId = res.data.application.id;
                     _this.applicationMeta.personalDetailsId = res.data.personalDetails.id;
@@ -1896,19 +1896,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         submitServiceType: function submitServiceType(scope) {
             var _this2 = this;
 
-            this.$validator.validateAll(scope).then(function () {
-
-                axios.post('./application/' + _this2.applicationMeta.applicationId + '/service-type/\n                    ' + _this2.applicationMeta.serviceTypeId, _this2.serviceTypeDetails).then(function (res) {
-                    EventBus.$emit('NEXT_STEP_MESSAGE', { 'message': 'Fill in your banking details on the next step.' });
-                    _this2.applicationMeta.applicationId = res.data.application.id;
-                    _this2.applicationMeta.serviceTypeId = res.data.serviceType.id;
-                    _this2.currentStep = 3;
-                }).catch(function (error) {
-                    EventBus.$emit('SUBMISION_ERROR');
-                });
-            }).catch(function () {
+            if (!this.serviceTypeDetails.adslNumber && this.serviceTypeDetails.adslCustomer) {
                 EventBus.$emit('VALIDATION_ERROR');
-            });
+            } else {
+
+                this.$validator.validateAll(scope).then(function () {
+                    axios.post('./application/' + _this2.applicationMeta.applicationId + '/service-type/' + _this2.applicationMeta.serviceTypeId, _this2.serviceTypeDetails).then(function (res) {
+                        EventBus.$emit('NEXT_STEP_MESSAGE', { 'message': 'Fill in your banking details on the next step.' });
+                        _this2.applicationMeta.applicationId = res.data.application.id;
+                        _this2.applicationMeta.serviceTypeId = res.data.serviceType.id;
+                        _this2.currentStep = 3;
+                    }).catch(function (error) {
+                        EventBus.$emit('SUBMISION_ERROR');
+                    });
+                }).catch(function () {
+                    EventBus.$emit('VALIDATION_ERROR');
+                });
+            }
         },
         submitBankingDetails: function submitBankingDetails(scope) {
             var _this3 = this;
@@ -1925,17 +1929,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function () {
                 EventBus.$emit('VALIDATION_ERROR');
             });
+        },
+        getPackagesFromServer: function getPackagesFromServer() {
+            var _this4 = this;
+
+            axios.get('/packages?type=' + this.serviceTypeDetails.serviceType).then(function (resp) {
+                _this4.packageOptions = resp.data;
+            });
         }
     },
     computed: {
         rules: function rules() {
-            return this.isAdslCutomer ? 'required' : '';
+            return this.serviceTypeDetails.adslCustomer ? 'required' : '';
         }
     },
     watch: {
-        'serviceTypeDetails.adslCustomer': function serviceTypeDetailsAdslCustomer() {
-            this.isAdslCutomer = this.serviceTypeDetails.adslCustomer;
-            this.serviceTypeDetails.adslNumber = '';
+        'serviceTypeDetails.serviceType': function serviceTypeDetailsServiceType() {
+            this.getPackagesFromServer();
         }
     }
 

@@ -8,11 +8,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Application;
 
-class ApplicationReceived extends Mailable
+class ApplicationReceivedClient extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $application;
+  public $application;
     /**
      * Create a new message instance.
      *
@@ -31,11 +30,8 @@ class ApplicationReceived extends Mailable
      */
     public function build()
     {
-       $fullNames=$this->application->personalDetails->name.' '.$this->application->personalDetails->surname;
         return $this->from('neo@enigma.co.ls','Econet FTTH')
-                    ->subject('FTTH Application from '.$fullNames)
-                    ->markdown('emails.applications.received');
+                    ->subject('FTTH Application')
+                    ->markdown('emails.applications.received-client');
     }
 }
-
-

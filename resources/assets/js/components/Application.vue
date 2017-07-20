@@ -3,8 +3,8 @@
     export default {
         data() {
             return {
-                currentStep:2,
-                isAdslCutomer:false,
+                currentStep:1,
+                packageOptions:[],
                 applicationMeta:{
                     applicationId:0,
                     personalDetailsId:0,
@@ -44,13 +44,12 @@
             }
         },
         mounted(){
-            console.log('Notifications'.notifications);
+            this.getPackagesFromServer();
         },
         methods: {
             submitPersonalDetails(scope){
                    this.$validator.validateAll(scope).then(() => {
-                        axios.post(`./application/${this.applicationMeta.applicationId}/personal-details/
-                                    ${this.applicationMeta.personalDetailsId}`,
+                        axios.post(`./application/${this.applicationMeta.applicationId}/personal-details/${this.applicationMeta.personalDetailsId}`,
                                     this.personalDetails)
                             .then(res=>{
                                  EventBus.$emit('NEXT_STEP_MESSAGE',{'message':'Pick your prefered package on the next step'});
@@ -68,10 +67,13 @@
                 });
             },
             submitServiceType(scope){
-                   this.$validator.validateAll(scope).then(() => {
-                      
-                        axios.post(`./application/${this.applicationMeta.applicationId}/service-type/
-                        ${this.applicationMeta.serviceTypeId}`
+                if(!this.serviceTypeDetails.adslNumber && this.serviceTypeDetails.adslCustomer){
+                      EventBus.$emit('VALIDATION_ERROR');             
+
+                } else{
+                           
+                       this.$validator.validateAll(scope).then(() => {
+                        axios.post(`./application/${this.applicationMeta.applicationId}/service-type/${this.applicationMeta.serviceTypeId}`
                                     ,this.serviceTypeDetails)
                             .then(res=>{
                                   EventBus.$emit('NEXT_STEP_MESSAGE',{'message':'Fill in your banking details on the next step.'});
@@ -84,8 +86,10 @@
                                 });                      
                 })
                 .catch(()=>{
-                         EventBus.$emit('VALIDATION_ERROR');
-                }); 
+                    EventBus.$emit('VALIDATION_ERROR');
+                    
+                });
+                }
             },
             submitBankingDetails(scope){
                    this.$validator.validateAll(scope).then(() => {
@@ -94,7 +98,7 @@
                                 EventBus.$emit('APPLICATION_COMPLETE_MESSAGE');
                                 this.applicationMeta.applicationId=res.data.application.id;
                                 this.applicationMeta.bankingDetailsId=res.data.bankingDetails.id;
-                                this.currentStep=4; 
+                                this.currentStep=4;
                             })
                             .catch(error=>{
                                  EventBus.$emit('SUBMISION_ERROR');                 
@@ -104,17 +108,21 @@
                          EventBus.$emit('VALIDATION_ERROR');
                 });
             } ,
+            getPackagesFromServer(){
+                axios.get(`/packages?type=${this.serviceTypeDetails.serviceType}`).then((resp)=>{
+                    this.packageOptions=resp.data;
+                });
+            }
                            
         },
         computed:{
             rules(){
-                return this.isAdslCutomer?'required':'';
+                return this.serviceTypeDetails.adslCustomer?'required':'';
             }
         },
         watch:{
-            'serviceTypeDetails.adslCustomer': function(){
-                this.isAdslCutomer=this.serviceTypeDetails.adslCustomer;
-                this.serviceTypeDetails.adslNumber='';
+            'serviceTypeDetails.serviceType': function(){
+                this.getPackagesFromServer();               
             }
         }
 
