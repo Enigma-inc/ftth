@@ -16,9 +16,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
 
     <!-- CSS Files -->
-    <link href="{{url('css/all.css')}}" rel="stylesheet"/>
-    <link href="{{url('css/material-kit.css')}}" rel="stylesheet"/>
-    <link href="{{url('css/app.css')}}" rel="stylesheet"/>
+    <link href="{{mix('css/all.css')}}" rel="stylesheet"/>
+    <link href="{{mix('css/material-kit.css')}}" rel="stylesheet"/>
+    <link href="{{mix('css/app.css')}}" rel="stylesheet"/>
 
     <script>
         window.Laravel = {!! json_encode([
