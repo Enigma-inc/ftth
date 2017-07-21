@@ -41,7 +41,7 @@ window.axios = require('axios');
 window.swal = require('sweetalert2');
 
 window.axios.defaults.headers.common = {
-    // 'X-CSRF-TOKEN': window.Laravel.csrfToken,
+    'X-CSRF-TOKEN': window.Laravel.csrfToken,
     'X-Requested-With': 'XMLHttpRequest'
 };
 

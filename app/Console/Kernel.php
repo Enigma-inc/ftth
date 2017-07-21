@@ -6,6 +6,9 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Application;
 use App\Jobs\SendApplicationEmail;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ApplicationReceived;
+use App\Mail\ApplicationReceivedClient;
 
 
 class Kernel extends ConsoleKernel
@@ -48,7 +51,14 @@ class Kernel extends ConsoleKernel
                                'bankingDetails','location'])->where('mail_send',false)->get();
         foreach ($applications as $application) {
             try{
-                dispatch(new SendApplicationEmail($application));
+               Mail::to('mokoena.n.a@gmail.com')
+                ->send(new ApplicationReceived($application));
+
+                    // Send Client Confirmation
+                  Mail::to($application->personalDetails->email)
+                ->send(new ApplicationReceivedClient($application));
+
+                
                  $application->mail_send=1;
                  $application->save();
             }catch(\League\Flysystem\Exception $e){
