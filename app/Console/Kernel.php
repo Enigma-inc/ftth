@@ -51,14 +51,14 @@ class Kernel extends ConsoleKernel
                                'bankingDetails','location'])->where('mail_send',false)->get();
         foreach ($applications as $application) {
             try{
-               Mail::to('mokoena.n.a@gmail.com')
+               Mail::to(explode(',', env('EMAIL_RECIPIENTS','')))
                 ->send(new ApplicationReceived($application));
 
                     // Send Client Confirmation
                   Mail::to($application->personalDetails->email)
                 ->send(new ApplicationReceivedClient($application));
 
-                
+
                  $application->mail_send=1;
                  $application->save();
             }catch(\League\Flysystem\Exception $e){

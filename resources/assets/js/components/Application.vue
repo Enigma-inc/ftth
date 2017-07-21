@@ -13,33 +13,33 @@
                 },
                 personalDetails: {
                     title: '',
-                    name: 'Neo',
-                    surname: 'Mokoena',
-                    email: 'neo@enigma.co.ls',
-                    phoneMobile: '62333344',
-                    phoneHome: '28503344',
-                    phoneOffice: '28503344',
-                    postalAddress:'Ha Mphele, Box 25, Teyateyaneng',
-                    physicalAddress:'Maseru East Next to Maseru High School',
-                    passport:'RA403389',
+                    name: '',
+                    surname: '',
+                    email: '',
+                    phoneMobile: '',
+                    phoneHome: '',
+                    phoneOffice: '',
+                    postalAddress:'',
+                    physicalAddress:'',
+                    passport:'',
                     location:''
                    
                   
                 },
                 serviceTypeDetails:{
                     serviceType:'contract',
-                    package:'2GB',
+                    package:'',
                     adslCustomer:false,
                     adslNumber:''
 
                 },
                 bankingDetails:{
-                    bankName:'FNB',
-                    branchName:'Pioneer',
-                    branchCode:'06602',
-                    accountHolderName:'Neo Mokoena',
-                    accountType:'savings',
-                    accountNumber:'01439293940'
+                    bankName:'',
+                    branchName:'',
+                    branchCode:'',
+                    accountHolderName:'',
+                    accountType:'',
+                    accountNumber:''
                 }
             }
         },

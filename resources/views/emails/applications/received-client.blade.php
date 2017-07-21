@@ -1,6 +1,6 @@
 @component('mail::message')
   Hi {{$application->personalDetails->name}}, we have recieved your application for FTTH. 
-  Below are the details for your application.
+  Below are the details of your application.
 
 @component('mail::panel')
        **PERSONAL DETAILS**
