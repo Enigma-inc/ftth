@@ -41,10 +41,9 @@
     <div class="main main-raised">
         @yield('content')
     @if(Session::has('flash'))
-         <flash-message message="{{session('flash')}}"></flash-message>       
+         <notifications :show-alert=true alert-type="success" alert-message="{{session('flash')}}"></notifications>       
     @endif
-
-    </div>
+      </div>
     @include('partials.footer')
 </div>
 
@@ -54,7 +53,6 @@
 <script src="{{url('js/material.min.js')}}"></script>
 <script src="{{url('js/material-kit.js')}}" type="text/javascript"></script>
 <script src="{{mix('js/app.js')}}"></script>
- @include('sweet::alert')
 
 @yield('scripts')
 </body>

@@ -42,7 +42,6 @@ class SurveysController extends Controller
     {
         $locations= Location::orderBy('name', 'ASC')->get();
         $districts=District::all();
-        Alert::success('Success Message', 'Optional Title');        
         return view('surveys.create')->with(['locations'=>$locations,'districts'=>$districts]);
     }
 

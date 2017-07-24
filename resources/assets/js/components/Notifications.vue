@@ -4,10 +4,41 @@
 
 <script>
 export default{
+    props:{
+        showAlert:{
+             type: Boolean,
+            default: false
+        },
+        alertMessage:{
+             type: String,
+            default: 'Success'
+        },
+        alertType:{
+            type:String,
+            default:'success'
+        }
+    },
     data(){
         return{}
     },
    mounted(){       
+
+    if(this.showAlert){
+        switch (this.alertType) {
+            case 'error':
+                
+                break;
+        
+            default:
+                swal({
+                    title: 'Success!',
+                    text: this.alertMessage,
+                    type: 'success',
+                    confirmButtonText: 'Ok'
+                    })
+                break;
+        }
+    }   
     EventBus.$on('VALIDATION_ERROR',()=>{
         this.showFormValidationErrorMessage();
     });
