@@ -54,6 +54,7 @@
 <script src="{{url('js/material.min.js')}}"></script>
 <script src="{{url('js/material-kit.js')}}" type="text/javascript"></script>
 <script src="{{mix('js/app.js')}}"></script>
+ @include('sweet::alert')
 
 @yield('scripts')
 </body>

@@ -28,8 +28,8 @@ class RequestReceived extends Mailable
      */
     public function build()
     {
-
-        return $this->from('test@gmail.com')
+       
+        return $this->from($this->survey->email)
                     ->markdown('emails.request-received');
     }
 }

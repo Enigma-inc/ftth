@@ -21,6 +21,6 @@ class Application extends Model
                         'id','applicant_service_type_id');
      }
      public function location(){
-         return $this->belongsTo(Location::class);
+         return $this->belongsTo(FtthLocation::class);
      }
 }

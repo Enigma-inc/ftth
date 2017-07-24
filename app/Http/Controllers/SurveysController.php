@@ -15,6 +15,7 @@ use App\Transformers\SurveyListTransformer;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use Illuminate\Support\Facades\Storage;
+use Alert;
 
 class SurveysController extends Controller
 {
@@ -28,10 +29,10 @@ class SurveysController extends Controller
         
         //$surveys=Survey::latest()->paginate(15);
         $surveys=Survey::latest()->get();
-  $jsonSurveys= $surveys->toJson();
-Storage::put('app-data/data.json',$jsonSurveys);
- echo asset('storage/app-data/data.json');
-return "Done!";
+        $jsonSurveys= $surveys->toJson();
+        Storage::put('app-data/data.json',$jsonSurveys);
+        echo asset('storage/app-data/data.json');
+        return "Done!";
      //   return Fractal::colletion($surveys,new SurveyListTransformer());
      //   return view('surveys.index')->with(['surveys'=>$surveys]);
     }
@@ -41,6 +42,7 @@ return "Done!";
     {
         $locations= Location::orderBy('name', 'ASC')->get();
         $districts=District::all();
+        Alert::success('Success Message', 'Optional Title');        
         return view('surveys.create')->with(['locations'=>$locations,'districts'=>$districts]);
     }
 
@@ -65,7 +67,7 @@ return "Done!";
         
         /// Send email
        
-        Mail::to(['address' => 'neo@enigma.co.ls'])
+        Mail::to(explode(',', env('EMAIL_RECIPIENTS','')))
               ->send(new RequestReceived($survey));
 
 
