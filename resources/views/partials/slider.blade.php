@@ -26,6 +26,10 @@
                 <img src="{{url('images/slides/one-com.jpg')}}" alt="img06"/>
 
         </div>
+        <div class="contentBox">
+                <img src="{{url('images/slides/calls.jpg')}}" alt="img06"/>
+
+        </div>
 
 
     </div>
