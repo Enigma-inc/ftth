@@ -40,6 +40,7 @@
     @yield('banner')
     <div class="main main-raised">
         @yield('content')
+
     @if(Session::has('flash'))
          <notifications :show-alert=true alert-type="success" alert-message="{{session('flash')}}"></notifications>       
     @endif

@@ -17,54 +17,9 @@
        </div>
        </div>
            <div class="panel-body">
-                  <div class="col-xs-12 ">
-            <blockquote>
-                <p>
-                    Lower Thetsane 
-                </p>
-                <small>  From next to the main road through to Mr. Matekane Residential Mansion</small>
-            </blockquote>
-            <blockquote>
-                <p>
-                    Thetsane West <br>
-                </p>
-            </blockquote>
-            <blockquote>
-                <p>
-                    Thetsane East
-                </p>
-            </blockquote>
-            <blockquote>
-                <p>
-                    Maseru West
-                </p>
-                <small>All the way through to Partners in Health Lesotho Headquarters</small>
-            </blockquote>
-            <blockquote>
-                <p>
-                   Stationary area 
-                </p>
-                <small>Lesotho Times offices and surrounding suburban homes</small>
-            </blockquote>
-            <blockquote>
-                <p>
-                  Hills View 
-                </p>
-                <small>Entire suburb</small>
-            </blockquote>
-            <blockquote>
-                <p>
-                 New and Old Europa suburb areas 
-                </p>
-                <small>From Khali Motel to Arrival Centre suburb </small>
-            </blockquote>
-            <blockquote>
-                <p>
-                 Golf Course Estates Area to Centre of Accounting Studies
-                </p>
-                <small>Through AVANI Maseru areas are also covered.</small>
-            </blockquote>
-        </div>
+          <div class="col-xs-12 ">
+           <ftth-locations></ftth-locations>
+           </div>
            </div>
        </div>
     </div>
