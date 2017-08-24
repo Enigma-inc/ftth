@@ -33,10 +33,10 @@ export default {
       },
      methods:{
         getMapData(){
-          console.log('Event Caught....');
         axios.get(`./data/${this.locationFile}.json`).then(response=>{
           this.paths=response.data;
-          this.center=this.paths[0];
+          let center =(this.paths.length/2).toFixed(0);
+          this.center=this.paths[center];
         
           
         });
