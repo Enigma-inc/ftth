@@ -23,4 +23,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/lib/smooth-div-scroll/css/smoothDivScroll.css',
     ], 'public/css/all.css')
     .js(['node_modules/select2/dist/js/select2.min.js'], 'public/js/bundle.js')
+    .js(['node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js'
+         ], 'public/js/admin-bundle.js')
     .version();

@@ -4,7 +4,11 @@
  * code may be modified to fit the specific needs of your application.
  */
 
+try {
+    window.$ = window.jQuery = require('jquery');
 
+    require('bootstrap-sass');
+} catch (e) {}
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
  * using reactive data binding and reusable components. Vue's API is clean

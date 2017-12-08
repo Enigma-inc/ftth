@@ -6,8 +6,6 @@
 @endslot
  @endcomponent 
 
-
-
 @section('content')
     <div class="">
         <div class="row ftth-requests">
