@@ -7,6 +7,10 @@ use App\FtthLocation;
 
 class FtthLocationsController extends Controller
 {
+    function __construct(){
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +42,12 @@ class FtthLocationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ftthLocationObject = FtthLocation::create([
+            'name' => request('name'),
+            'description' => request('description')
+        ]);
+
+        return redirect()->route('ftthLocations.list');
     }
 
     /**
@@ -60,7 +69,10 @@ class FtthLocationsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ftthLocation = FtthLocation::find($id);
+
+        return view('admin.ftth-locations.edit')
+               ->with('ftthLocation', $ftthLocation);
     }
 
     /**
@@ -72,7 +84,15 @@ class FtthLocationsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ftthLocation = FtthLocation::find($id);
+
+        $ftthLocation->name = $request->input('name');
+        $ftthLocation->description = $request->input('description');
+
+        $ftthLocation->save();
+
+        return redirect()->route('ftthLocations.list');
+
     }
 
     /**
@@ -83,6 +103,8 @@ class FtthLocationsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deletedFtthLocation = FtthLocation::find($id)
+                                            ->delete();
+        return redirect()->route('ftthLocations.list');
     }
 }

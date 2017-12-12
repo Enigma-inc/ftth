@@ -11,6 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link href="{{ mix('css/admin-theme.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
@@ -43,7 +44,8 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li><a href="{{ route('locations.list') }}">Locations</a></li>
+                        <li><a href="{{ route('ftthLocations.list') }}">Ftth Locations</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -83,7 +85,8 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/admin-bundle.js') }}"></script>
-    
+    <script src="{{url('js/material.min.js')}}"></script>
+    <script src="{{url('js/material-kit.js')}}" type="text/javascript"></script>    
     <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>

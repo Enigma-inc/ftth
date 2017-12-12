@@ -3,7 +3,7 @@
  @section('content')
 <div class="container">
     <div class="row">
-        <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal">Add Location</button>
+        <button class="btn btn-danger btn-xs pull-right" data-toggle="modal" data-target="#myModal">Add Location</button>
         <div id="myModal" class="modal fade" role="dialog">
                     <div class="modal-dialog">
 
@@ -17,7 +17,7 @@
                             <form class="form-horizontal" role="form" method="POST" action="{{route('location.store')}}">
                                 {{ csrf_field() }}
 
-                                <div class="col-xs-12 col-md-6">
+                                <div class="col-xs-12 col-md-12">
                                     <div class="form-group label-floating padding-right-10 {{ $errors->has('name') ? ' has-error' : '' }}">
                                         <label for="name" class=" control-label">Name</label>
 
@@ -61,11 +61,11 @@
                                 </td>
                                 <td>
                                     <div class="col-xs-12 button-flex">
-                                        <a href="{{route('location.edit',$location->id)}}" class="btn btn-info btn-xs margin-right-5"><i class="fa fa-edit"></i> Edit</a>
+                                        <a href="{{route('location.edit',$location->id)}}" class="btn btn-info btn-xs margin-right-5"><i class="material-icons icon-size">edit</i> Edit</a>
                                         <form action="{{route('location.destroy',['id'=>$location->id])}}" method="POST">
                                             {{csrf_field()}}
                                             <input type="text" name="file-name"class="" value="{{$location->id}}" hidden>
-                                            <button type="submit" class="btn btn-danger btn-xs margin-right-5"><i class="fa fa-trash-o"></i> Remove</button>
+                                            <button type="submit" class="btn btn-danger btn-xs margin-right-5"><i class="material-icons icon-size">delete_forever</i> Remove</button>
                                         </form>
                                     </div>
                                 </td>

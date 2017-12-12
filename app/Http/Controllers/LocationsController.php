@@ -7,6 +7,10 @@ use App\Location;
 
 class LocationsController extends Controller
 {
+    function __construct(){
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +42,7 @@ class LocationsController extends Controller
      */
     public function store(Request $request)
     {
-        $locationObject = Location::create([
+        $location = Location::create([
             'name' => request('name')
         ]);
 

@@ -22,7 +22,6 @@ Route::get('/admin', 'AdminController@index');
                                     //Locations
 
 Route::get('/admin/locations', 'LocationsController@index')->name('locations.list');
-Route::get('/admin/locations/create', 'LocationsController@create')->name('location.create');
 Route::post('/admin/locations/store', 'LocationsController@store')->name('location.store');
 Route::get('/admin/locations/{id}/edit', 'LocationsController@edit')->name('location.edit');
 Route::patch('/admin/locations/{location}/update', 'LocationsController@update')->name('location.update');
@@ -31,11 +30,24 @@ Route::post('admin/locations/{id}/destroy', 'LocationsController@destroy')->name
                                     //Ftth Locations
 
 Route::get('/admin/ftth-locations', 'FtthLocationsController@index')->name('ftthLocations.list');
-Route::get('/admin/ftth-locations/create', 'FtthLocationsController@create')->name('ftthLocations.create');
-Route::post('/admin/ftth-locations/store', 'FtthLocationsController@store')->name('ftthLocations.store');
-Route::get('/admin/ftth-locations/{id}/edit', 'FtthLocationsController@edit')->name('ftthLocations.edit');
-Route::patch('/admin/ftth-locations/{ftthLocation}/update', 'FtthLocationsController@update')->name('ftthLocations.update');
-Route::post('admin/ftth-locations/{id}/destroy', 'FtthLocationsController@destroy')->name('ftthLocations.destroy');
+Route::post('/admin/ftth-locations/store', 'FtthLocationsController@store')->name('ftthLocation.store');
+Route::get('/admin/ftth-locations/{id}/edit', 'FtthLocationsController@edit')->name('ftthLocation.edit');
+Route::patch('/admin/ftth-locations/{ftthLocation}/update', 'FtthLocationsController@update')->name('ftthLocation.update');
+Route::post('admin/ftth-locations/{id}/destroy', 'FtthLocationsController@destroy')->name('ftthLocation.destroy');
+
+                                    //Prepaid Packages
+Route::get('/admin/prepaid-packages', 'PackagesController@prepaidPackages')->name('prepaidPackages.list');
+Route::post('/admin/prepaid-packages/store', 'PrepaidPackages@storePrepaidPackage')->name('prepaidPackages.store');
+Route::get('/admin/prepaid-packages/{id}/edit', 'PrepaidPackages@editPrepaidPackage')->name('prepaidPackages.edit');
+Route::patch('/admin/prepaid-packages/{prepaidPackage}/update', 'PrepaidPackages@updatePrepaidPackage')->name('prepaidPackages.update');
+Route::post('/admin/prepaid-packages/{id}/destroy', 'PrepaidPackages@destroyPrepaidPackage')->name('prepaidPackages.destroy');
+
+                                    //Contract Packages
+Route::get('/admin/contract-packages', 'PackagesController@contractPackages')->name('contractPackages.list');
+Route::post('/admin/contract-packages/store', 'PrepaidPackages@storeContractPackage')->name('contractPackages.store');
+Route::get('/admin/contract-packages/{id}/edit', 'PrepaidPackages@editContractPackage')->name('contractPackages.edit');
+Route::patch('/admin/contract-packages/{prepaidPackage}/update', 'PrepaidPackages@updateContractPackage')->name('contractPackages.update');
+Route::post('/admin/contract-packages/{id}/destroy', 'PrepaidPackages@destroyContractPackage')->name('contractPackages.destroy');
 
 Route::get('/application', 'ApplicationsController@create')->name('application.create');
 Route::post('/application/{applicationId}/personal-details/{personalDetailsId}', 'ApplicationsController@addApplication')->name('application.store.personal');
