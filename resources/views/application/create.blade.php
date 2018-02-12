@@ -5,13 +5,12 @@
 @endcomponent
 
  @section('content')
- <notifications></notifications>
-<application inline-template>
     <div class="container">
         <div class="row">
             <div class="col-xs-12 ">
-                <div  >
-                    {{ csrf_field() }}
+                <application> </application>
+                {{--  <div  >
+                   
                     <div id="accordion" class="panel-group">
                         <div class="panel panel-primary" v-show="currentStep==1">
                             <div class="panel-heading">
@@ -21,7 +20,7 @@
                             </div>
                             <div id="personal-details" class="panel-collapse collapse in">
                                 <div class="panel-body">
-                                    @include('application.personal-details-form')
+                                   
                                 </div>
                             </div>
                         </div>
@@ -50,10 +49,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>  --}}
             </div>
         </div>
     </div>
-</application>
+
 
 @endsection

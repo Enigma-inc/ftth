@@ -6233,9 +6233,9 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-form-wizard@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/vue-form-wizard/-/vue-form-wizard-0.6.1.tgz#3b5ee2da7501e0795e97660617816845295d53da"
+vue-form-wizard@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/vue-form-wizard/-/vue-form-wizard-0.8.2.tgz#f5720264de9a810d0abdecde0d5c9faa1151a065"
 
 vue-hot-reload-api@^2.0.11:
   version "2.0.11"
@@ -6292,6 +6292,10 @@ vue@^2.1.10:
 vue@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.4.1.tgz#76e0b8eee614613532216b7bfe784e0b5695b160"
+
+vuelidate@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/vuelidate/-/vuelidate-0.6.1.tgz#c52c9fd2b48f974613485e2cf51c182e84bcf747"
 
 vuetify@^0.14.2:
   version "0.14.2"
