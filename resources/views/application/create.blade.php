@@ -8,7 +8,7 @@
  <notifications></notifications>
 <application inline-template>
     <div class="container">
-        <div class="row">
+        <div class="row" ></div>
             <div class="col-xs-12 ">
                 <div  >
                     {{ csrf_field() }}
