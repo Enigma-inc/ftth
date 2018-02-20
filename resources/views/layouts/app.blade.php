@@ -163,5 +163,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
     @yield('scripts')
+    <!-- Scripts -->
+    <script src="{{ mix('js/admin-bundle.js') }}"></script>
+    
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>

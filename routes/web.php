@@ -19,9 +19,10 @@ Auth::routes();
 
 Route::get('/admin', 'AdminController@index');
 
-                                    //Locations
+ //Locations
 
 Route::get('/admin/locations', 'LocationsController@index')->name('locations.list');
+Route::get('/admin/locations/create', 'LocationsController@create')->name('location.create');
 Route::post('/admin/locations/store', 'LocationsController@store')->name('location.store');
 Route::get('/admin/locations/{id}/edit', 'LocationsController@edit')->name('location.edit');
 Route::patch('/admin/locations/{location}/update', 'LocationsController@update')->name('location.update');

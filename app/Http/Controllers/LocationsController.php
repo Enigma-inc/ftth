@@ -42,7 +42,7 @@ class LocationsController extends Controller
      */
     public function store(Request $request)
     {
-        $location = Location::create([
+        $locationObject = Location::create([
             'name' => request('name')
         ]);
 
