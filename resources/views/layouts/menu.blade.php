@@ -10,4 +10,3 @@
 <li class="{{ Request::is('packagesLookups*') ? 'active' : '' }}">
     <a href="{!! route('packagesLookups.index') !!}"><i class="fa fa-edit"></i><span>Packages Lookups</span></a>
 </li>
-
