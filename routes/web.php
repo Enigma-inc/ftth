@@ -31,6 +31,7 @@ Route::post('admin/locations/{id}/destroy', 'LocationsController@destroy')->name
                                     //Ftth Locations
 
 Route::get('/admin/ftth-locations', 'FtthLocationsController@index')->name('ftthLocations.list');
+Route::get('/admin/ftth-locations/create', 'FtthLocationsController@create')->name('ftthLocation.create');
 Route::post('/admin/ftth-locations/store', 'FtthLocationsController@store')->name('ftthLocation.store');
 Route::get('/admin/ftth-locations/{id}/edit', 'FtthLocationsController@edit')->name('ftthLocation.edit');
 Route::patch('/admin/ftth-locations/{ftthLocation}/update', 'FtthLocationsController@update')->name('ftthLocation.update');

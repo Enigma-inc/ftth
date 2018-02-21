@@ -26,23 +26,23 @@
                             </div>
                         </div>
     
-                        <div class="form-group label-floating padding-right-10" :class="{ error: errors.has('form-personal.phoneMobile')}">
+                        <div class="form-group label-floating padding-right-10" >
                             <label for="phone-mobile" class=" control-label">Cellphone<span class="required-star">*</span> </label>
     
                             <div class="">
                                 <input id="phone-mobile" type="text" class="form-control" @input="$v.personalDetails.phoneMobile.$touch()" v-model.trim="personalDetails.phoneMobile" name="phoneMobile" > 
-                                <span class="help-block" v-show="errors.has('form-personal.phoneMobile')">
+                                <span class="help-block" >
                                     <!-- <strong>@{{ errors.first('form-personal.phoneMobile') }}</strong> -->
                                 </span>
                             </div>
                         </div>
     
-                        <div class="form-group label-floating padding-right-10 " :class="{ error: errors.has('form-personal.passport')}">
+                        <div class="form-group label-floating padding-right-10 " >
                             <label for="passport" class=" control-label">Pasport/ID Number<span class="required-star">*</span> </label>
     
                             <div class="">
                                 <input id="passport" type="text" class="form-control" @input="$v.personalDetails.passport.$touch()" v-model.trim="personalDetails.passport" name="passport" > 
-                                <span class="help-block" v-show="errors.has('form-personal.passport')">
+                                <span class="help-block" >
                                     <!-- <strong>@{{ errors.first('form-personal.passport') }}</strong> -->
                                 </span>
                             </div>
@@ -50,13 +50,13 @@
     
                     </div>
                     <div class="col-xs-12 col-md-6">
-                        <div class="form-group  label-floating padding-right-10" :class="{ error: errors.has('form-personal.email')}">
+                        <div class="form-group  label-floating padding-right-10" >
                         
                             <label for="email" class="control-label">Email<span class="required-star">*</span></label>
     
                             <div class="">
-                                <input id="email" type="text" class="form-control" name="email" @input="$v.personalDetails.email.$touch()" v-model.trim="personalDetails.email" v-validate="'required|email'"> 
-                                    <span class="help-block" v-show="errors.has('form-personal.email')">
+                                <input id="email" type="text" class="form-control" name="email" @input="$v.personalDetails.email.$touch()" v-model.trim="personalDetails.email" > 
+                                    <span class="help-block" >
                                     <!-- <strong>@{{ errors.first('form-personal.email') }}</strong> -->
                                 </span>
                             </div>
@@ -75,7 +75,7 @@
                         </div>
                             <div class="col-xs-12 col-md-12">
     
-                        <!-- <div class="form-group label-floating padding-right-10 " :class="{ error: errors.has('form-personal.location')}">
+                        <!-- <div class="form-group label-floating padding-right-10 " >
                             <label for="location" class="control-label ">Select Your Location<span class="required-star">*</span></label>
     
                             <div class="">
@@ -84,7 +84,7 @@
                                             <option value="{{$location->id}}"><strong>{{$locatio.name}}</strong></option>
                                         @endforeach
                                     </select> 
-                                    <span class="help-block" v-show="errors.has('form-personal.location')">
+                                    <span class="help-block" >
                                     <strong>@{{ errors.first('form-personal.location') }}</strong>
                                 </span>
                             </div>
@@ -96,21 +96,21 @@
                     </div>
                     <div class="col-xs-12">
                     <div class="col-md-6">
-                        <div class="form-group label-floating padding-right-10" :class="{ error: errors.has('form-personal.postalAddress')}">
+                        <div class="form-group label-floating padding-right-10" >
                             <label for="postal-address" class=" control-label">Postal Address<span class="required-star">*</span></label>
                             <textarea id="postal-address" class="form-control"  rows="5" @input="$v.personalDetails.postalAddress.$touch()" v-model.trim="personalDetails.postalAddress" >
                             </textarea>
-                                    <span class="help-block" v-show="errors.has('form-personal.postalAddress')">
+                                    <span class="help-block" >
                                     <!-- <strong>@{{ errors.first('form-personal.postalAddress') }}</strong> -->
                                 </span>
                         </div>
                     </div>
                     <div class="col-md-6">
-                    <div class="form-group label-floating padding-right-10 " :class="{ error: errors.has('form-personal.physicalAddress')}">
+                    <div class="form-group label-floating padding-right-10 " >
                             <label for="physical-address" class=" control-label">Physical Address<span class="required-star">*</span></label>
                             <textarea id="physical-address" class="form-control"  rows="5" @input="$v.personalDetails.physicalAddress.$touch()" v-model.trim="personalDetails.physicalAddress" >
                             </textarea>
-                                    <span class="help-block" v-show="errors.has('form-personal.physicalAddress')">
+                                    <span class="help-block" >
                                     <!-- <strong>@{{ errors.first('form-personal.physicalAddress') }}</strong> -->
                                 </span>
                         </div>
@@ -197,7 +197,7 @@ import { required, minLength, between,email } from 'vuelidate/lib/validators';
         },
         methods: {
             submitPersonalDetails(scope){
-                   this.$validator.validateAll(scope).then(() => {
+                
                         axios.post(`./application/${this.applicationMeta.applicationId}/personal-details/${this.applicationMeta.personalDetailsId}`,
                                     this.personalDetails)
                             .then(res=>{
@@ -209,19 +209,12 @@ import { required, minLength, between,email } from 'vuelidate/lib/validators';
                             .catch(error=>{
                                   EventBus.$emit('SUBMISION_ERROR');             
                                 });       
-                          
-                })
-                .catch(()=>{
-                       EventBus.$emit('VALIDATION_ERROR');
-                });
             },
             submitServiceType(scope){
                 if(!this.serviceTypeDetails.adslNumber && this.serviceTypeDetails.adslCustomer){
                       EventBus.$emit('VALIDATION_ERROR');             
 
                 } else{
-                           
-                       this.$validator.validateAll(scope).then(() => {
                         axios.post(`./application/${this.applicationMeta.applicationId}/service-type/${this.applicationMeta.serviceTypeId}`
                                     ,this.serviceTypeDetails)
                             .then(res=>{
@@ -233,15 +226,11 @@ import { required, minLength, between,email } from 'vuelidate/lib/validators';
                             .catch(error=>{
                                  EventBus.$emit('SUBMISION_ERROR');                 
                                 });                      
-                })
-                .catch(()=>{
-                    EventBus.$emit('VALIDATION_ERROR');
-                    
-                });
+           
                 }
             },
             submitBankingDetails(scope){
-                   this.$validator.validateAll(scope).then(() => {
+
                         axios.post(`./application/${this.applicationMeta.applicationId}/banking-details/${this.applicationMeta.bankingDetailsId}`,this.bankingDetails)
                             .then(res=>{
                                 EventBus.$emit('APPLICATION_COMPLETE_MESSAGE');
@@ -252,10 +241,6 @@ import { required, minLength, between,email } from 'vuelidate/lib/validators';
                             .catch(error=>{
                                  EventBus.$emit('SUBMISION_ERROR');                 
                                 });                      
-                })
-                .catch(()=>{
-                         EventBus.$emit('VALIDATION_ERROR');
-                });
             } ,
             getPackagesFromServer(){
                 axios.get(`/packages?type=${this.serviceTypeDetails.serviceType}`).then((resp)=>{

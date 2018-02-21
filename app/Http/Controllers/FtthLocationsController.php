@@ -31,7 +31,7 @@ class FtthLocationsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.ftth-locations.create');
     }
 
     /**

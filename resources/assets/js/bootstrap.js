@@ -5,7 +5,7 @@
  */
 
 try {
-    window.$ = window.jQuery = require('jquery');
+    // window.$ = window.jQuery = require('jquery');
 
     require('bootstrap-sass');
 } catch (e) {}
@@ -17,7 +17,6 @@ try {
 
 window.Vue = require('vue');
 window.EventBus = new Vue();
-import VeeValidate from 'vee-validate';
 
 const dictionary = {
 
@@ -30,10 +29,6 @@ const dictionary = {
     }
 
 };
-
-VeeValidate.Validator.updateDictionary(dictionary);
-
-Vue.use(VeeValidate);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

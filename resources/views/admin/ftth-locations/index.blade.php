@@ -3,7 +3,7 @@
  @section('content')
 <div class="container">
     <div class="row">
-        <button class="btn btn-danger btn-xs pull-right" data-toggle="modal" data-target="#myModal">Add Location</button>
+        <a class="btn btn-danger btn-xs pull-right"  href="/admin/ftth-locations/create">Add Location</a>
         <div id="myModal" class="modal fade" role="dialog">
                     <div class="modal-dialog">
 
