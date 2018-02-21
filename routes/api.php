@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::resource('ftth_locations', 'FtthLocationAPIController');
+
+Route::resource('ftth_locations', 'FtthLocationAPIController');
+
+Route::resource('locations', 'LocationAPIController');
+
+Route::resource('packages_lookups', 'PackagesLookupAPIController');

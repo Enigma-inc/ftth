@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>InfyOm Generator</title>
+    <title>Econet - FTTH</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
     <!-- Bootstrap 3.3.7 -->
@@ -38,7 +38,7 @@
 
             <!-- Logo -->
             <a href="#" class="logo">
-                <b>InfyOm</b>
+                <b>Econet - FTTH</b>
             </a>
 
             <!-- Header Navbar -->
@@ -121,7 +121,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{!! url('/') !!}">
-                    InfyOm Generator
+                    Econet - FTTH
                 </a>
             </div>
 
@@ -157,10 +157,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- AdminLTE App -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/js/adminlte.min.js"></script>
+    {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/js/adminlte.min.js"></script>  --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+    
 
     @yield('scripts')
 </body>

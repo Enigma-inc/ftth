@@ -22,18 +22,18 @@ Route::get('/admin', 'AdminController@index');
                                     //Locations
 
 Route::get('/admin/locations', 'LocationsController@index')->name('locations.list');
-Route::post('/admin/locations/store', 'LocationsController@store')->name('location.store');
-Route::get('/admin/locations/{id}/edit', 'LocationsController@edit')->name('location.edit');
-Route::patch('/admin/locations/{location}/update', 'LocationsController@update')->name('location.update');
-Route::post('admin/locations/{id}/destroy', 'LocationsController@destroy')->name('location.destroy');
+Route::post('/admin/locations/store', 'LocationsController@store')->name('locations.store');
+Route::get('/admin/locations/{id}/edit', 'LocationsController@edit')->name('locations.edit');
+Route::patch('/admin/locations/{location}/update', 'LocationsController@update')->name('locations.update');
+Route::post('admin/locations/{id}/destroy', 'LocationsController@destroy')->name('locations.destroy');
 
                                     //Ftth Locations
 
 Route::get('/admin/ftth-locations', 'FtthLocationsController@index')->name('ftthLocations.list');
-Route::post('/admin/ftth-locations/store', 'FtthLocationsController@store')->name('ftthLocation.store');
-Route::get('/admin/ftth-locations/{id}/edit', 'FtthLocationsController@edit')->name('ftthLocation.edit');
-Route::patch('/admin/ftth-locations/{ftthLocation}/update', 'FtthLocationsController@update')->name('ftthLocation.update');
-Route::post('admin/ftth-locations/{id}/destroy', 'FtthLocationsController@destroy')->name('ftthLocation.destroy');
+Route::post('/admin/ftth-locations/store', 'FtthLocationsController@store')->name('ftthLocations.store');
+Route::get('/admin/ftth-locations/{id}/edit', 'FtthLocationsController@edit')->name('ftthLocations.edit');
+Route::patch('/admin/ftth-locations/{ftthLocation}/update', 'FtthLocationsController@update')->name('ftthLocations.update');
+Route::post('admin/ftth-locations/{id}/destroy', 'FtthLocationsController@destroy')->name('ftthLocations.destroy');
 
                                     //Prepaid Packages
 Route::get('/admin/prepaid-packages', 'PackagesController@prepaidPackages')->name('prepaidPackages.list');
@@ -61,3 +61,17 @@ Route::get('/ftth-requests/export/{type}', 'SurveysController@export')->name('ex
 Route::get('/packages','PackagesController@index')->name('packages.list');
 
 
+                                     //package lookup
+Route::get('/admin/packages_lookup', 'PackagesLookupController@index')->name('packagesLookups.list');
+Route::post('/admin/packages_lookup/store', 'PackagesLookupController@store')->name('packagesLookups.store');
+Route::get('/admin/packages_lookup/{id}/edit', 'PackagesLookupController@edit')->name('packagesLookups.edit');
+Route::patch('/admin/packages_lookup/{packages_lookup}/update', 'PackagesLookupController@update')->name('packagesLookups.update');
+Route::post('/admin/packages_lookup/{id}/destroy', 'PackagesLookupController@destroy')->name('packagesLookups.destroy');
+
+Route::resource('ftthLocations', 'FtthLocationController');
+
+
+
+Route::resource('locations', 'LocationController');
+
+Route::resource('packagesLookups', 'PackagesLookupController');
