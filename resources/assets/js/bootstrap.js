@@ -5,7 +5,7 @@
  */
 
 try {
-    window.$ = window.jQuery = require('jquery');
+    window.$ = window.jsQuery = require('jquery');
 
     require('bootstrap-sass');
 } catch (e) {}
