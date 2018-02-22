@@ -50,10 +50,19 @@
 
 <!--   Core JS Files   -->
 <script src="{{url('js/jquery.min.js')}}" type="text/javascript"></script>
+{{--  <script src="https://code.jquery.com/jquery-migrate-3.0.1.js"></script>  --}}
+
 <script src="{{url('js/bootstrap.min.js')}}" type="text/javascript"></script>
 <script src="{{url('js/material.min.js')}}"></script>
 <script src="{{url('js/material-kit.js')}}" type="text/javascript"></script>
-<script src="{{mix('js/app.js')}}"></script>
+<script src="{{mix('js/app.js')}}"></script>   
+
+
+
+
+
+
+
 
 @yield('scripts')
 </body>

@@ -5,7 +5,7 @@
  */
 
 try {
-    // window.$ = window.jQuery = require('jquery');
+    // window.$ = window.jsQuery = require('jquery');
 
     require('bootstrap-sass');
 } catch (e) {}
@@ -57,4 +57,4 @@ window.axios.defaults.headers.common = {
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
-// });
+// })
