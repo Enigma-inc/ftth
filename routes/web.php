@@ -55,10 +55,10 @@ Route::get('/admin/packages_lookup/{id}/edit', 'PackagesLookupController@edit')-
 Route::patch('/admin/packages_lookup/{packages_lookup}/update', 'PackagesLookupController@update')->name('packagesLookups.update');
 Route::post('/admin/packages_lookup/{id}/destroy', 'PackagesLookupController@destroy')->name('packagesLookups.destroy');
 
-// Route::resource('ftthLocations', 'FtthLocationController');
+Route::resource('ftthLocations', 'FtthLocationController');
 
 
 
-// Route::resource('locations', 'LocationController');
+Route::resource('locations', 'LocationController');
 
-// Route::resource('packagesLookups', 'PackagesLookupController');
+Route::resource('packagesLookups', 'PackagesLookupController');
