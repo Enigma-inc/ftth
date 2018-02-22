@@ -62,4 +62,4 @@ window.axios.defaults.headers.common = {
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
-// });
+// })
