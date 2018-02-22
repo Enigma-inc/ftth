@@ -9,6 +9,7 @@
     @foreach($locations as $location)
         <tr>
             <td>{!! $location->name !!}</td>
+            {{--  <td>   &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp </td>  --}}
             <td>
                 {!! Form::open(['route' => ['locations.destroy', $location->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

@@ -21,6 +21,23 @@ Route::get('/admin', 'AdminController@index');
 
                                     //Locations
 
+Route::get('/admin/locations', 'LocationController@index')->name('locations.index');
+Route::get('/admin/locations/create', 'LocationController@create')->name('locations.create');
+Route::post('/admin/locations/store', 'LocationController@store')->name('locations.store');
+Route::get('/admin/locations/{id}/edit', 'LocationController@edit')->name('locations.edit');
+Route::get('/admin/locations/{id}', 'LocationController@show')->name('locations.show');
+Route::patch('/admin/locations/{location}/update', 'LocationController@update')->name('locations.update');
+Route::delete('admin/locations/{id}/destroy', 'LocationController@destroy')->name('locations.destroy');
+
+                                    //Ftth Locations
+
+Route::get('/admin/ftth-locations', 'FtthLocationController@index')->name('ftthLocations.index');
+Route::get('/admin/ftth-locations/create', 'FtthLocationController@create')->name('ftthLocations.create');
+Route::post('/admin/ftth-locations/store', 'FtthLocationController@store')->name('ftthLocations.store');
+Route::get('/admin/ftth-locations/{id}/edit', 'FtthLocationController@edit')->name('ftthLocations.edit');
+Route::get('/admin/ftth-locations/{id}', 'FtthLocationController@show')->name('ftthLocations.show');
+Route::patch('/admin/ftth-locations/{ftthLocation}/update', 'FtthLocationController@update')->name('ftthLocations.update');
+Route::delete('admin/ftth-locations/{id}/destroy', 'FtthLocationController@destroy')->name('ftthLocations.destroy');
 
                                     //Prepaid Packages
 Route::get('/admin/prepaid-packages', 'PackagesController@prepaidPackages')->name('prepaidPackages.list');
@@ -49,16 +66,14 @@ Route::get('/packages','PackagesController@index')->name('packages.list');
 
 
                                      //package lookup
-Route::get('/admin/packages_lookup', 'PackagesLookupController@index')->name('packagesLookups.list');
+Route::get('/admin/packages_lookup', 'PackagesLookupController@index')->name('packagesLookups.index');
 Route::post('/admin/packages_lookup/store', 'PackagesLookupController@store')->name('packagesLookups.store');
+Route::get('/admin/packages_lookup/create', 'PackagesLookupController@create')->name('packagesLookups.create');
 Route::get('/admin/packages_lookup/{id}/edit', 'PackagesLookupController@edit')->name('packagesLookups.edit');
+Route::get('/admin/packages_lookup/{id}', 'PackagesLookupController@show')->name('packagesLookups.show');
 Route::patch('/admin/packages_lookup/{packages_lookup}/update', 'PackagesLookupController@update')->name('packagesLookups.update');
-Route::post('/admin/packages_lookup/{id}/destroy', 'PackagesLookupController@destroy')->name('packagesLookups.destroy');
+Route::delete('/admin/packages_lookup/{id}/destroy', 'PackagesLookupController@destroy')->name('packagesLookups.destroy');
 
-Route::resource('ftthLocations', 'FtthLocationController');
-
-
-
-Route::resource('locations', 'LocationController');
-
-Route::resource('packagesLookups', 'PackagesLookupController');
+//Route::resource('ftthLocations', 'FtthLocationController');
+//Route::resource('locations', 'LocationController');
+//Route::resource('packagesLookups', 'PackagesLookupController');
