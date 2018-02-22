@@ -66,13 +66,13 @@ Route::get('/packages','PackagesController@index')->name('packages.list');
 
 
                                      //package lookup
-Route::get('/admin/packages_lookup', 'PackagesLookupController@index')->name('packagesLookups.index');
-Route::post('/admin/packages_lookup/store', 'PackagesLookupController@store')->name('packagesLookups.store');
-Route::get('/admin/packages_lookup/create', 'PackagesLookupController@create')->name('packagesLookups.create');
-Route::get('/admin/packages_lookup/{id}/edit', 'PackagesLookupController@edit')->name('packagesLookups.edit');
-Route::get('/admin/packages_lookup/{id}', 'PackagesLookupController@show')->name('packagesLookups.show');
-Route::patch('/admin/packages_lookup/{packages_lookup}/update', 'PackagesLookupController@update')->name('packagesLookups.update');
-Route::delete('/admin/packages_lookup/{id}/destroy', 'PackagesLookupController@destroy')->name('packagesLookups.destroy');
+Route::get('/admin/packages', 'PackagesLookupController@index')->name('packagesLookups.index');
+Route::post('/admin/packages/store', 'PackagesLookupController@store')->name('packagesLookups.store');
+Route::get('/admin/packages/create', 'PackagesLookupController@create')->name('packagesLookups.create');
+Route::get('/admin/packages/{id}/edit', 'PackagesLookupController@edit')->name('packagesLookups.edit');
+Route::get('/admin/packages/{id}', 'PackagesLookupController@show')->name('packagesLookups.show');
+Route::patch('/admin/packages/{packages_lookup}/update', 'PackagesLookupController@update')->name('packagesLookups.update');
+Route::delete('/admin/packages/{id}/destroy', 'PackagesLookupController@destroy')->name('packagesLookups.destroy');
 
 //Route::resource('ftthLocations', 'FtthLocationController');
 //Route::resource('locations', 'LocationController');
