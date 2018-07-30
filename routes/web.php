@@ -77,3 +77,5 @@ Route::delete('/admin/packages/{id}/destroy', 'PackagesLookupController@destroy'
 //Route::resource('ftthLocations', 'FtthLocationController');
 //Route::resource('locations', 'LocationController');
 //Route::resource('packagesLookups', 'PackagesLookupController');
+
+Route::resource('ftthApplications', 'FtthApplicationController');

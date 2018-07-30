@@ -3,9 +3,14 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import VueFormWizard from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css';
 import Vuelidate from 'vuelidate';
+import vSelect from 'vue-select';
 
-Vue.use(Vuelidate)
-Vue.use(VueFormWizard)
+
+
+Vue.use(Vuelidate);
+Vue.use(VueFormWizard);
+Vue.component('v-select', vSelect);
+
 
 Vue.use(VueGoogleMaps, {
     load: {
