@@ -17,11 +17,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/material-kit.scss', 'public/css')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .sass('resources/assets/sass/admin/app.scss', 'public/css/admin-theme.css')
-    .sass('resources/assets/sass/tailwind.scss', 'public/website/css/tailwind.css')
-    .options({
-        processCssUrls: false,
-        postCss: [tailwindcss('./tailwind.js')],
-    });
 
 mix.styles([
     //  'resources/assets/css/select2.min.css',

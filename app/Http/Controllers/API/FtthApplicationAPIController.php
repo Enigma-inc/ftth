@@ -35,7 +35,6 @@ class FtthApplicationAPIController extends AppBaseController
         ApplicantBankingRepository $bankingRepo,
         ApplicantPersonalDetailsRepository $personalDetailsRepo
     ) {
-        $this->middleware('auth');
         $this->ftthApplicationRepository = $ftthApplicationRepo;
         $this->serviceTypeRepository = $serviceTypeRepo;
         $this->bankingRepository = $bankingRepo;
@@ -69,13 +68,12 @@ class FtthApplicationAPIController extends AppBaseController
      */
     public function store(CreateFtthApplicationAPIRequest $request)
     {
-        // dd(Auth::User());
         
         //SAVE BANKING DETAILS
-        $savedBankingDetails = $this->bankingRepository->pushToDb($request->all());      
+        // $savedBankingDetails = $this->bankingRepository->pushToDb($request->all());      
 
         //SAVE SERVICE TYPE
-        $saveServiceTypeDetails = $this->serviceTypeRepository->pushToDb($request->all());
+        // $saveServiceTypeDetails = $this->serviceTypeRepository->pushToDb($request->all());
 
         //SAVE PERSONAL DETAILS
         // $savedBankingDetails->id, $saveServiceTypeDetails->id
@@ -107,17 +105,17 @@ class FtthApplicationAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
-    {
-        /** @var FtthApplication $ftthApplication */
-        $ftthApplication = $this->ftthApplicationRepository->findWithoutFail($id);
+    // public function show($id)
+    // {
+    //     /** @var FtthApplication $ftthApplication */
+    //     $ftthApplication = $this->ftthApplicationRepository->findWithoutFail($id);
 
-        if (empty($ftthApplication)) {
-            return $this->sendError('Ftth Application not found');
-        }
+    //     if (empty($ftthApplication)) {
+    //         return $this->sendError('Ftth Application not found');
+    //     }
 
-        return $this->sendResponse($ftthApplication->toArray(), 'Ftth Application retrieved successfully');
-    }
+    //     return $this->sendResponse($ftthApplication->toArray(), 'Ftth Application retrieved successfully');
+    // }
 
     /**
      * Update the specified FtthApplication in storage.
@@ -128,21 +126,21 @@ class FtthApplicationAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateFtthApplicationAPIRequest $request)
-    {
-        $input = $request->all();
+    // public function update($id, UpdateFtthApplicationAPIRequest $request)
+    // {
+    //     $input = $request->all();
 
-        /** @var FtthApplication $ftthApplication */
-        $ftthApplication = $this->ftthApplicationRepository->findWithoutFail($id);
+    //     /** @var FtthApplication $ftthApplication */
+    //     $ftthApplication = $this->ftthApplicationRepository->findWithoutFail($id);
 
-        if (empty($ftthApplication)) {
-            return $this->sendError('Ftth Application not found');
-        }
+    //     if (empty($ftthApplication)) {
+    //         return $this->sendError('Ftth Application not found');
+    //     }
 
-        $ftthApplication = $this->ftthApplicationRepository->update($input, $id);
+    //     $ftthApplication = $this->ftthApplicationRepository->update($input, $id);
 
-        return $this->sendResponse($ftthApplication->toArray(), 'FtthApplication updated successfully');
-    }
+    //     return $this->sendResponse($ftthApplication->toArray(), 'FtthApplication updated successfully');
+    // }
 
     /**
      * Remove the specified FtthApplication from storage.
@@ -152,17 +150,17 @@ class FtthApplicationAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function destroy($id)
-    {
-        /** @var FtthApplication $ftthApplication */
-        $ftthApplication = $this->ftthApplicationRepository->findWithoutFail($id);
+    // public function destroy($id)
+    // {
+    //     /** @var FtthApplication $ftthApplication */
+    //     $ftthApplication = $this->ftthApplicationRepository->findWithoutFail($id);
 
-        if (empty($ftthApplication)) {
-            return $this->sendError('Ftth Application not found');
-        }
+    //     if (empty($ftthApplication)) {
+    //         return $this->sendError('Ftth Application not found');
+    //     }
 
-        $ftthApplication->delete();
+    //     $ftthApplication->delete();
 
-        return $this->sendResponse($id, 'Ftth Application deleted successfully');
-    }
+    //     return $this->sendResponse($id, 'Ftth Application deleted successfully');
+    // }
 }

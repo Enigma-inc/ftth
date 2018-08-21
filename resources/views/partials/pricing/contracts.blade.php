@@ -7,67 +7,26 @@
     </div>
 
  <div class="row">
-     <div class="col-xs-12 col-md-6">
-         <h4 class="text-left margin-left-10 contract-title">Value For Money</h4>
+
+     <div class="col-xs-12 col-md-12 contract-container">
          <div class="contract-header">
              <div class="contract">Price</div>
              <div class="contract">Data Volume</div>
+             <div class="contract"></div>
          </div>
+         @foreach ($packages->filter(function($item)
+         {
+             return $item->type == 'contract';
+         }) as $package)
+             
          <div class="contract-details">
-             <div class="contract"><span>M</span> 550</div>
-             <div class="contract">30 <span>GB</span></div>
+         <div class="contract"><span>M</span> {{$package->price}}</div>
+             <div class="contract">{{$package->data_bundle}} <span>GB</span></div>
+             <div class="contract"> 
+                 <apply-btn :package="{{$package->id}}"></apply-btn>    
+            </div>
          </div>
-         <div class="row  margin-top-20">
-         <img src="{{url('images/fiber2hme-logo.png')}}" alt="FTTH" height="230">
-             <a href="{{route('ftth.areas')}}" class="btn btn-info btn-round col-xs-12"> <i class="material-icons">remove_red_eye</i> View areas where FTTH is  available</a>
-         </div>
-     </div>
-
-     <div class="col-xs-12 col-md-6 contract-container">
-         <h4 class="text-left margin-left-10 contract-title">Other Contract Offers</h4>
-         <div class="contract-header">
-             <div class="contract">Price</div>
-             <div class="contract">Data Volume</div>
-         </div>
-         <div class="contract-details">
-             <div class="contract"><span>M</span> 3,750</div>
-             <div class="contract">425 <span>GB</span></div>
-         </div>
-
-         <div class="contract-details">
-             <div class="contract"><span>M</span> 2,250</div>
-             <div class="contract">200 <span>GB</span></div>
-         </div>
-
-         <div class="contract-details">
-             <div class="contract"><span>M</span> 1,500</div>
-             <div class="contract">105 <span>GB</span></div>
-         </div>
-
-         <div class="contract-details">
-             <div class="contract"><span>M</span> 1,100</div>
-             <div class="contract">70 <span>GB</span></div>
-         </div>
-
-         <div class="contract-details">
-             <div class="contract"><span>M</span> 759</div>
-             <div class="contract">45 <span>GB</span></div>
-         </div>
-
-         <div class="contract-details">
-             <div class="contract"><span>M</span> 399</div>
-             <div class="contract">20 <span>GB</span></div>
-         </div>
-
-         <div class="contract-details">
-             <div class="contract"><span>M</span> 250</div>
-             <div class="contract">10 <span>GB</span></div>
-         </div>
-
-         <div class="contract-details">
-             <div class="contract"><span>M</span> 149</div>
-             <div class="contract">5 <span>GB</span></div>
-         </div>
+         @endforeach
      </div>
  </div>
 

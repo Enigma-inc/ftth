@@ -9,12 +9,14 @@ use App\ContractPackage;
 
 class PackagesController extends Controller
 {
-    function __construct(){
-        $this->middleware('auth');
+    function __construct()
+    {
+        // $this->middleware('auth');
     }
 
-    public function index(Request $request){
-        if(request('type') !== null){
+    public function index(Request $request)
+    {
+        if (request('type') !== null) {
             return PackagesLookup::whereType(request('type'))->get();
         }
 
@@ -22,14 +24,16 @@ class PackagesController extends Controller
 
     }
 
-    public function prepaidPackages(){
+    public function prepaidPackages()
+    {
         $prepaidPackages = PrepaidPackage::latest()->paginate(10);
 
         return view('admin.packages.prepaid.index')
-                ->with('prepaidPackages', $prepaidPackages);
+            ->with('prepaidPackages', $prepaidPackages);
     }
 
-    public function storePrepaidPackage(){
+    public function storePrepaidPackage()
+    {
 
         $prepaidPackage = PrepaidPackage::create([
             'name' => request('name'),
@@ -39,15 +43,17 @@ class PackagesController extends Controller
         return redirect()->route('prepaidPackages.list');
     }
 
-    public function editPrepaidPackage($id){
+    public function editPrepaidPackage($id)
+    {
 
         $prepaidPackage = PrepaidPackage::find($id);
 
         return view('admin.packages.prepaid.edit')
-               ->with('prepaidPackage', $prepaidPackage);
+            ->with('prepaidPackage', $prepaidPackage);
     }
 
-    public function updatePrepaidPackage(Request $request, $id){
+    public function updatePrepaidPackage(Request $request, $id)
+    {
         $prepaidPackage = PrepaidPackage::find($id);
 
         $prepaidPackage->name = $request->input('name');
@@ -57,9 +63,10 @@ class PackagesController extends Controller
         return redirect()->route('prepaidPackages.list');
     }
 
-    public function destroyPrepaidPackage($id){
+    public function destroyPrepaidPackage($id)
+    {
         $deletedPrepaidPackage = PrepaidPackage::find($id)
-                               ->delete();
+            ->delete();
         return redirect()->route('prepaidPackages.list');
     }
 }

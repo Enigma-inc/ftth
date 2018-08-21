@@ -36,6 +36,7 @@
     .contract-details {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         border: rgba(0, 0, 0, 0.3) 1px solid;
         padding: 10px;
         .contract {

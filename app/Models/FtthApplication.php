@@ -29,7 +29,7 @@ class FtthApplication extends Model
     use SoftDeletes;
 
     public $table = 'ftth_applications';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -53,7 +53,7 @@ class FtthApplication extends Model
         'applicant_banking_details_id' => 'integer',
         'applicant_service_type_id' => 'integer',
         'applicant_personal_details_id' => 'integer',
-        'amount'=>'integer'
+        'amount' => 'integer'
     ];
 
     /**
@@ -62,19 +62,13 @@ class FtthApplication extends Model
      * @var array
      */
     public static $rules = [
-        'title' => 'required',
         'name' => 'required',
         'surname' => 'required',
         'email' => 'required',
         'phoneMobile' => 'required',
-        'passport' => 'required',
-        'postalAddress' => 'required',
-        'physicalAddress' => 'required',
         'location' => 'required',
-        'serviceType'=>'required',
-        'package'=>'required',
-        'adslCustomer'=>'required'
+        'package' => 'required',
     ];
 
-    
+
 }
