@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 use App\Http\Requests\CreateFtthLocationRequest;
 use App\Http\Requests\UpdateFtthLocationRequest;
 use App\Repositories\FtthLocationRepository;
@@ -19,6 +23,7 @@ class FtthLocationController extends AppBaseController
     public function __construct(FtthLocationRepository $ftthLocationRepo)
     {
         $this->ftthLocationRepository = $ftthLocationRepo;
+        $this->disk = Storage::disk(env('FILE_SYSTEM', 'local'));
     }
 
     /**
@@ -57,7 +62,20 @@ class FtthLocationController extends AppBaseController
     {
         $input = $request->all();
 
-        $ftthLocation = $this->ftthLocationRepository->create($input);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = str_slug($request->input('name') . '-' . time());
+            $imagePath = "public/images/ftth_locations/" . $imageName;
+            $this->resizeImage($image, $imagePath);
+            $input['image'] = $imagePath . '.' . $image->getClientOriginalExtension();
+            $ftthLocation = $this->ftthLocationRepository->create($input);
+
+        } else {
+             $ftthLocation = $this->ftthLocationRepository->create($input);
+        }
+
+
+        // $ftthLocation = $this->ftthLocationRepository->create($input);
 
         Flash::success('Ftth Location saved successfully.');
 
@@ -122,7 +140,23 @@ class FtthLocationController extends AppBaseController
             return redirect(route('ftthLocations.index'));
         }
 
-        $ftthLocation = $this->ftthLocationRepository->update($request->all(), $id);
+
+        $input = $request->all();
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = str_slug($request->input('name') . '-' . time());
+            $imagePath = "public/images/ftth_locations/" . $imageName;
+            $this->resizeImage($image, $imagePath);
+            $input['image'] = $imagePath . '.' . $image->getClientOriginalExtension();
+            $ftthLocation = $this->ftthLocationRepository->update($input, $id);
+
+        } else {
+            $ftthLocation = $this->ftthLocationRepository->update($request->all(), $id);
+        }
+
+
+        // $ftthLocation = $this->ftthLocationRepository->update($request->all(), $id);
 
         Flash::success('Ftth Location updated successfully.');
 
@@ -152,4 +186,21 @@ class FtthLocationController extends AppBaseController
 
         return redirect(route('ftthLocations.index'));
     }
+
+    private function resizeImage(UploadedFile $image, $ImagePath)
+    {
+        $imageStream = Image::make($image)
+            ->fit(800,500)
+            ->stream()
+            ->detach();
+        // $largeImageStream = Image::make($image)
+        //     ->fit(1170, 580)
+        //     ->stream()
+        //     ->detach();
+        $this->disk->put($ImagePath . '.' . $image->getClientOriginalExtension(), $imageStream, 'public');
+        // $this->disk->put($ImagePath . '_lg.' . $image->getClientOriginalExtension(), $largeImageStream, 'public');
+    }
 }
+
+
+

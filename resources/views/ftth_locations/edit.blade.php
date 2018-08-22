@@ -11,7 +11,7 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($ftthLocation, ['route' => ['ftthLocations.update', $ftthLocation->id], 'method' => 'patch']) !!}
+                   {!! Form::model($ftthLocation, ['route' => ['ftthLocations.update', $ftthLocation->id], 'method' => 'patch','files'=>true]) !!}
 
                         @include('ftth_locations.fields')
 

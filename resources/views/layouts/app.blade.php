@@ -25,6 +25,9 @@
 
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+      <link href="{{ mix('css/admin-theme.css') }}" rel="stylesheet">
+   
+    
     
 
     @yield('css')
@@ -168,6 +171,7 @@
     @yield('scripts')
     <!-- Scripts -->
     <script src="{{ mix('js/admin-bundle.js') }}"></script>
+    css/admin-theme.css
     
     <script src="{{ mix('js/app.js') }}"></script>
 </body>

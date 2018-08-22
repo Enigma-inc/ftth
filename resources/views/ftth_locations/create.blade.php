@@ -12,7 +12,7 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'ftthLocations.store']) !!}
+                    {!! Form::open(['route' => 'ftthLocations.store','files'=>true]) !!}
 
                         @include('ftth_locations.fields')
 
