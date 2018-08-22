@@ -46,8 +46,30 @@
             </div>
 
             <div class="row">
-               <div class="col-xs-12 col-md-6">
-                <div class="form-group  label-floating padding-right-10" :class="{ error: $v.basicDetails.package.$invalid }">
+               <div class="col-xs-12 col-md-8">
+                   <div class="col-xs-6">
+                       <div class="form-group label-floating margin-top-0 service-type" >
+                          <label class="label-text">Service Type</label>                        
+                           <div class="radio-container">
+                                <div class="radio margin-0">
+                                <label>
+                                    <input   v-bind:value="'contract'" v-model="basicDetails.serviceType"   type="radio" name="serviceType" checked>
+                                       <span class="circle"></span><span class="check"></span>
+                                        Contract
+                                </label>
+                            </div>
+                            <div class="radio margin-0">
+                                    <label>
+                                        <input  v-bind:value="'prepaid'" v-model="basicDetails.serviceType"   type="radio" name="serviceType">
+                                         <span class="circle"></span><span class="check"></span>
+                                        Prepaid
+                                    </label>
+                                </div>
+                            </div>
+                           </div>
+                   </div>
+                <div class="col-xs-6">
+                    <div class="form-group  label-floating padding-right-10" :class="{ error: $v.basicDetails.package.$invalid }">
 
                     <label for="package" class="control-label" style="text-transform:capitalize">Select {{basicDetails.serviceType}} package<span class="required-star">*</span></label>
 
@@ -64,9 +86,10 @@
                             <span>Select Package </span>
                         </span>
                     </div>
+                     </div>
                 </div>
                </div>
-               <div class="col-xs-12 col-md-6">
+               <div class="col-xs-12 col-md-4">
                     <div class="form-group label-floating padding-right-10 " :class="{ error: $v.basicDetails.location.$invalid}">
                     <label for="location" class="control-label ">Select Your Area<span class="required-star">*</span></label>
 
@@ -176,6 +199,7 @@ export default {
         surname: "",
         phoneMobile: "",
         location: "",
+        serviceType: "",
         package: ""
       },
       accountDetails: {
@@ -206,7 +230,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.getParameterByName("package"));
     this.getLookups();
   },
   methods: {
@@ -223,13 +246,6 @@ export default {
     validateStep1($v) {
       this.showStep1Errors = true;
       return true;
-      //   return (
-      //     !$v.basicDetails.name.$invalid &&
-      //     !$v.basicDetails.surname.$invalid &&
-      //     !$v.basicDetails.email.$invalid &&
-      //     !$v.basicDetails.phoneMobile.$invalid &&
-      //     !$v.basicDetails.location.$invalid
-      //   );
     },
     validateStep2($v) {
       this.showStep2Errors = true;
@@ -322,6 +338,11 @@ export default {
       } else {
         this.basicDetails.package = oldValue.id;
       }
+    },
+    "basicDetails.serviceType": function(newValue, oldValue) {
+      return this.packageOptions.filter(pkg => {
+        return pkg.contract == "contract";
+      });
     }
   }
 };
@@ -364,6 +385,17 @@ a:focus {
       font-weight: 500;
       color: rgba(0, 0, 0, 0.6);
     }
+  }
+}
+.service-type {
+  margin-top: 27px !important;
+  label {
+    font-size: 11px;
+  }
+  .radio-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
   }
 }
 </style>
