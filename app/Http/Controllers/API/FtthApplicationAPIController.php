@@ -15,6 +15,7 @@ use App\Repositories\ApplicantServiceTypeRepository;
 use App\Repositories\ApplicantBankingRepository;
 use App\Repositories\ApplicantPersonalDetailsRepository;
 use Illuminate\Support\Facades\Auth;
+use App\PackagesLookup;
 
 /**
  * Class FtthApplicationController
@@ -26,19 +27,13 @@ class FtthApplicationAPIController extends AppBaseController
     /** @var  FtthApplicationRepository */
     private $ftthApplicationRepository;
     private $serviceTypeRepository;
-    private $bankingRepository;
-    private $personalDetailsRepository;
 
     public function __construct(
         FtthApplicationRepository $ftthApplicationRepo,
-        ApplicantServiceTypeRepository $serviceTypeRepo,
-        ApplicantBankingRepository $bankingRepo,
-        ApplicantPersonalDetailsRepository $personalDetailsRepo
+        ApplicantServiceTypeRepository $serviceTypeRepo
     ) {
         $this->ftthApplicationRepository = $ftthApplicationRepo;
         $this->serviceTypeRepository = $serviceTypeRepo;
-        $this->bankingRepository = $bankingRepo;
-        $this->personalDetailsRepository = $personalDetailsRepo;
 
     }
 
@@ -49,14 +44,6 @@ class FtthApplicationAPIController extends AppBaseController
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request)
-    {
-        $this->ftthApplicationRepository->pushCriteria(new RequestCriteria($request));
-        $this->ftthApplicationRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $ftthApplications = $this->ftthApplicationRepository->all();
-
-        return $this->sendResponse($ftthApplications->toArray(), 'Ftth Applications retrieved successfully');
-    }
 
     /**
      * Store a newly created FtthApplication in storage.
@@ -68,28 +55,28 @@ class FtthApplicationAPIController extends AppBaseController
      */
     public function store(CreateFtthApplicationAPIRequest $request)
     {
-        
-        //SAVE BANKING DETAILS
-        // $savedBankingDetails = $this->bankingRepository->pushToDb($request->all());      
 
-        //SAVE SERVICE TYPE
-        // $saveServiceTypeDetails = $this->serviceTypeRepository->pushToDb($request->all());
+        $package = PackagesLookup::findOrFail($request->package);
+        if (!$package) {
+            return $this->sendError('Package not found!');
+        }
+         //SAVE SERVICE TYPE
+        $serviceTypeModel = [
+            'service_type' => $request->serviceType,
+            'data_package' => $package->data_bundle
+        ];
+        $saveServiceTypeDetails = $this->serviceTypeRepository->pushToDb($serviceTypeModel);
 
-        //SAVE PERSONAL DETAILS
-        // $savedBankingDetails->id, $saveServiceTypeDetails->id
-        $savedPersonalDetails = $this->personalDetailsRepository->pushToDb($request->all());
+
 
         //Extract Application Details
         $applicationDetails = [
             'user_id' => 1,
             'location_id' => $request->location,
-            'applicant_personal_details_id' => $savedPersonalDetails->id,
-            'applicant_banking_details_id' => $savedBankingDetails->id,
             'applicant_service_type_id' => $saveServiceTypeDetails->id
 
 
         ];
-     //   $table->float('amount')->default(0);
 
 
         $ftthApplication = $this->ftthApplicationRepository->placeApplication($applicationDetails);

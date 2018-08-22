@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1613,127 +1613,327 @@ module.exports = {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
+
+var _accountDetails;
+
+var _validators = __webpack_require__("./node_modules/vuelidate/lib/validators/index.js");
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 exports.default = {
-    data: function data() {
-        return {
-            currentStep: 1,
-            packageOptions: [],
-            applicationMeta: {
-                applicationId: 0,
-                personalDetailsId: 0,
-                serviceTypeId: 0,
-                bankingDetailsId: 0
-            },
-            personalDetails: {
-                title: '',
-                name: '',
-                surname: '',
-                email: '',
-                phoneMobile: '',
-                phoneHome: '',
-                phoneOffice: '',
-                postalAddress: '',
-                physicalAddress: '',
-                passport: '',
-                location: ''
+  data: function data() {
+    return {
+      showStep1Errors: false,
+      showStep2Errors: false,
+      showStep3Errors: false,
+      accountTypes: ["Cheque", "Savings"],
+      packageOptions: [],
+      selectedPackageOption: "",
+      locations: [],
+      selectedLocation: "",
+      applicationMeta: {
+        applicationId: 0,
+        personalDetailsId: 0,
+        serviceTypeId: 0,
+        bankingDetailsId: 0
+      },
+      basicDetails: {
+        name: "",
+        surname: "",
+        phoneMobile: "",
+        location: "",
+        package: ""
+      },
+      accountDetails: {
+        email: "",
+        password: "",
+        repeatPassword: ""
+      }
+    };
+  },
 
-            },
-            serviceTypeDetails: {
-                serviceType: 'contract',
-                package: '',
-                adslCustomer: false,
-                adslNumber: ''
-
-            },
-            bankingDetails: {
-                bankName: '',
-                branchName: '',
-                branchCode: '',
-                accountHolderName: '',
-                accountType: '',
-                accountNumber: ''
-            }
-        };
+  validations: {
+    basicDetails: {
+      name: { required: _validators.required },
+      surname: { required: _validators.required },
+      phoneMobile: { required: _validators.required },
+      package: { required: _validators.required },
+      location: { required: _validators.required }
     },
-    mounted: function mounted() {
-        this.getPackagesFromServer();
+    accountDetails: (_accountDetails = {
+      email: { required: _validators.required },
+      password: { required: _validators.required }
+    }, _defineProperty(_accountDetails, "password", {
+      required: _validators.required,
+      minLength: (0, _validators.minLength)(6)
+    }), _defineProperty(_accountDetails, "repeatPassword", {
+      sameAsPassword: (0, _validators.sameAs)("password")
+    }), _accountDetails)
+  },
+  mounted: function mounted() {
+    console.log(this.getParameterByName("package"));
+    this.getLookups();
+  },
+
+  methods: {
+    placeApplication: function placeApplication() {
+      axios.post("./api/place-application", Object.assign({}, this.basicDetails, this.accountDetails)).then(function (response) {
+        console.log(response);
+      });
     },
+    validateStep1: function validateStep1($v) {
+      this.showStep1Errors = true;
+      return true;
+      //   return (
+      //     !$v.basicDetails.name.$invalid &&
+      //     !$v.basicDetails.surname.$invalid &&
+      //     !$v.basicDetails.email.$invalid &&
+      //     !$v.basicDetails.phoneMobile.$invalid &&
+      //     !$v.basicDetails.location.$invalid
+      //   );
+    },
+    validateStep2: function validateStep2($v) {
+      this.showStep2Errors = true;
 
-    methods: {
-        submitPersonalDetails: function submitPersonalDetails(scope) {
-            var _this = this;
+      //   return !$v.basicDetails.package.$invalid;
+    },
+    submitPersonalDetails: function submitPersonalDetails(scope) {
+      var _this = this;
 
-            this.$validator.validateAll(scope).then(function () {
-                axios.post('./application/' + _this.applicationMeta.applicationId + '/personal-details/' + _this.applicationMeta.personalDetailsId, _this.personalDetails).then(function (res) {
-                    EventBus.$emit('NEXT_STEP_MESSAGE', { 'message': 'Pick your prefered package on the next step' });
-                    _this.applicationMeta.applicationId = res.data.application.id;
-                    _this.applicationMeta.personalDetailsId = res.data.personalDetails.id;
-                    _this.currentStep = 2;
-                }).catch(function (error) {
-                    EventBus.$emit('SUBMISION_ERROR');
-                });
-            }).catch(function () {
-                EventBus.$emit('VALIDATION_ERROR');
-            });
-        },
-        submitServiceType: function submitServiceType(scope) {
-            var _this2 = this;
+      axios.post("./application/" + this.applicationMeta.applicationId + "/personal-details/" + this.applicationMeta.personalDetailsId, this.basicDetails).then(function (res) {
+        EventBus.$emit("NEXT_STEP_MESSAGE", {
+          message: "Pick your prefered package on the next step"
+        });
+        _this.applicationMeta.applicationId = res.data.application.id;
+        _this.applicationMeta.personalDetailsId = res.data.basicDetails.id;
+        _this.currentStep = 2;
+      }).catch(function (error) {
+        EventBus.$emit("SUBMISION_ERROR");
+      });
+    },
+    getPackagesFromServer: function getPackagesFromServer() {
+      var _this2 = this;
 
-            if (!this.serviceTypeDetails.adslNumber && this.serviceTypeDetails.adslCustomer) {
-                EventBus.$emit('VALIDATION_ERROR');
-            } else {
+      axios.get("/packages?type=").then(function (resp) {
+        _this2.packageOptions = resp.data;
+        _this2.setSelectedPackgeFromParam();
+      });
+    },
+    getFtthLocationsFromServer: function getFtthLocationsFromServer() {
+      var _this3 = this;
 
-                this.$validator.validateAll(scope).then(function () {
-                    axios.post('./application/' + _this2.applicationMeta.applicationId + '/service-type/' + _this2.applicationMeta.serviceTypeId, _this2.serviceTypeDetails).then(function (res) {
-                        EventBus.$emit('NEXT_STEP_MESSAGE', { 'message': 'Fill in your banking details on the next step.' });
-                        _this2.applicationMeta.applicationId = res.data.application.id;
-                        _this2.applicationMeta.serviceTypeId = res.data.serviceType.id;
-                        _this2.currentStep = 3;
-                    }).catch(function (error) {
-                        EventBus.$emit('SUBMISION_ERROR');
-                    });
-                }).catch(function () {
-                    EventBus.$emit('VALIDATION_ERROR');
-                });
-            }
-        },
-        submitBankingDetails: function submitBankingDetails(scope) {
-            var _this3 = this;
+      axios.get("/api/ftth-locations").then(function (resp) {
+        _this3.locations = resp.data;
+        _this3.setSelectedLocationFromParam();
+      });
+    },
+    getLookups: function getLookups() {
+      this.getPackagesFromServer();
+      this.getFtthLocationsFromServer();
+    },
+    getParameterByName: function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return "";
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    },
+    setSelectedPackgeFromParam: function setSelectedPackgeFromParam() {
+      var _this4 = this;
 
-            this.$validator.validateAll(scope).then(function () {
-                axios.post('./application/' + _this3.applicationMeta.applicationId + '/banking-details/' + _this3.applicationMeta.bankingDetailsId, _this3.bankingDetails).then(function (res) {
-                    EventBus.$emit('APPLICATION_COMPLETE_MESSAGE');
-                    _this3.applicationMeta.applicationId = res.data.application.id;
-                    _this3.applicationMeta.bankingDetailsId = res.data.bankingDetails.id;
-                    _this3.currentStep = 4;
-                }).catch(function (error) {
-                    EventBus.$emit('SUBMISION_ERROR');
-                });
-            }).catch(function () {
-                EventBus.$emit('VALIDATION_ERROR');
-            });
-        },
-        getPackagesFromServer: function getPackagesFromServer() {
-            var _this4 = this;
-
-            axios.get('/packages?type=' + this.serviceTypeDetails.serviceType).then(function (resp) {
-                _this4.packageOptions = resp.data;
-            });
+      this.packageOptions.forEach(function (item) {
+        var packageParam = _this4.getParameterByName("package");
+        if (packageParam) {
+          _this4.selectedPackageOption = _this4.packageOptions.filter(function (pkg) {
+            return pkg.id == packageParam;
+          })[0];
         }
+      });
     },
-    computed: {
-        rules: function rules() {
-            return this.serviceTypeDetails.adslCustomer ? 'required' : '';
+    setSelectedLocationFromParam: function setSelectedLocationFromParam() {
+      var _this5 = this;
+
+      this.packageOptions.forEach(function (item) {
+        var locationParam = _this5.getParameterByName("location");
+        if (locationParam) {
+          _this5.selectedLocation = _this5.locations.filter(function (loc) {
+            return loc.id == locationParam;
+          })[0];
         }
-    },
-    watch: {
-        'serviceTypeDetails.serviceType': function serviceTypeDetailsServiceType() {
-            this.getPackagesFromServer();
-        }
+      });
     }
-
+  },
+  computed: {
+    rules: function rules() {
+      return this.basicDetails.adslCustomer ? "required" : "";
+    }
+  },
+  watch: {
+    selectedLocation: function selectedLocation(newValue, oldValue) {
+      if (newValue) {
+        this.basicDetails.location = newValue.id;
+      } else {
+        this.basicDetails.location = oldValue.id;
+      }
+    },
+    selectedPackageOption: function selectedPackageOption(newValue, oldValue) {
+      if (newValue) {
+        this.basicDetails.package = newValue.id;
+      } else {
+        this.basicDetails.package = oldValue.id;
+      }
+    }
+  }
 };
 
 /***/ }),
@@ -1814,7 +2014,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.form-group.error label.control-label[data-v-2bd5e1aa],\n.form-group.error\n.help-block[data-v-2bd5e1aa] {\n  color: #f44336;\n}\na[data-v-2bd5e1aa], a[data-v-2bd5e1aa]:hover, a[data-v-2bd5e1aa]:focus {\n  color: #b4cff9;\n}\n.container[data-v-2bd5e1aa] {\n  padding-top: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.form-group.error label.control-label[data-v-2bd5e1aa],\n.form-group.error .help-block[data-v-2bd5e1aa] {\n  color: #f44336;\n}\na[data-v-2bd5e1aa],\na[data-v-2bd5e1aa]:hover,\na[data-v-2bd5e1aa]:focus {\n  color: #b4cff9;\n}\n.container[data-v-2bd5e1aa] {\n  padding-top: 20px;\n}\n.section-container .section-title[data-v-2bd5e1aa] {\n  font-weight: 600;\n  font-size: 1.5rem;\n  color: rgba(0, 0, 0, 0.5);\n  margin-bottom: 5px;\n  margin-top: 15px;\n}\n.section-container .item-container[data-v-2bd5e1aa] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.2);\n  padding: 5px 0;\n}\n.section-container .item-container .item-title[data-v-2bd5e1aa] {\n    font-size: 1.2rem;\n    font-weight: 300;\n    color: rgba(0, 0, 0, 0.5);\n}\n.section-container .item-container .item-content[data-v-2bd5e1aa] {\n    font-size: 1.2rem;\n    font-weight: 500;\n    color: rgba(0, 0, 0, 0.6);\n}\n", ""]);
 
 // exports
 
@@ -7555,6 +7755,364 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-15c81486", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2bd5e1aa\"}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Application.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('form-wizard', {
+    attrs: {
+      "title": "Complete 2 Easy Steps Below",
+      "subtitle": "",
+      "finishButtonText": 'Submit',
+      "color": '#eb443b'
+    },
+    on: {
+      "on-complete": function($event) {
+        _vm.placeApplication()
+      }
+    }
+  }, [_c('tab-content', {
+    attrs: {
+      "title": "Package & Location Selection"
+    }
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-4 "
+  }, [_c('div', {
+    staticClass: "form-group label-floating padding-right-10",
+    class: {
+      error: _vm.$v.basicDetails.name.$invalid
+    }
+  }, [_c('label', {
+    staticClass: " control-label",
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("Name \r\n                                "), (_vm.$v.basicDetails.name.$invalid) ? _c('span', {
+    staticClass: "required-star"
+  }, [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c('div', {}, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model.trim",
+      value: (_vm.basicDetails.name),
+      expression: "basicDetails.name",
+      modifiers: {
+        "trim": true
+      }
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "name",
+      "type": "text",
+      "name": "name"
+    },
+    domProps: {
+      "value": (_vm.basicDetails.name)
+    },
+    on: {
+      "input": [function($event) {
+        if ($event.target.composing) { return; }
+        _vm.basicDetails.name = $event.target.value.trim()
+      }, function($event) {
+        _vm.$v.basicDetails.name.$touch()
+      }],
+      "blur": function($event) {
+        _vm.$forceUpdate()
+      }
+    }
+  }), _vm._v(" "), (_vm.$v.basicDetails.name.$invalid && (_vm.$v.basicDetails.name.$dirty || _vm.showStep1Errors)) ? _c('span', {
+    staticClass: "help-block"
+  }, [_vm._v("\r\n                                    This field is required\r\n                                ")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-4"
+  }, [_c('div', {
+    staticClass: "form-group label-floating padding-right-10",
+    class: {
+      error: _vm.$v.basicDetails.surname.$invalid
+    }
+  }, [_c('label', {
+    staticClass: " control-label",
+    attrs: {
+      "for": "surname"
+    }
+  }, [_vm._v("Surname"), (_vm.$v.basicDetails.surname.$invalid) ? _c('span', {
+    staticClass: "required-star"
+  }, [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c('div', {}, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model.trim",
+      value: (_vm.basicDetails.surname),
+      expression: "basicDetails.surname",
+      modifiers: {
+        "trim": true
+      }
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "surname",
+      "type": "text",
+      "name": "surname"
+    },
+    domProps: {
+      "value": (_vm.basicDetails.surname)
+    },
+    on: {
+      "input": [function($event) {
+        if ($event.target.composing) { return; }
+        _vm.basicDetails.surname = $event.target.value.trim()
+      }, function($event) {
+        _vm.$v.basicDetails.surname.$touch()
+      }],
+      "blur": function($event) {
+        _vm.$forceUpdate()
+      }
+    }
+  }), _vm._v(" "), (_vm.$v.basicDetails.surname.$invalid && (_vm.$v.basicDetails.surname.$dirty || _vm.showStep1Errors)) ? _c('span', {
+    staticClass: "help-block"
+  }, [_vm._v("\r\n                                        This field is required \r\n                                     ")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-4"
+  }, [_c('div', {
+    staticClass: "form-group label-floating padding-right-10",
+    class: {
+      error: _vm.$v.basicDetails.phoneMobile.$invalid
+    }
+  }, [_c('label', {
+    staticClass: " control-label",
+    attrs: {
+      "for": "phone-mobile"
+    }
+  }, [_vm._v("Phone"), _c('span', {
+    staticClass: "required-star"
+  }, [_vm._v("*")])]), _vm._v(" "), _c('div', {}, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model.trim",
+      value: (_vm.basicDetails.phoneMobile),
+      expression: "basicDetails.phoneMobile",
+      modifiers: {
+        "trim": true
+      }
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "phone-mobile",
+      "type": "text",
+      "name": "phoneMobile"
+    },
+    domProps: {
+      "value": (_vm.basicDetails.phoneMobile)
+    },
+    on: {
+      "input": [function($event) {
+        if ($event.target.composing) { return; }
+        _vm.basicDetails.phoneMobile = $event.target.value.trim()
+      }, function($event) {
+        _vm.$v.basicDetails.phoneMobile.$touch()
+      }],
+      "blur": function($event) {
+        _vm.$forceUpdate()
+      }
+    }
+  }), _vm._v(" "), (_vm.$v.basicDetails.phoneMobile.$invalid && (_vm.$v.basicDetails.phoneMobile.$dirty || _vm.showStep1Errors)) ? _c('span', {
+    staticClass: "help-block"
+  }, [_c('span', [_vm._v("This field is required")])]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group  label-floating padding-right-10",
+    class: {
+      error: _vm.$v.basicDetails.package.$invalid
+    }
+  }, [_c('label', {
+    staticClass: "control-label",
+    staticStyle: {
+      "text-transform": "capitalize"
+    },
+    attrs: {
+      "for": "package"
+    }
+  }, [_vm._v("Select " + _vm._s(_vm.basicDetails.serviceType) + " package"), _c('span', {
+    staticClass: "required-star"
+  }, [_vm._v("*")])]), _vm._v(" "), _c('div', {}, [_c('v-select', {
+    attrs: {
+      "label": "data_bundle",
+      "options": _vm.packageOptions
+    },
+    scopedSlots: _vm._u([
+      ["option", function(option) {
+        return [_c('span', [_vm._v(_vm._s(option.data_bundle))]), _vm._v(" "), _c('span', [_vm._v("|")]), _vm._v(" "), _c('span', [_vm._v(" M" + _vm._s(option.price))])]
+      }]
+    ]),
+    model: {
+      value: (_vm.selectedPackageOption),
+      callback: function($$v) {
+        _vm.selectedPackageOption = $$v
+      },
+      expression: "selectedPackageOption"
+    }
+  }), _vm._v(" "), (_vm.$v.basicDetails.package.$invalid && _vm.showStep2Errors) ? _c('span', {
+    staticClass: "help-block"
+  }, [_c('span', [_vm._v("Select Package ")])]) : _vm._e()], 1)])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group label-floating padding-right-10 ",
+    class: {
+      error: _vm.$v.basicDetails.location.$invalid
+    }
+  }, [_c('label', {
+    staticClass: "control-label ",
+    attrs: {
+      "for": "location"
+    }
+  }, [_vm._v("Select Your Area"), _c('span', {
+    staticClass: "required-star"
+  }, [_vm._v("*")])]), _vm._v(" "), _c('div', {}, [_c('v-select', {
+    attrs: {
+      "label": "name",
+      "options": _vm.locations
+    },
+    model: {
+      value: (_vm.selectedLocation),
+      callback: function($$v) {
+        _vm.selectedLocation = $$v
+      },
+      expression: "selectedLocation"
+    }
+  }), _vm._v(" "), (_vm.$v.basicDetails.location.$invalid && (_vm.$v.basicDetails.location.$dirty || _vm.showStep1Errors)) ? _c('span', {
+    staticClass: "help-block"
+  }, [_c('span', [_vm._v("Select your Area")])]) : _vm._e()], 1)])])])]), _vm._v(" "), _c('tab-content', {
+    attrs: {
+      "title": "Account"
+    }
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-12 "
+  }, [_c('div', {
+    staticClass: "form-group label-floating padding-right-10",
+    class: {
+      error: _vm.$v.accountDetails.email.$invalid
+    }
+  }, [_c('label', {
+    staticClass: " control-label",
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("Email \r\n                          "), (_vm.$v.accountDetails.email.$invalid) ? _c('span', {
+    staticClass: "required-star"
+  }, [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c('div', {}, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.accountDetails.email),
+      expression: "accountDetails.email"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "email",
+      "type": "text",
+      "name": "email"
+    },
+    domProps: {
+      "value": (_vm.accountDetails.email)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.accountDetails.email = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.$v.accountDetails.email.$invalid && (_vm.$v.accountDetails.email.$dirty || _vm.showStep1Errors)) ? _c('span', {
+    staticClass: "help-block"
+  }, [_vm._v("\r\n                              This field is required\r\n                          ")]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-6 "
+  }, [_c('div', {
+    staticClass: "form-group label-floating padding-right-10",
+    class: {
+      error: _vm.$v.accountDetails.password.$invalid
+    }
+  }, [_c('label', {
+    staticClass: " control-label",
+    attrs: {
+      "for": "password"
+    }
+  }, [_vm._v("Password \r\n                          "), (_vm.$v.accountDetails.password.$invalid) ? _c('span', {
+    staticClass: "required-star"
+  }, [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c('div', {}, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.accountDetails.password),
+      expression: "accountDetails.password"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "password",
+      "type": "password",
+      "name": "password"
+    },
+    domProps: {
+      "value": (_vm.accountDetails.password)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.accountDetails.password = $event.target.value
+      }
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-6 "
+  }, [_c('div', {
+    staticClass: "form-group label-floating padding-right-10",
+    class: {
+      error: _vm.$v.accountDetails.repeatPassword.$invalid
+    }
+  }, [_c('label', {
+    staticClass: " control-label",
+    attrs: {
+      "for": "repeatPassword"
+    }
+  }, [_vm._v("Confirm Password\r\n                          "), (_vm.$v.accountDetails.repeatPassword.$invalid) ? _c('span', {
+    staticClass: "required-star"
+  }, [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c('div', {}, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.accountDetails.repeatPassword),
+      expression: "accountDetails.repeatPassword"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "repeatPassword",
+      "type": "password",
+      "name": "repeatPassword"
+    },
+    domProps: {
+      "value": (_vm.accountDetails.repeatPassword)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.accountDetails.repeatPassword = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.$v.accountDetails.repeatPassword.$invalid && (_vm.$v.accountDetails.repeatPassword.$dirty || _vm.showStep1Errors)) ? _c('span', {
+    staticClass: "help-block"
+  }, [_vm._v("\r\n                              This field is required\r\n                          ")]) : _vm._e()])])])])])], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-2bd5e1aa", module.exports)
   }
 }
 
@@ -17172,6 +17730,686 @@ module.exports = Vue$3;
 
 /***/ }),
 
+/***/ "./node_modules/vuelidate/lib/params.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.pushParams = pushParams;
+exports.popParams = popParams;
+exports.withParams = withParams;
+
+var stack = [];
+
+// exported for tests
+var target = exports.target = null;
+var _setTarget = exports._setTarget = function _setTarget(x) {
+  exports.target = target = x;
+};
+
+function pushParams() {
+  if (target !== null) {
+    stack.push(target);
+  }
+  exports.target = target = {};
+}
+
+function popParams() {
+  var lastTarget = target;
+  var newTarget = exports.target = target = stack.pop() || null;
+  if (newTarget) {
+    if (!Array.isArray(newTarget.$sub)) {
+      newTarget.$sub = [];
+    }
+    newTarget.$sub.push(lastTarget);
+  }
+  return lastTarget;
+}
+
+function addParams(params) {
+  if (typeof params === 'object' && !Array.isArray(params)) {
+    exports.target = target = _extends({}, target, params);
+  } else {
+    throw new Error('params must be an object');
+  }
+}
+
+function withParamsDirect(params, validator) {
+  return withParamsClosure(function (add) {
+    return function () {
+      add(params);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return validator.apply(this, args);
+    };
+  });
+}
+
+function withParamsClosure(closure) {
+  var validator = closure(addParams);
+  return function () {
+    pushParams();
+    try {
+      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      return validator.apply(this, args);
+    } finally {
+      popParams();
+    }
+  };
+}
+
+function withParams(paramsOrClosure, maybeValidator) {
+  if (typeof paramsOrClosure === 'object' && maybeValidator !== undefined) {
+    return withParamsDirect(paramsOrClosure, maybeValidator);
+  }
+  return withParamsClosure(paramsOrClosure);
+}
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/alpha.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = (0, _common.regex)('alpha', /^[a-zA-Z]*$/);
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/alphaNum.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = (0, _common.regex)('alphaNum', /^[a-zA-Z0-9]*$/);
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/and.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = function () {
+  for (var _len = arguments.length, validators = Array(_len), _key = 0; _key < _len; _key++) {
+    validators[_key] = arguments[_key];
+  }
+
+  return (0, _common.withParams)({ type: 'and' }, function () {
+    var _this = this;
+
+    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return validators.length > 0 && validators.reduce(function (valid, fn) {
+      return valid && fn.apply(_this, args);
+    }, true);
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/between.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = function (min, max) {
+  return (0, _common.withParams)({ type: 'between', min: min, max: max }, function (value) {
+    return !(0, _common.req)(value) || (!/\s/.test(value) || value instanceof Date) && +min <= +value && +max >= +value;
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/common.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.regex = exports.ref = exports.len = exports.req = exports.withParams = undefined;
+
+var _withParams = __webpack_require__("./node_modules/vuelidate/lib/withParams.js");
+
+var _withParams2 = _interopRequireDefault(_withParams);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.withParams = _withParams2.default;
+
+// "required" core, used in almost every validator to allow empty values
+
+var req = exports.req = function req(value) {
+  if (Array.isArray(value)) return !!value.length;
+  if (value === undefined || value === null || value === false) {
+    return false;
+  }
+
+  if (value instanceof Date) {
+    // invalid date won't pass
+    return !isNaN(value.getTime());
+  }
+
+  if (typeof value === 'object') {
+    for (var _ in value) {
+      return true;
+    }return false;
+  }
+
+  return !!String(value).length;
+};
+
+// get length in type-agnostic way
+var len = exports.len = function len(value) {
+  if (Array.isArray(value)) return value.length;
+  if (typeof value === 'object') {
+    return Object.keys(value).length;
+  }
+  return String(value).length;
+};
+
+// resolve referenced value
+var ref = exports.ref = function ref(reference, vm, parentVm) {
+  return typeof reference === 'function' ? reference.call(vm, parentVm) : parentVm[reference];
+};
+
+// regex based validator template
+var regex = exports.regex = function regex(type, expr) {
+  return (0, _withParams2.default)({ type: type }, function (value) {
+    return !req(value) || expr.test(value);
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/email.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+var emailRegex = /(^$|^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$)/;
+
+exports.default = (0, _common.regex)('email', emailRegex);
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.maxValue = exports.minValue = exports.and = exports.or = exports.url = exports.sameAs = exports.requiredUnless = exports.requiredIf = exports.required = exports.minLength = exports.maxLength = exports.macAddress = exports.ipAddress = exports.email = exports.between = exports.numeric = exports.alphaNum = exports.alpha = undefined;
+
+var _alpha = __webpack_require__("./node_modules/vuelidate/lib/validators/alpha.js");
+
+var _alpha2 = _interopRequireDefault(_alpha);
+
+var _alphaNum = __webpack_require__("./node_modules/vuelidate/lib/validators/alphaNum.js");
+
+var _alphaNum2 = _interopRequireDefault(_alphaNum);
+
+var _numeric = __webpack_require__("./node_modules/vuelidate/lib/validators/numeric.js");
+
+var _numeric2 = _interopRequireDefault(_numeric);
+
+var _between = __webpack_require__("./node_modules/vuelidate/lib/validators/between.js");
+
+var _between2 = _interopRequireDefault(_between);
+
+var _email = __webpack_require__("./node_modules/vuelidate/lib/validators/email.js");
+
+var _email2 = _interopRequireDefault(_email);
+
+var _ipAddress = __webpack_require__("./node_modules/vuelidate/lib/validators/ipAddress.js");
+
+var _ipAddress2 = _interopRequireDefault(_ipAddress);
+
+var _macAddress = __webpack_require__("./node_modules/vuelidate/lib/validators/macAddress.js");
+
+var _macAddress2 = _interopRequireDefault(_macAddress);
+
+var _maxLength = __webpack_require__("./node_modules/vuelidate/lib/validators/maxLength.js");
+
+var _maxLength2 = _interopRequireDefault(_maxLength);
+
+var _minLength = __webpack_require__("./node_modules/vuelidate/lib/validators/minLength.js");
+
+var _minLength2 = _interopRequireDefault(_minLength);
+
+var _required = __webpack_require__("./node_modules/vuelidate/lib/validators/required.js");
+
+var _required2 = _interopRequireDefault(_required);
+
+var _requiredIf = __webpack_require__("./node_modules/vuelidate/lib/validators/requiredIf.js");
+
+var _requiredIf2 = _interopRequireDefault(_requiredIf);
+
+var _requiredUnless = __webpack_require__("./node_modules/vuelidate/lib/validators/requiredUnless.js");
+
+var _requiredUnless2 = _interopRequireDefault(_requiredUnless);
+
+var _sameAs = __webpack_require__("./node_modules/vuelidate/lib/validators/sameAs.js");
+
+var _sameAs2 = _interopRequireDefault(_sameAs);
+
+var _url = __webpack_require__("./node_modules/vuelidate/lib/validators/url.js");
+
+var _url2 = _interopRequireDefault(_url);
+
+var _or = __webpack_require__("./node_modules/vuelidate/lib/validators/or.js");
+
+var _or2 = _interopRequireDefault(_or);
+
+var _and = __webpack_require__("./node_modules/vuelidate/lib/validators/and.js");
+
+var _and2 = _interopRequireDefault(_and);
+
+var _minValue = __webpack_require__("./node_modules/vuelidate/lib/validators/minValue.js");
+
+var _minValue2 = _interopRequireDefault(_minValue);
+
+var _maxValue = __webpack_require__("./node_modules/vuelidate/lib/validators/maxValue.js");
+
+var _maxValue2 = _interopRequireDefault(_maxValue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.alpha = _alpha2.default;
+exports.alphaNum = _alphaNum2.default;
+exports.numeric = _numeric2.default;
+exports.between = _between2.default;
+exports.email = _email2.default;
+exports.ipAddress = _ipAddress2.default;
+exports.macAddress = _macAddress2.default;
+exports.maxLength = _maxLength2.default;
+exports.minLength = _minLength2.default;
+exports.required = _required2.default;
+exports.requiredIf = _requiredIf2.default;
+exports.requiredUnless = _requiredUnless2.default;
+exports.sameAs = _sameAs2.default;
+exports.url = _url2.default;
+exports.or = _or2.default;
+exports.and = _and2.default;
+exports.minValue = _minValue2.default;
+exports.maxValue = _maxValue2.default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/ipAddress.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = (0, _common.withParams)({ type: 'ipAddress' }, function (value) {
+  if (!(0, _common.req)(value)) {
+    return true;
+  }
+
+  if (typeof value !== 'string') {
+    return false;
+  }
+
+  var nibbles = value.split('.');
+  return nibbles.length === 4 && nibbles.every(nibbleValid);
+});
+
+
+var nibbleValid = function nibbleValid(nibble) {
+  if (nibble.length > 3 || nibble.length === 0) {
+    return false;
+  }
+
+  if (nibble[0] === '0' && nibble !== '0') {
+    return false;
+  }
+
+  if (!nibble.match(/^\d+$/)) {
+    return false;
+  }
+
+  var numeric = +nibble | 0;
+  return numeric >= 0 && numeric <= 255;
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/macAddress.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = function () {
+  var separator = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ':';
+  return (0, _common.withParams)({ type: 'macAddress' }, function (value) {
+    if (!(0, _common.req)(value)) {
+      return true;
+    }
+
+    if (typeof value !== 'string') {
+      return false;
+    }
+
+    var parts = typeof separator === 'string' && separator !== '' ? value.split(separator) : value.length === 12 || value.length === 16 ? value.match(/.{2}/g) : null;
+
+    return parts !== null && (parts.length === 6 || parts.length === 8) && parts.every(hexValid);
+  });
+};
+
+var hexValid = function hexValid(hex) {
+  return hex.toLowerCase().match(/^[0-9a-f]{2}$/);
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/maxLength.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = function (length) {
+  return (0, _common.withParams)({ type: 'maxLength', max: length }, function (value) {
+    return !(0, _common.req)(value) || (0, _common.len)(value) <= length;
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/maxValue.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = function (max) {
+  return (0, _common.withParams)({ type: 'maxValue', max: max }, function (value) {
+    return !(0, _common.req)(value) || (!/\s/.test(value) || value instanceof Date) && +value <= +max;
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/minLength.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = function (length) {
+  return (0, _common.withParams)({ type: 'minLength', min: length }, function (value) {
+    return !(0, _common.req)(value) || (0, _common.len)(value) >= length;
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/minValue.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = function (min) {
+  return (0, _common.withParams)({ type: 'minValue', min: min }, function (value) {
+    return !(0, _common.req)(value) || (!/\s/.test(value) || value instanceof Date) && +value >= +min;
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/numeric.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = (0, _common.regex)('numeric', /^[0-9]*$/);
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/or.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = function () {
+  for (var _len = arguments.length, validators = Array(_len), _key = 0; _key < _len; _key++) {
+    validators[_key] = arguments[_key];
+  }
+
+  return (0, _common.withParams)({ type: 'or' }, function () {
+    var _this = this;
+
+    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return validators.length > 0 && validators.reduce(function (valid, fn) {
+      return valid || fn.apply(_this, args);
+    }, false);
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/required.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = (0, _common.withParams)({ type: 'required' }, _common.req);
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/requiredIf.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = function (prop) {
+  return (0, _common.withParams)({ type: 'requiredIf', prop: prop }, function (value, parentVm) {
+    return (0, _common.ref)(prop, this, parentVm) ? (0, _common.req)(value) : true;
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/requiredUnless.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = function (prop) {
+  return (0, _common.withParams)({ type: 'requiredUnless', prop: prop }, function (value, parentVm) {
+    return !(0, _common.ref)(prop, this, parentVm) ? (0, _common.req)(value) : true;
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/sameAs.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+exports.default = function (equalTo) {
+  return (0, _common.withParams)({ type: 'sameAs', eq: equalTo }, function (value, parentVm) {
+    return value === (0, _common.ref)(equalTo, this, parentVm);
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/url.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__("./node_modules/vuelidate/lib/validators/common.js");
+
+var urlRegex = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/;
+
+exports.default = (0, _common.regex)('url', urlRegex);
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/withParams.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/* istanbul ignore next */
+var withParams =  false ? require('./withParamsBrowser').withParams : __webpack_require__("./node_modules/vuelidate/lib/params.js").withParams;
+
+exports.default = withParams;
+
+/***/ }),
+
 /***/ "./node_modules/vuetify/dist/vuetify.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26643,8 +27881,6 @@ var dictionary = {
 
 };
 
-_veeValidate2.default.Validator.updateDictionary(dictionary);
-
 Vue.use(_veeValidate2.default);
 Vue.use(_vuetify2.default);
 
@@ -26690,7 +27926,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* script */
   __webpack_require__("./node_modules/babel-loader/lib/index.js?cacheDirectory!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Application.vue"),
   /* template */
-  null,
+  __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2bd5e1aa\"}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Application.vue"),
   /* scopeId */
   "data-v-2bd5e1aa",
   /* cssModules */
@@ -26698,6 +27934,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
 )
 Component.options.__file = "C:\\Users\\mokoe\\Documents\\Enigma\\projects\\Econet\\ftth\\resources\\assets\\js\\components\\Application.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Application.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -26752,7 +27989,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/assets/js/admin-app.js");

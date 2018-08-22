@@ -65,9 +65,10 @@ class FtthApplication extends Model
         'name' => 'required',
         'surname' => 'required',
         'email' => 'required',
-        'phoneMobile' => 'required',
+        'phone' => 'required',
         'location' => 'required',
         'package' => 'required',
+        'serviceType' => 'required',
     ];
 
 
