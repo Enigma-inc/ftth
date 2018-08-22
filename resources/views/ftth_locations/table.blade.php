@@ -1,7 +1,8 @@
 <table class="table table-responsive" id="ftthLocations-table">
     <thead>
         <tr>
-            <th>Name</th>
+        <th>Image</th>
+        <th>Name</th>
         <th>Description</th>
             <th colspan="3">Action</th>
         </tr>
@@ -9,6 +10,11 @@
     <tbody>
     @foreach($ftthLocations as $ftthLocation)
         <tr>
+           
+            <td>
+                  @if($ftthLocation->image)
+                 <img class="responsive locations-thumbnail margin-bottom-0" src="{{ Storage::Url($ftthLocation->image)}}"></td> 
+                  @endif
             <td>{!! $ftthLocation->name !!}</td>
             <td>{!! $ftthLocation->description !!}</td>
             <td>

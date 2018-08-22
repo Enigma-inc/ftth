@@ -25,7 +25,8 @@ class FtthLocation extends Model
 
     public $fillable = [
         'name',
-        'description'
+        'description',
+        'image'
     ];
 
     /**
