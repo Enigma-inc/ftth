@@ -9,13 +9,21 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
+ */
 Auth::routes();
+
+Route::get('/', 'PagesController@home');
+Route::get('/application', 'ApplicationsController@create')->name('application.create');
+Route::post('/application/{applicationId}/personal-details/{personalDetailsId}', 'ApplicationsController@addApplication')->name('application.store.personal');
+Route::post('/application/{applicationId}/service-type/{serviceTypeId}', 'ApplicationsController@addServiceType')->name('application.store.servce');
+Route::post('/application/{applicationId}/banking-details/{bankingDetailsId}', 'ApplicationsController@addBankingDetails')->name('application.store.banking');
+Route::get('/ftth-requests', 'SurveysController@index')->name('list.request');
+Route::get('/ftth-requests/create', 'SurveysController@create')->name('create.request');
+Route::post('/ftth-requests', 'SurveysController@store')->name('store.request');
+Route::get('/ftth-areas', 'PagesController@ftthAreas')->name('ftth.areas');
+Route::get('/ftth-requests/export/{type}', 'SurveysController@export')->name('export.excel');
+Route::get('/packages', 'PackagesController@index')->name('packages.list');
+
 
 Route::get('/admin', 'AdminController@index');
 
@@ -28,7 +36,6 @@ Route::get('/admin/locations/{id}/edit', 'LocationController@edit')->name('locat
 Route::get('/admin/locations/{id}', 'LocationController@show')->name('locations.show');
 Route::patch('/admin/locations/{location}/update', 'LocationController@update')->name('locations.update');
 Route::delete('admin/locations/{id}/destroy', 'LocationController@destroy')->name('locations.destroy');
-
                                     //Ftth Locations
 
 Route::get('/admin/ftth-locations', 'FtthLocationController@index')->name('ftthLocations.index');
@@ -53,16 +60,7 @@ Route::get('/admin/contract-packages/{id}/edit', 'PrepaidPackages@editContractPa
 Route::patch('/admin/contract-packages/{prepaidPackage}/update', 'PrepaidPackages@updateContractPackage')->name('contractPackages.update');
 Route::post('/admin/contract-packages/{id}/destroy', 'PrepaidPackages@destroyContractPackage')->name('contractPackages.destroy');
 
-Route::get('/application', 'ApplicationsController@create')->name('application.create');
-Route::post('/application/{applicationId}/personal-details/{personalDetailsId}', 'ApplicationsController@addApplication')->name('application.store.personal');
-Route::post('/application/{applicationId}/service-type/{serviceTypeId}', 'ApplicationsController@addServiceType')->name('application.store.servce');
-Route::post('/application/{applicationId}/banking-details/{bankingDetailsId}', 'ApplicationsController@addBankingDetails')->name('application.store.banking');
-Route::get('/ftth-requests', 'SurveysController@index')->name('list.request');
-Route::get('/ftth-requests/create', 'SurveysController@create')->name('create.request');
-Route::post('/ftth-requests', 'SurveysController@store')->name('store.request');
-Route::get('/ftth-areas', 'SurveysController@ftthAreas')->name('ftth.areas');
-Route::get('/ftth-requests/export/{type}', 'SurveysController@export')->name('export.excel');
-Route::get('/packages','PackagesController@index')->name('packages.list');
+
 
 
                                      //package lookup
@@ -77,3 +75,5 @@ Route::delete('/admin/packages/{id}/destroy', 'PackagesLookupController@destroy'
 //Route::resource('ftthLocations', 'FtthLocationController');
 //Route::resource('locations', 'LocationController');
 //Route::resource('packagesLookups', 'PackagesLookupController');
+
+Route::resource('ftthApplications', 'FtthApplicationController');

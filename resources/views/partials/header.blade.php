@@ -34,7 +34,7 @@
         </li>
         <li>
             <a href="{{route('application.create')}}">
-                <i class="material-icons">assignment_turned_in</i> Apply For FTTH
+                <i class="material-icons">assignment_turned_in</i> Apply
             </a>
         </li>
 

@@ -1612,280 +1612,328 @@ module.exports = {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
+
+var _accountDetails;
 
 var _validators = __webpack_require__("./node_modules/vuelidate/lib/validators/index.js");
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 exports.default = {
-    data: function data() {
-        return {
-            currentStep: 1,
-            packageOptions: [],
-            applicationMeta: {
-                applicationId: 0,
-                personalDetailsId: 0,
-                serviceTypeId: 0,
-                bankingDetailsId: 0
-            },
-            personalDetails: {
-                title: '',
-                name: '',
-                surname: '',
-                email: '',
-                phoneMobile: '',
-                phoneHome: '',
-                phoneOffice: '',
-                postalAddress: '',
-                physicalAddress: '',
-                passport: '',
-                location: ''
+  data: function data() {
+    return {
+      showStep1Errors: false,
+      showStep2Errors: false,
+      showStep3Errors: false,
+      accountTypes: ["Cheque", "Savings"],
+      packageOptions: [],
+      selectedPackageOption: "",
+      locations: [],
+      selectedLocation: "",
+      applicationMeta: {
+        applicationId: 0,
+        personalDetailsId: 0,
+        serviceTypeId: 0,
+        bankingDetailsId: 0
+      },
+      basicDetails: {
+        name: "",
+        surname: "",
+        phoneMobile: "",
+        location: "",
+        package: ""
+      },
+      accountDetails: {
+        email: "",
+        password: "",
+        repeatPassword: ""
+      }
+    };
+  },
 
-            },
-            serviceTypeDetails: {
-                serviceType: 'contract',
-                package: '',
-                adslCustomer: false,
-                adslNumber: ''
-
-            },
-            bankingDetails: {
-                bankName: '',
-                branchName: '',
-                branchCode: '',
-                accountHolderName: '',
-                accountType: '',
-                accountNumber: ''
-            }
-        };
+  validations: {
+    basicDetails: {
+      name: { required: _validators.required },
+      surname: { required: _validators.required },
+      phoneMobile: { required: _validators.required },
+      package: { required: _validators.required },
+      location: { required: _validators.required }
     },
+    accountDetails: (_accountDetails = {
+      email: { required: _validators.required },
+      password: { required: _validators.required }
+    }, _defineProperty(_accountDetails, "password", {
+      required: _validators.required,
+      minLength: (0, _validators.minLength)(6)
+    }), _defineProperty(_accountDetails, "repeatPassword", {
+      sameAsPassword: (0, _validators.sameAs)("password")
+    }), _accountDetails)
+  },
+  mounted: function mounted() {
+    console.log(this.getParameterByName("package"));
+    this.getLookups();
+  },
 
-    validations: {
-        personalDetails: {
-            title: { required: _validators.required },
-            name: { required: _validators.required },
-            surname: { required: _validators.required },
-            email: { required: _validators.required },
-            phoneMobile: { required: _validators.required },
-            phoneHome: '',
-            phoneOffice: '',
-            postalAddress: { required: _validators.required },
-            physicalAddress: { required: _validators.required },
-            passport: { required: _validators.required },
-            location: { required: _validators.required }
+  methods: {
+    placeApplication: function placeApplication() {
+      axios.post("./api/place-application", Object.assign({}, this.basicDetails, this.accountDetails)).then(function (response) {
+        console.log(response);
+      });
+    },
+    validateStep1: function validateStep1($v) {
+      this.showStep1Errors = true;
+      return true;
+      //   return (
+      //     !$v.basicDetails.name.$invalid &&
+      //     !$v.basicDetails.surname.$invalid &&
+      //     !$v.basicDetails.email.$invalid &&
+      //     !$v.basicDetails.phoneMobile.$invalid &&
+      //     !$v.basicDetails.location.$invalid
+      //   );
+    },
+    validateStep2: function validateStep2($v) {
+      this.showStep2Errors = true;
 
+      //   return !$v.basicDetails.package.$invalid;
+    },
+    submitPersonalDetails: function submitPersonalDetails(scope) {
+      var _this = this;
+
+      axios.post("./application/" + this.applicationMeta.applicationId + "/personal-details/" + this.applicationMeta.personalDetailsId, this.basicDetails).then(function (res) {
+        EventBus.$emit("NEXT_STEP_MESSAGE", {
+          message: "Pick your prefered package on the next step"
+        });
+        _this.applicationMeta.applicationId = res.data.application.id;
+        _this.applicationMeta.personalDetailsId = res.data.basicDetails.id;
+        _this.currentStep = 2;
+      }).catch(function (error) {
+        EventBus.$emit("SUBMISION_ERROR");
+      });
+    },
+    getPackagesFromServer: function getPackagesFromServer() {
+      var _this2 = this;
+
+      axios.get("/packages?type=").then(function (resp) {
+        _this2.packageOptions = resp.data;
+        _this2.setSelectedPackgeFromParam();
+      });
+    },
+    getFtthLocationsFromServer: function getFtthLocationsFromServer() {
+      var _this3 = this;
+
+      axios.get("/api/ftth-locations").then(function (resp) {
+        _this3.locations = resp.data;
+        _this3.setSelectedLocationFromParam();
+      });
+    },
+    getLookups: function getLookups() {
+      this.getPackagesFromServer();
+      this.getFtthLocationsFromServer();
+    },
+    getParameterByName: function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return "";
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    },
+    setSelectedPackgeFromParam: function setSelectedPackgeFromParam() {
+      var _this4 = this;
+
+      this.packageOptions.forEach(function (item) {
+        var packageParam = _this4.getParameterByName("package");
+        if (packageParam) {
+          _this4.selectedPackageOption = _this4.packageOptions.filter(function (pkg) {
+            return pkg.id == packageParam;
+          })[0];
         }
+      });
     },
-    mounted: function mounted() {
-        this.getPackagesFromServer();
-    },
+    setSelectedLocationFromParam: function setSelectedLocationFromParam() {
+      var _this5 = this;
 
-    methods: {
-        submitPersonalDetails: function submitPersonalDetails(scope) {
-            var _this = this;
-
-            this.$validator.validateAll(scope).then(function () {
-                axios.post('./application/' + _this.applicationMeta.applicationId + '/personal-details/' + _this.applicationMeta.personalDetailsId, _this.personalDetails).then(function (res) {
-                    EventBus.$emit('NEXT_STEP_MESSAGE', { 'message': 'Pick your prefered package on the next step' });
-                    _this.applicationMeta.applicationId = res.data.application.id;
-                    _this.applicationMeta.personalDetailsId = res.data.personalDetails.id;
-                    _this.currentStep = 2;
-                }).catch(function (error) {
-                    EventBus.$emit('SUBMISION_ERROR');
-                });
-            }).catch(function () {
-                EventBus.$emit('VALIDATION_ERROR');
-            });
-        },
-        submitServiceType: function submitServiceType(scope) {
-            var _this2 = this;
-
-            if (!this.serviceTypeDetails.adslNumber && this.serviceTypeDetails.adslCustomer) {
-                EventBus.$emit('VALIDATION_ERROR');
-            } else {
-
-                this.$validator.validateAll(scope).then(function () {
-                    axios.post('./application/' + _this2.applicationMeta.applicationId + '/service-type/' + _this2.applicationMeta.serviceTypeId, _this2.serviceTypeDetails).then(function (res) {
-                        EventBus.$emit('NEXT_STEP_MESSAGE', { 'message': 'Fill in your banking details on the next step.' });
-                        _this2.applicationMeta.applicationId = res.data.application.id;
-                        _this2.applicationMeta.serviceTypeId = res.data.serviceType.id;
-                        _this2.currentStep = 3;
-                    }).catch(function (error) {
-                        EventBus.$emit('SUBMISION_ERROR');
-                    });
-                }).catch(function () {
-                    EventBus.$emit('VALIDATION_ERROR');
-                });
-            }
-        },
-        submitBankingDetails: function submitBankingDetails(scope) {
-            var _this3 = this;
-
-            this.$validator.validateAll(scope).then(function () {
-                axios.post('./application/' + _this3.applicationMeta.applicationId + '/banking-details/' + _this3.applicationMeta.bankingDetailsId, _this3.bankingDetails).then(function (res) {
-                    EventBus.$emit('APPLICATION_COMPLETE_MESSAGE');
-                    _this3.applicationMeta.applicationId = res.data.application.id;
-                    _this3.applicationMeta.bankingDetailsId = res.data.bankingDetails.id;
-                    _this3.currentStep = 4;
-                }).catch(function (error) {
-                    EventBus.$emit('SUBMISION_ERROR');
-                });
-            }).catch(function () {
-                EventBus.$emit('VALIDATION_ERROR');
-            });
-        },
-        getPackagesFromServer: function getPackagesFromServer() {
-            var _this4 = this;
-
-            axios.get('/packages?type=' + this.serviceTypeDetails.serviceType).then(function (resp) {
-                _this4.packageOptions = resp.data;
-                console.log(_this4.packageOptions);
-            });
+      this.packageOptions.forEach(function (item) {
+        var locationParam = _this5.getParameterByName("location");
+        if (locationParam) {
+          _this5.selectedLocation = _this5.locations.filter(function (loc) {
+            return loc.id == locationParam;
+          })[0];
         }
-    },
-    computed: {
-        rules: function rules() {
-            return this.serviceTypeDetails.adslCustomer ? 'required' : '';
-        }
-    },
-    watch: {
-        'serviceTypeDetails.serviceType': function serviceTypeDetailsServiceType() {
-            this.getPackagesFromServer();
-        }
+      });
     }
-
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+  },
+  computed: {
+    rules: function rules() {
+      return this.basicDetails.adslCustomer ? "required" : "";
+    }
+  },
+  watch: {
+    selectedLocation: function selectedLocation(newValue, oldValue) {
+      if (newValue) {
+        this.basicDetails.location = newValue.id;
+      } else {
+        this.basicDetails.location = oldValue.id;
+      }
+    },
+    selectedPackageOption: function selectedPackageOption(newValue, oldValue) {
+      if (newValue) {
+        this.basicDetails.package = newValue.id;
+      } else {
+        this.basicDetails.package = oldValue.id;
+      }
+    }
+  }
+};
 
 /***/ }),
 
@@ -1965,7 +2013,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.form-group.error label.control-label[data-v-2bd5e1aa],\n.form-group.error\n.help-block[data-v-2bd5e1aa] {\n  color: #f44336;\n}\na[data-v-2bd5e1aa], a[data-v-2bd5e1aa]:hover, a[data-v-2bd5e1aa]:focus {\n  color: #b4cff9;\n}\n.container[data-v-2bd5e1aa] {\n  padding-top: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.form-group.error label.control-label[data-v-2bd5e1aa],\n.form-group.error .help-block[data-v-2bd5e1aa] {\n  color: #f44336;\n}\na[data-v-2bd5e1aa],\na[data-v-2bd5e1aa]:hover,\na[data-v-2bd5e1aa]:focus {\n  color: #b4cff9;\n}\n.container[data-v-2bd5e1aa] {\n  padding-top: 20px;\n}\n.section-container .section-title[data-v-2bd5e1aa] {\n  font-weight: 600;\n  font-size: 1.5rem;\n  color: rgba(0, 0, 0, 0.5);\n  margin-bottom: 5px;\n  margin-top: 15px;\n}\n.section-container .item-container[data-v-2bd5e1aa] {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: justify;\n      justify-content: space-between;\n  -ms-flex-align: center;\n      align-items: center;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.2);\n  padding: 5px 0;\n}\n.section-container .item-container .item-title[data-v-2bd5e1aa] {\n    font-size: 1.2rem;\n    font-weight: 300;\n    color: rgba(0, 0, 0, 0.5);\n}\n.section-container .item-container .item-content[data-v-2bd5e1aa] {\n    font-size: 1.2rem;\n    font-weight: 500;\n    color: rgba(0, 0, 0, 0.6);\n}\n", ""]);
 
 // exports
 
@@ -11330,32 +11378,44 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('form-wizard', [_c('tab-content', {
+  return _c('form-wizard', {
     attrs: {
-      "title": "Personal details"
+      "title": "Complete 2 Easy Steps Below",
+      "subtitle": "",
+      "finishButtonText": 'Submit',
+      "color": '#eb443b'
+    },
+    on: {
+      "on-complete": function($event) {
+        _vm.placeApplication()
+      }
+    }
+  }, [_c('tab-content', {
+    attrs: {
+      "title": "Package & Location Selection"
     }
   }, [_c('div', {
-    staticClass: "col-xs-12"
+    staticClass: "row"
   }, [_c('div', {
-    staticClass: "col-xs-12 col-md-6 "
+    staticClass: "col-xs-12 col-md-4 "
   }, [_c('div', {
     staticClass: "form-group label-floating padding-right-10",
     class: {
-      error: _vm.$v.personalDetails.name.$invalid
+      error: _vm.$v.basicDetails.name.$invalid
     }
   }, [_c('label', {
     staticClass: " control-label",
     attrs: {
       "for": "name"
     }
-  }, [_vm._v("Name \r\n                                "), (_vm.$v.personalDetails.name.$invalid) ? _c('span', {
+  }, [_vm._v("Name \r\n                                "), (_vm.$v.basicDetails.name.$invalid) ? _c('span', {
     staticClass: "required-star"
   }, [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c('div', {}, [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model.trim",
-      value: (_vm.personalDetails.name),
-      expression: "personalDetails.name",
+      value: (_vm.basicDetails.name),
+      expression: "basicDetails.name",
       modifiers: {
         "trim": true
       }
@@ -11367,39 +11427,41 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "name"
     },
     domProps: {
-      "value": (_vm.personalDetails.name)
+      "value": (_vm.basicDetails.name)
     },
     on: {
       "input": [function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.personalDetails, "name", $event.target.value.trim())
+        _vm.$set(_vm.basicDetails, "name", $event.target.value.trim())
       }, function($event) {
-        _vm.$v.personalDetails.name.$touch()
+        _vm.$v.basicDetails.name.$touch()
       }],
       "blur": function($event) {
         _vm.$forceUpdate()
       }
     }
-  }), _vm._v(" "), (_vm.$v.personalDetails.name.$invalid && _vm.$v.personalDetails.name.$dirty) ? _c('span', {
+  }), _vm._v(" "), (_vm.$v.basicDetails.name.$invalid && (_vm.$v.basicDetails.name.$dirty || _vm.showStep1Errors)) ? _c('span', {
     staticClass: "help-block"
-  }, [_vm._v("\r\n                                    This field is required\r\n                                ")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\r\n                                    This field is required\r\n                                ")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-4"
+  }, [_c('div', {
     staticClass: "form-group label-floating padding-right-10",
     class: {
-      error: _vm.$v.personalDetails.surname.$invalid
+      error: _vm.$v.basicDetails.surname.$invalid
     }
   }, [_c('label', {
     staticClass: " control-label",
     attrs: {
       "for": "surname"
     }
-  }, [_vm._v("Surname"), (_vm.$v.personalDetails.surname.$invalid) ? _c('span', {
+  }, [_vm._v("Surname"), (_vm.$v.basicDetails.surname.$invalid) ? _c('span', {
     staticClass: "required-star"
   }, [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c('div', {}, [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model.trim",
-      value: (_vm.personalDetails.surname),
-      expression: "personalDetails.surname",
+      value: (_vm.basicDetails.surname),
+      expression: "basicDetails.surname",
       modifiers: {
         "trim": true
       }
@@ -11411,39 +11473,41 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "surname"
     },
     domProps: {
-      "value": (_vm.personalDetails.surname)
+      "value": (_vm.basicDetails.surname)
     },
     on: {
       "input": [function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.personalDetails, "surname", $event.target.value.trim())
+        _vm.$set(_vm.basicDetails, "surname", $event.target.value.trim())
       }, function($event) {
-        _vm.$v.personalDetails.surname.$touch()
+        _vm.$v.basicDetails.surname.$touch()
       }],
       "blur": function($event) {
         _vm.$forceUpdate()
       }
     }
-  }), _vm._v(" "), (_vm.$v.personalDetails.surname.$invalid && _vm.$v.personalDetails.surname.$dirty) ? _c('span', {
+  }), _vm._v(" "), (_vm.$v.basicDetails.surname.$invalid && (_vm.$v.basicDetails.surname.$dirty || _vm.showStep1Errors)) ? _c('span', {
     staticClass: "help-block"
-  }, [_vm._v("\r\n                                        This field is required \r\n                                     ")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\r\n                                        This field is required \r\n                                     ")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-4"
+  }, [_c('div', {
     staticClass: "form-group label-floating padding-right-10",
     class: {
-      error: _vm.errors.has('form-personal.phoneMobile')
+      error: _vm.$v.basicDetails.phoneMobile.$invalid
     }
   }, [_c('label', {
     staticClass: " control-label",
     attrs: {
       "for": "phone-mobile"
     }
-  }, [_vm._v("Cellphone"), _c('span', {
+  }, [_vm._v("Phone"), _c('span', {
     staticClass: "required-star"
   }, [_vm._v("*")])]), _vm._v(" "), _c('div', {}, [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model.trim",
-      value: (_vm.personalDetails.phoneMobile),
-      expression: "personalDetails.phoneMobile",
+      value: (_vm.basicDetails.phoneMobile),
+      expression: "basicDetails.phoneMobile",
       modifiers: {
         "trim": true
       }
@@ -11455,105 +11519,114 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "phoneMobile"
     },
     domProps: {
-      "value": (_vm.personalDetails.phoneMobile)
+      "value": (_vm.basicDetails.phoneMobile)
     },
     on: {
       "input": [function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.personalDetails, "phoneMobile", $event.target.value.trim())
+        _vm.$set(_vm.basicDetails, "phoneMobile", $event.target.value.trim())
       }, function($event) {
-        _vm.$v.personalDetails.phoneMobile.$touch()
+        _vm.$v.basicDetails.phoneMobile.$touch()
       }],
       "blur": function($event) {
         _vm.$forceUpdate()
       }
     }
-  }), _vm._v(" "), _c('span', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.errors.has('form-personal.phoneMobile')),
-      expression: "errors.has('form-personal.phoneMobile')"
-    }],
+  }), _vm._v(" "), (_vm.$v.basicDetails.phoneMobile.$invalid && (_vm.$v.basicDetails.phoneMobile.$dirty || _vm.showStep1Errors)) ? _c('span', {
     staticClass: "help-block"
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group label-floating padding-right-10 ",
-    class: {
-      error: _vm.errors.has('form-personal.passport')
-    }
-  }, [_c('label', {
-    staticClass: " control-label",
-    attrs: {
-      "for": "passport"
-    }
-  }, [_vm._v("Pasport/ID Number"), _c('span', {
-    staticClass: "required-star"
-  }, [_vm._v("*")])]), _vm._v(" "), _c('div', {}, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model.trim",
-      value: (_vm.personalDetails.passport),
-      expression: "personalDetails.passport",
-      modifiers: {
-        "trim": true
-      }
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "id": "passport",
-      "type": "text",
-      "name": "passport"
-    },
-    domProps: {
-      "value": (_vm.personalDetails.passport)
-    },
-    on: {
-      "input": [function($event) {
-        if ($event.target.composing) { return; }
-        _vm.$set(_vm.personalDetails, "passport", $event.target.value.trim())
-      }, function($event) {
-        _vm.$v.personalDetails.passport.$touch()
-      }],
-      "blur": function($event) {
-        _vm.$forceUpdate()
-      }
-    }
-  }), _vm._v(" "), _c('span', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.errors.has('form-personal.passport')),
-      expression: "errors.has('form-personal.passport')"
-    }],
-    staticClass: "help-block"
-  })])])]), _vm._v(" "), _c('div', {
+  }, [_c('span', [_vm._v("This field is required")])]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
     staticClass: "col-xs-12 col-md-6"
   }, [_c('div', {
     staticClass: "form-group  label-floating padding-right-10",
     class: {
-      error: _vm.errors.has('form-personal.email')
+      error: _vm.$v.basicDetails.package.$invalid
     }
   }, [_c('label', {
     staticClass: "control-label",
+    staticStyle: {
+      "text-transform": "capitalize"
+    },
+    attrs: {
+      "for": "package"
+    }
+  }, [_vm._v("Select " + _vm._s(_vm.basicDetails.serviceType) + " package"), _c('span', {
+    staticClass: "required-star"
+  }, [_vm._v("*")])]), _vm._v(" "), _c('div', {}, [_c('v-select', {
+    attrs: {
+      "label": "data_bundle",
+      "options": _vm.packageOptions
+    },
+    scopedSlots: _vm._u([{
+      key: "option",
+      fn: function(option) {
+        return [_c('span', [_vm._v(_vm._s(option.data_bundle))]), _vm._v(" "), _c('span', [_vm._v("|")]), _vm._v(" "), _c('span', [_vm._v(" M" + _vm._s(option.price))])]
+      }
+    }]),
+    model: {
+      value: (_vm.selectedPackageOption),
+      callback: function($$v) {
+        _vm.selectedPackageOption = $$v
+      },
+      expression: "selectedPackageOption"
+    }
+  }), _vm._v(" "), (_vm.$v.basicDetails.package.$invalid && _vm.showStep2Errors) ? _c('span', {
+    staticClass: "help-block"
+  }, [_c('span', [_vm._v("Select Package ")])]) : _vm._e()], 1)])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group label-floating padding-right-10 ",
+    class: {
+      error: _vm.$v.basicDetails.location.$invalid
+    }
+  }, [_c('label', {
+    staticClass: "control-label ",
+    attrs: {
+      "for": "location"
+    }
+  }, [_vm._v("Select Your Area"), _c('span', {
+    staticClass: "required-star"
+  }, [_vm._v("*")])]), _vm._v(" "), _c('div', {}, [_c('v-select', {
+    attrs: {
+      "label": "name",
+      "options": _vm.locations
+    },
+    model: {
+      value: (_vm.selectedLocation),
+      callback: function($$v) {
+        _vm.selectedLocation = $$v
+      },
+      expression: "selectedLocation"
+    }
+  }), _vm._v(" "), (_vm.$v.basicDetails.location.$invalid && (_vm.$v.basicDetails.location.$dirty || _vm.showStep1Errors)) ? _c('span', {
+    staticClass: "help-block"
+  }, [_c('span', [_vm._v("Select your Area")])]) : _vm._e()], 1)])])])]), _vm._v(" "), _c('tab-content', {
+    attrs: {
+      "title": "Account"
+    }
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-12 "
+  }, [_c('div', {
+    staticClass: "form-group label-floating padding-right-10",
+    class: {
+      error: _vm.$v.accountDetails.email.$invalid
+    }
+  }, [_c('label', {
+    staticClass: " control-label",
     attrs: {
       "for": "email"
     }
-  }, [_vm._v("Email"), _c('span', {
+  }, [_vm._v("Email \r\n                          "), (_vm.$v.accountDetails.email.$invalid) ? _c('span', {
     staticClass: "required-star"
-  }, [_vm._v("*")])]), _vm._v(" "), _c('div', {}, [_c('input', {
+  }, [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c('div', {}, [_c('input', {
     directives: [{
       name: "model",
-      rawName: "v-model.trim",
-      value: (_vm.personalDetails.email),
-      expression: "personalDetails.email",
-      modifiers: {
-        "trim": true
-      }
-    }, {
-      name: "validate",
-      rawName: "v-validate",
-      value: ('required|email'),
-      expression: "'required|email'"
+      rawName: "v-model",
+      value: (_vm.accountDetails.email),
+      expression: "accountDetails.email"
     }],
     staticClass: "form-control",
     attrs: {
@@ -11562,216 +11635,93 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "email"
     },
     domProps: {
-      "value": (_vm.personalDetails.email)
+      "value": (_vm.accountDetails.email)
     },
     on: {
-      "input": [function($event) {
+      "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.personalDetails, "email", $event.target.value.trim())
-      }, function($event) {
-        _vm.$v.personalDetails.email.$touch()
-      }],
-      "blur": function($event) {
-        _vm.$forceUpdate()
+        _vm.$set(_vm.accountDetails, "email", $event.target.value)
       }
     }
-  }), _vm._v(" "), _c('span', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.errors.has('form-personal.email')),
-      expression: "errors.has('form-personal.email')"
-    }],
+  }), _vm._v(" "), (_vm.$v.accountDetails.email.$invalid && (_vm.$v.accountDetails.email.$dirty || _vm.showStep1Errors)) ? _c('span', {
     staticClass: "help-block"
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group label-floating padding-right-10 "
-  }, [_c('label', {
-    staticClass: " control-label",
-    attrs: {
-      "for": "phone-home"
-    }
-  }, [_vm._v("Home Phone")]), _vm._v(" "), _c('div', {}, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model.trim",
-      value: (_vm.personalDetails.phoneHome),
-      expression: "personalDetails.phoneHome",
-      modifiers: {
-        "trim": true
-      }
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "id": "phone-home",
-      "type": "text",
-      "name": "phone-home"
-    },
-    domProps: {
-      "value": (_vm.personalDetails.phoneHome)
-    },
-    on: {
-      "input": [function($event) {
-        if ($event.target.composing) { return; }
-        _vm.$set(_vm.personalDetails, "phoneHome", $event.target.value.trim())
-      }, function($event) {
-        _vm.$v.personalDetails.phoneHome.$touch()
-      }],
-      "blur": function($event) {
-        _vm.$forceUpdate()
-      }
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group label-floating padding-right-10"
-  }, [_c('label', {
-    staticClass: " control-label",
-    attrs: {
-      "for": "phone-office"
-    }
-  }, [_vm._v("Office Phone")]), _vm._v(" "), _c('div', {}, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model.trim",
-      value: (_vm.personalDetails.phoneOffice),
-      expression: "personalDetails.phoneOffice",
-      modifiers: {
-        "trim": true
-      }
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "id": "phone-office",
-      "type": "text",
-      "name": "phone-office"
-    },
-    domProps: {
-      "value": (_vm.personalDetails.phoneOffice)
-    },
-    on: {
-      "input": [function($event) {
-        if ($event.target.composing) { return; }
-        _vm.$set(_vm.personalDetails, "phoneOffice", $event.target.value.trim())
-      }, function($event) {
-        _vm.$v.personalDetails.phoneOffice.$touch()
-      }],
-      "blur": function($event) {
-        _vm.$forceUpdate()
-      }
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-md-12"
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12"
+  }, [_vm._v("\r\n                              This field is required\r\n                          ")]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
   }, [_c('div', {
-    staticClass: "col-md-6"
+    staticClass: "col-xs-12 col-md-6 "
   }, [_c('div', {
     staticClass: "form-group label-floating padding-right-10",
     class: {
-      error: _vm.errors.has('form-personal.postalAddress')
+      error: _vm.$v.accountDetails.password.$invalid
     }
   }, [_c('label', {
     staticClass: " control-label",
     attrs: {
-      "for": "postal-address"
+      "for": "password"
     }
-  }, [_vm._v("Postal Address"), _c('span', {
+  }, [_vm._v("Password \r\n                          "), (_vm.$v.accountDetails.password.$invalid) ? _c('span', {
     staticClass: "required-star"
-  }, [_vm._v("*")])]), _vm._v(" "), _c('textarea', {
+  }, [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c('div', {}, [_c('input', {
     directives: [{
       name: "model",
-      rawName: "v-model.trim",
-      value: (_vm.personalDetails.postalAddress),
-      expression: "personalDetails.postalAddress",
-      modifiers: {
-        "trim": true
-      }
+      rawName: "v-model",
+      value: (_vm.accountDetails.password),
+      expression: "accountDetails.password"
     }],
     staticClass: "form-control",
     attrs: {
-      "id": "postal-address",
-      "rows": "5"
+      "id": "password",
+      "type": "password",
+      "name": "password"
     },
     domProps: {
-      "value": (_vm.personalDetails.postalAddress)
+      "value": (_vm.accountDetails.password)
     },
     on: {
-      "input": [function($event) {
+      "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.personalDetails, "postalAddress", $event.target.value.trim())
-      }, function($event) {
-        _vm.$v.personalDetails.postalAddress.$touch()
-      }],
-      "blur": function($event) {
-        _vm.$forceUpdate()
+        _vm.$set(_vm.accountDetails, "password", $event.target.value)
       }
     }
-  }), _vm._v(" "), _c('span', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.errors.has('form-personal.postalAddress')),
-      expression: "errors.has('form-personal.postalAddress')"
-    }],
-    staticClass: "help-block"
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-6"
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-6 "
   }, [_c('div', {
-    staticClass: "form-group label-floating padding-right-10 ",
+    staticClass: "form-group label-floating padding-right-10",
     class: {
-      error: _vm.errors.has('form-personal.physicalAddress')
+      error: _vm.$v.accountDetails.repeatPassword.$invalid
     }
   }, [_c('label', {
     staticClass: " control-label",
     attrs: {
-      "for": "physical-address"
+      "for": "repeatPassword"
     }
-  }, [_vm._v("Physical Address"), _c('span', {
+  }, [_vm._v("Confirm Password\r\n                          "), (_vm.$v.accountDetails.repeatPassword.$invalid) ? _c('span', {
     staticClass: "required-star"
-  }, [_vm._v("*")])]), _vm._v(" "), _c('textarea', {
+  }, [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c('div', {}, [_c('input', {
     directives: [{
       name: "model",
-      rawName: "v-model.trim",
-      value: (_vm.personalDetails.physicalAddress),
-      expression: "personalDetails.physicalAddress",
-      modifiers: {
-        "trim": true
-      }
+      rawName: "v-model",
+      value: (_vm.accountDetails.repeatPassword),
+      expression: "accountDetails.repeatPassword"
     }],
     staticClass: "form-control",
     attrs: {
-      "id": "physical-address",
-      "rows": "5"
+      "id": "repeatPassword",
+      "type": "password",
+      "name": "repeatPassword"
     },
     domProps: {
-      "value": (_vm.personalDetails.physicalAddress)
+      "value": (_vm.accountDetails.repeatPassword)
     },
     on: {
-      "input": [function($event) {
+      "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.personalDetails, "physicalAddress", $event.target.value.trim())
-      }, function($event) {
-        _vm.$v.personalDetails.physicalAddress.$touch()
-      }],
-      "blur": function($event) {
-        _vm.$forceUpdate()
+        _vm.$set(_vm.accountDetails, "repeatPassword", $event.target.value)
       }
     }
-  }), _vm._v(" "), _c('span', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.errors.has('form-personal.physicalAddress')),
-      expression: "errors.has('form-personal.physicalAddress')"
-    }],
+  }), _vm._v(" "), (_vm.$v.accountDetails.repeatPassword.$invalid && (_vm.$v.accountDetails.repeatPassword.$dirty || _vm.showStep1Errors)) ? _c('span', {
     staticClass: "help-block"
-  })])])]), _vm._v(" "), _c('pre', [_vm._v(_vm._s(_vm.$v.personalDetails))])])]), _vm._v(" "), _c('tab-content', {
-    attrs: {
-      "title": "Additional Info"
-    }
-  }, [_vm._v("\r\n                                My second tab content\r\n        ")]), _vm._v(" "), _c('tab-content', {
-    attrs: {
-      "title": "Last step"
-    }
-  }, [_vm._v("\r\n                                Yuhuuu! This seems pretty damn simple\r\n        ")])], 1)
+  }, [_vm._v("\r\n                              This field is required\r\n                          ")]) : _vm._e()])])])])])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -34841,8 +34791,6 @@ var dictionary = {
     }
 
 };
-
-_veeValidate2.default.Validator.updateDictionary(dictionary);
 
 Vue.use(_veeValidate2.default);
 Vue.use(_vuetify2.default);

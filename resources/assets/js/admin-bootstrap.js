@@ -17,7 +17,6 @@ const dictionary = {
 
 };
 
-VeeValidate.Validator.updateDictionary(dictionary);
 
 Vue.use(VeeValidate);
 Vue.use(Vuetify);

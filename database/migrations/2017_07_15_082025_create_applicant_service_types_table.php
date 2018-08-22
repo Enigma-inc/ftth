@@ -20,6 +20,7 @@ class CreateApplicantServiceTypesTable extends Migration
             $table->boolean('is_adsl_customer')->default(0);
             $table->string('adsl_number')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -1,280 +1,369 @@
 <template>
-<form-wizard>
-        <tab-content title="Personal details">
-            <div class="col-xs-12">
-                <div class="col-xs-12 col-md-6 ">
-                        <div class="form-group label-floating padding-right-10" :class="{ error: $v.personalDetails.name.$invalid }">
+<form-wizard title="Complete 2 Easy Steps Below" subtitle=""
+             :finishButtonText="'Submit'" :color="'#eb443b'" 
+              @on-complete="placeApplication()"> 
+        <tab-content title="Package & Location Selection" >
+            <div class="row">
+                    <div class="col-xs-12 col-md-4 ">
+                        <div class="form-group label-floating padding-right-10" :class="{ error: $v.basicDetails.name.$invalid }">
                             <label for="name" class=" control-label">Name 
-                                <span class="required-star" v-if="$v.personalDetails.name.$invalid ">*</span></label>
+                                <span class="required-star" v-if="$v.basicDetails.name.$invalid ">*</span></label>
     
                             <div class="">
-                                <input  id="name" type="text" name="name" class="form-control" @input="$v.personalDetails.name.$touch()" v-model.trim="personalDetails.name"  >
-                                <span class="help-block"  v-if="$v.personalDetails.name.$invalid && $v.personalDetails.name.$dirty">
+                                <input  id="name" type="text" name="name" class="form-control" @input="$v.basicDetails.name.$touch()" v-model.trim="basicDetails.name"  >
+                                <span class="help-block"  v-if="$v.basicDetails.name.$invalid && ($v.basicDetails.name.$dirty || showStep1Errors)">
                                     This field is required
                                 </span>
                             </div>
-                        </div>
+                        </div>                       
     
-                        <div class="form-group label-floating padding-right-10" :class="{ error: $v.personalDetails.surname.$invalid}">
-                            <label for="surname" class=" control-label">Surname<span class="required-star" v-if="$v.personalDetails.surname.$invalid">*</span></label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                            
+                        <div class="form-group label-floating padding-right-10" :class="{ error: $v.basicDetails.surname.$invalid}">
+                            <label for="surname" class=" control-label">Surname<span class="required-star" v-if="$v.basicDetails.surname.$invalid">*</span></label>
     
                             <div class="">
-                                <input id="surname" type="text" class="form-control" name="surname"  @input="$v.personalDetails.surname.$touch()" v-model.trim="personalDetails.surname"  > 
-                                    <span class="help-block" v-if="$v.personalDetails.surname.$invalid && $v.personalDetails.surname.$dirty">
+                                <input id="surname" type="text" class="form-control" name="surname"  @input="$v.basicDetails.surname.$touch()" v-model.trim="basicDetails.surname"  > 
+                                    <span class="help-block" v-if="$v.basicDetails.surname.$invalid && ($v.basicDetails.surname.$dirty || showStep1Errors)">
                                         This field is required 
                                      </span>
                             </div>
                         </div>
-    
-                        <div class="form-group label-floating padding-right-10" >
-                            <label for="phone-mobile" class=" control-label">Cellphone<span class="required-star">*</span> </label>
-    
-                            <div class="">
-                                <input id="phone-mobile" type="text" class="form-control" @input="$v.personalDetails.phoneMobile.$touch()" v-model.trim="personalDetails.phoneMobile" name="phoneMobile" > 
-                                <span class="help-block" >
-                                    <!-- <strong>@{{ errors.first('form-personal.phoneMobile') }}</strong> -->
-                                </span>
-                            </div>
-                        </div>
-    
-                        <div class="form-group label-floating padding-right-10 " >
-                            <label for="passport" class=" control-label">Pasport/ID Number<span class="required-star">*</span> </label>
-    
-                            <div class="">
-                                <input id="passport" type="text" class="form-control" @input="$v.personalDetails.passport.$touch()" v-model.trim="personalDetails.passport" name="passport" > 
-                                <span class="help-block" >
-                                    <!-- <strong>@{{ errors.first('form-personal.passport') }}</strong> -->
-                                </span>
-                            </div>
-                        </div>
-    
                     </div>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-group  label-floating padding-right-10" >
-                        
-                            <label for="email" class="control-label">Email<span class="required-star">*</span></label>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group label-floating padding-right-10" :class="{ error: $v.basicDetails.phoneMobile.$invalid}">
+                            <label for="phone-mobile" class=" control-label">Phone<span class="required-star">*</span> </label>
     
                             <div class="">
-                                <input id="email" type="text" class="form-control" name="email" @input="$v.personalDetails.email.$touch()" v-model.trim="personalDetails.email" > 
-                                    <span class="help-block" >
-                                    <!-- <strong>@{{ errors.first('form-personal.email') }}</strong> -->
+                                <input id="phone-mobile" type="text" class="form-control" @input="$v.basicDetails.phoneMobile.$touch()" v-model.trim="basicDetails.phoneMobile" name="phoneMobile" > 
+                                <span class="help-block"  v-if="$v.basicDetails.phoneMobile.$invalid && ($v.basicDetails.phoneMobile.$dirty || showStep1Errors)">
+                                    <span>This field is required</span>
                                 </span>
                             </div>
-                        </div>
-                        <div class="form-group label-floating padding-right-10 " >
-                            <label for="phone-home" class=" control-label">Home Phone</label>
-                            <div class="">
-                                <input id="phone-home" type="text" class="form-control" @input="$v.personalDetails.phoneHome.$touch()" v-model.trim="personalDetails.phoneHome" name="phone-home" >
-                            </div>
-                        </div>
-                        <div class="form-group label-floating padding-right-10">
-                            <label for="phone-office" class=" control-label">Office Phone</label>
-                            <div class="">
-                                <input id="phone-office" type="text" class="form-control" @input="$v.personalDetails.phoneOffice.$touch()" v-model.trim="personalDetails.phoneOffice" name="phone-office" >
-                            </div>
-                        </div>
-                            <div class="col-xs-12 col-md-12">
-    
-                        <!-- <div class="form-group label-floating padding-right-10 " >
-                            <label for="location" class="control-label ">Select Your Location<span class="required-star">*</span></label>
-    
-                            <div class="">
-                                <select name="location" id="location_id" class="form-control "  v-model.trim="personalDetails.location" >
-                                        @foreach($locations as $location)
-                                            <option value="{{$location->id}}"><strong>{{$locatio.name}}</strong></option>
-                                        @endforeach
-                                    </select> 
-                                    <span class="help-block" >
-                                    <strong>@{{ errors.first('form-personal.location') }}</strong>
-                                </span>
-                            </div>
-                        </div> -->
-                    </div>                      
-                        
-    
-    
-                    </div>
-                    <div class="col-xs-12">
-                    <div class="col-md-6">
-                        <div class="form-group label-floating padding-right-10" >
-                            <label for="postal-address" class=" control-label">Postal Address<span class="required-star">*</span></label>
-                            <textarea id="postal-address" class="form-control"  rows="5" @input="$v.personalDetails.postalAddress.$touch()" v-model.trim="personalDetails.postalAddress" >
-                            </textarea>
-                                    <span class="help-block" >
-                                    <!-- <strong>@{{ errors.first('form-personal.postalAddress') }}</strong> -->
-                                </span>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                    <div class="form-group label-floating padding-right-10 " >
-                            <label for="physical-address" class=" control-label">Physical Address<span class="required-star">*</span></label>
-                            <textarea id="physical-address" class="form-control"  rows="5" @input="$v.personalDetails.physicalAddress.$touch()" v-model.trim="personalDetails.physicalAddress" >
-                            </textarea>
-                                    <span class="help-block" >
-                                    <!-- <strong>@{{ errors.first('form-personal.physicalAddress') }}</strong> -->
-                                </span>
-                        </div>
-                    </div>
-                        
-                    </div>
-                   <pre>{{$v.personalDetails}}</pre>
-    
             </div>
+
+            <div class="row">
+               <div class="col-xs-12 col-md-6">
+                <div class="form-group  label-floating padding-right-10" :class="{ error: $v.basicDetails.package.$invalid }">
+
+                    <label for="package" class="control-label" style="text-transform:capitalize">Select {{basicDetails.serviceType}} package<span class="required-star">*</span></label>
+
+                    <div class="">
+                        <v-select label="data_bundle" :options="packageOptions"   v-model="selectedPackageOption" >
+                                <template slot="option" scope="option">
+                                    <span>{{option.data_bundle}}</span>
+                                    <span>|</span>
+                                    <span> M{{option.price}}</span>
+                                </template>
+                        </v-select> 
+
+                        <span class="help-block" v-if="$v.basicDetails.package.$invalid && showStep2Errors">
+                            <span>Select Package </span>
+                        </span>
+                    </div>
+                </div>
+               </div>
+               <div class="col-xs-12 col-md-6">
+                    <div class="form-group label-floating padding-right-10 " :class="{ error: $v.basicDetails.location.$invalid}">
+                    <label for="location" class="control-label ">Select Your Area<span class="required-star">*</span></label>
+
+                    <div class="">
+                            <v-select label="name"  :options="locations" v-model="selectedLocation"></v-select>
+                            <span class="help-block" v-if="$v.basicDetails.location.$invalid && ($v.basicDetails.location.$dirty || showStep1Errors)">
+                            <span>Select your Area</span>
+                        </span>
+                    </div>
+                </div>
+               </div>
+            </div>
+                        
+    
+    
+    
+            
         </tab-content>
-        <tab-content title="Additional Info">
-                                My second tab content
+        <!-- :beforeChange="()=>validateStep2($v)" -->
+        <tab-content title="Account" >
+         <div class="row">
+              <div class="col-xs-12 col-md-12 ">
+                  <div class="form-group label-floating padding-right-10" :class="{ error: $v.accountDetails.email.$invalid }">
+                      <label for="email" class=" control-label">Email 
+                          <span class="required-star" v-if="$v.accountDetails.email.$invalid ">*</span></label>
+
+                      <div class="">
+                          <input  id="email" type="text" name="email" class="form-control"  v-model="accountDetails.email"  >
+                          <span class="help-block"  v-if="$v.accountDetails.email.$invalid && ($v.accountDetails.email.$dirty || showStep1Errors)">
+                              This field is required
+                          </span>
+                      </div>
+                  </div>                       
+
+              </div>
+              
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 ">
+                  <div class="form-group label-floating padding-right-10" :class="{ error: $v.accountDetails.password.$invalid }">
+                      <label for="password" class=" control-label">Password 
+                          <span class="required-star" v-if="$v.accountDetails.password.$invalid ">*</span></label>
+
+                      <div class="">
+                          <input  id="password" type="password" name="password" class="form-control" v-model="accountDetails.password"  >
+                          <!-- <span class="help-block"  v-if="!$v.accountDetails.password.required">
+                              Password is required
+                          </span>
+                          <span class="help-block"  v-if="!$v.accountDetails.password.minLength">
+                              Password must have at least 6 charecters.
+                          </span> -->
+                      </div>
+                  </div>                      
+
+              </div>
+                <div class="col-xs-12 col-md-6 ">
+                  <div class="form-group label-floating padding-right-10" :class="{ error: $v.accountDetails.repeatPassword.$invalid }">
+                      <label for="repeatPassword" class=" control-label">Confirm Password
+                          <span class="required-star" v-if="$v.accountDetails.repeatPassword.$invalid ">*</span></label>
+
+                      <div class="">
+                          <input  id="repeatPassword" type="password" name="repeatPassword" class="form-control" v-model="accountDetails.repeatPassword"  >
+                          <span class="help-block"  v-if="$v.accountDetails.repeatPassword.$invalid && ($v.accountDetails.repeatPassword.$dirty || showStep1Errors)">
+                              This field is required
+                          </span>
+                      </div>
+                  </div>                      
+
+              </div>
+            </div>
+
+
+            
         </tab-content>
-        <tab-content title="Last step">
-                                Yuhuuu! This seems pretty damn simple
-        </tab-content>
+        
 </form-wizard>
 </template>
 
 <script>
-import { required, minLength, between,email } from 'vuelidate/lib/validators';
-    export default {
-        data() {
-            return {
-                currentStep:1,
-                packageOptions:[],
-                applicationMeta:{
-                    applicationId:0,
-                    personalDetailsId:0,
-                    serviceTypeId:0,
-                    bankingDetailsId:0,
-                },
-                personalDetails: {
-                    title: '',
-                    name: '',
-                    surname: '',
-                    email: '',
-                    phoneMobile: '',
-                    phoneHome: '',
-                    phoneOffice: '',
-                    postalAddress:'',
-                    physicalAddress:'',
-                    passport:'',
-                    location:''
-                   
-                  
-                },
-                serviceTypeDetails:{
-                    serviceType:'contract',
-                    package:'',
-                    adslCustomer:false,
-                    adslNumber:''
+import {
+  required,
+  minLength,
+  between,
+  email,
+  requiredIf,
+  sameAs
+} from "vuelidate/lib/validators";
+export default {
+  data() {
+    return {
+      showStep1Errors: false,
+      showStep2Errors: false,
+      showStep3Errors: false,
+      accountTypes: ["Cheque", "Savings"],
+      packageOptions: [],
+      selectedPackageOption: "",
+      locations: [],
+      selectedLocation: "",
+      applicationMeta: {
+        applicationId: 0,
+        personalDetailsId: 0,
+        serviceTypeId: 0,
+        bankingDetailsId: 0
+      },
+      basicDetails: {
+        name: "",
+        surname: "",
+        phoneMobile: "",
+        location: "",
+        package: ""
+      },
+      accountDetails: {
+        email: "",
+        password: "",
+        repeatPassword: ""
+      }
+    };
+  },
+  validations: {
+    basicDetails: {
+      name: { required },
+      surname: { required },
+      phoneMobile: { required },
+      package: { required },
+      location: { required }
+    },
+    accountDetails: {
+      email: { required },
+      password: { required },
+      password: {
+        required,
+        minLength: minLength(6)
+      },
+      repeatPassword: {
+        sameAsPassword: sameAs("password")
+      }
+    }
+  },
+  mounted() {
+    console.log(this.getParameterByName("package"));
+    this.getLookups();
+  },
+  methods: {
+    placeApplication() {
+      axios
+        .post(
+          `./api/place-application`,
+          Object.assign({}, this.basicDetails, this.accountDetails)
+        )
+        .then(response => {
+          console.log(response);
+        });
+    },
+    validateStep1($v) {
+      this.showStep1Errors = true;
+      return true;
+      //   return (
+      //     !$v.basicDetails.name.$invalid &&
+      //     !$v.basicDetails.surname.$invalid &&
+      //     !$v.basicDetails.email.$invalid &&
+      //     !$v.basicDetails.phoneMobile.$invalid &&
+      //     !$v.basicDetails.location.$invalid
+      //   );
+    },
+    validateStep2($v) {
+      this.showStep2Errors = true;
 
-                },
-                bankingDetails:{
-                    bankName:'',
-                    branchName:'',
-                    branchCode:'',
-                    accountHolderName:'',
-                    accountType:'',
-                    accountNumber:''
-                }
-            }
-        },
-         validations: {
-          personalDetails: {
-                    title: {required},
-                    name: {required},
-                    surname: {required},
-                    email: {required},
-                    phoneMobile: {required},
-                    phoneHome: '',
-                    phoneOffice: '',
-                    postalAddress:{required},
-                    physicalAddress:{required},
-                    passport:{required},
-                    location:{required}
-                   
-                  
-                },
-        },
-        mounted(){
-            this.getPackagesFromServer();
-        },
-        methods: {
-            submitPersonalDetails(scope){
-                
-                        axios.post(`./application/${this.applicationMeta.applicationId}/personal-details/${this.applicationMeta.personalDetailsId}`,
-                                    this.personalDetails)
-                            .then(res=>{
-                                 EventBus.$emit('NEXT_STEP_MESSAGE',{'message':'Pick your prefered package on the next step'});
-                                this.applicationMeta.applicationId=res.data.application.id;
-                                this.applicationMeta.personalDetailsId=res.data.personalDetails.id;
-                                this.currentStep=2;                                             
-                            })
-                            .catch(error=>{
-                                  EventBus.$emit('SUBMISION_ERROR');             
-                                });       
-            },
-            submitServiceType(scope){
-                if(!this.serviceTypeDetails.adslNumber && this.serviceTypeDetails.adslCustomer){
-                      EventBus.$emit('VALIDATION_ERROR');             
+      //   return !$v.basicDetails.package.$invalid;
+    },
 
-                } else{
-                        axios.post(`./application/${this.applicationMeta.applicationId}/service-type/${this.applicationMeta.serviceTypeId}`
-                                    ,this.serviceTypeDetails)
-                            .then(res=>{
-                                  EventBus.$emit('NEXT_STEP_MESSAGE',{'message':'Fill in your banking details on the next step.'});
-                                this.applicationMeta.applicationId=res.data.application.id;
-                                this.applicationMeta.serviceTypeId=res.data.serviceType.id;
-                                this.currentStep=3; 
-                            }) 
-                            .catch(error=>{
-                                 EventBus.$emit('SUBMISION_ERROR');                 
-                                });                      
-           
-                }
-            },
-            submitBankingDetails(scope){
-
-                        axios.post(`./application/${this.applicationMeta.applicationId}/banking-details/${this.applicationMeta.bankingDetailsId}`,this.bankingDetails)
-                            .then(res=>{
-                                EventBus.$emit('APPLICATION_COMPLETE_MESSAGE');
-                                this.applicationMeta.applicationId=res.data.application.id;
-                                this.applicationMeta.bankingDetailsId=res.data.bankingDetails.id;
-                                this.currentStep=4;
-                            })
-                            .catch(error=>{
-                                 EventBus.$emit('SUBMISION_ERROR');                 
-                                });                      
-            } ,
-            getPackagesFromServer(){
-                axios.get(`/packages?type=${this.serviceTypeDetails.serviceType}`).then((resp)=>{
-                    this.packageOptions=resp.data;
-                    console.log(this.packageOptions);
-                });
-            }
-                           
-        },
-        computed:{
-            rules(){
-                return this.serviceTypeDetails.adslCustomer?'required':'';
-            }
-        },
-        watch:{
-            'serviceTypeDetails.serviceType': function(){
-                this.getPackagesFromServer();               
-            }
+    submitPersonalDetails(scope) {
+      axios
+        .post(
+          `./application/${
+            this.applicationMeta.applicationId
+          }/personal-details/${this.applicationMeta.personalDetailsId}`,
+          this.basicDetails
+        )
+        .then(res => {
+          EventBus.$emit("NEXT_STEP_MESSAGE", {
+            message: "Pick your prefered package on the next step"
+          });
+          this.applicationMeta.applicationId = res.data.application.id;
+          this.applicationMeta.personalDetailsId = res.data.basicDetails.id;
+          this.currentStep = 2;
+        })
+        .catch(error => {
+          EventBus.$emit("SUBMISION_ERROR");
+        });
+    },
+    getPackagesFromServer() {
+      axios.get(`/packages?type=`).then(resp => {
+        this.packageOptions = resp.data;
+        this.setSelectedPackgeFromParam();
+      });
+    },
+    getFtthLocationsFromServer() {
+      axios.get(`/api/ftth-locations`).then(resp => {
+        this.locations = resp.data;
+        this.setSelectedLocationFromParam();
+      });
+    },
+    getLookups() {
+      this.getPackagesFromServer();
+      this.getFtthLocationsFromServer();
+    },
+    getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return "";
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    },
+    setSelectedPackgeFromParam() {
+      this.packageOptions.forEach(item => {
+        let packageParam = this.getParameterByName("package");
+        if (packageParam) {
+          this.selectedPackageOption = this.packageOptions.filter(pkg => {
+            return pkg.id == packageParam;
+          })[0];
         }
-
-    } 
+      });
+    },
+    setSelectedLocationFromParam() {
+      this.packageOptions.forEach(item => {
+        let locationParam = this.getParameterByName("location");
+        if (locationParam) {
+          this.selectedLocation = this.locations.filter(loc => {
+            return loc.id == locationParam;
+          })[0];
+        }
+      });
+    }
+  },
+  computed: {
+    rules() {
+      return this.basicDetails.adslCustomer ? "required" : "";
+    }
+  },
+  watch: {
+    selectedLocation: function(newValue, oldValue) {
+      if (newValue) {
+        this.basicDetails.location = newValue.id;
+      } else {
+        this.basicDetails.location = oldValue.id;
+      }
+    },
+    selectedPackageOption: function(newValue, oldValue) {
+      if (newValue) {
+        this.basicDetails.package = newValue.id;
+      } else {
+        this.basicDetails.package = oldValue.id;
+      }
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-    .form-group.error label.control-label,
-     .form-group.error 
-     .help-block {
-          color: #f44336;
-          }
-          a, a:hover, a:focus 
-          {
-         color:lighten(#0d47a1,50%);
-      }
-        .container{
-            padding-top:20px;
-        }
+.form-group.error label.control-label,
+.form-group.error .help-block {
+  color: #f44336;
+}
+a,
+a:hover,
+a:focus {
+  color: lighten(#0d47a1, 50%);
+}
+.container {
+  padding-top: 20px;
+}
+.section-container {
+  .section-title {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 5px;
+    margin-top: 15px;
+  }
+  .item-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 5px 0;
+    .item-title {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: rgba(0, 0, 0, 0.5);
+    }
+    .item-content {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
 </style>

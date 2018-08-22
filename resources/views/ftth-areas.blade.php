@@ -7,21 +7,10 @@
  @endcomponent 
 
  @section('content')
-<div class="container ftth-areas">
+<div class="container ftth-areas padding-top-20">
     <div class="row">
-       <div class="panel panel-primary margin-top-20">
-       <div class="panel-heading">
-       <div>Apply For FTTH</div>
-       <div>
-        <a href="{{route('application.create')}}" class="btn btn-danger btn-xs">Apply</a>
-       </div>
-       </div>
-           <div class="panel-body">
-          <div class="col-xs-12 ">
-           <ftth-locations></ftth-locations>
-           </div>
-           </div>
-       </div>
+      <ftth-locations></ftth-locations>
+
     </div>
 </div>
 

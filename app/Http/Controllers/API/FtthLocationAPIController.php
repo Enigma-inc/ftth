@@ -40,7 +40,7 @@ class FtthLocationAPIController extends AppBaseController
         $this->ftthLocationRepository->pushCriteria(new LimitOffsetCriteria($request));
         $ftthLocations = $this->ftthLocationRepository->all();
 
-        return $this->sendResponse($ftthLocations->toArray(), 'Ftth Locations retrieved successfully');
+        return $ftthLocations;
     }
 
     /**

@@ -36,6 +36,7 @@
     .contract-details {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         border: rgba(0, 0, 0, 0.3) 1px solid;
         padding: 10px;
         .contract {
@@ -136,4 +137,16 @@
     color: #0d47a1 !important;
     font-weight: 600 !important;
 }
+.dropdown-toggle{
+    border-radius: 0 !important;
+}
 
+.index-page .brand {
+    margin-top: 80px;
+}
+.index-page .wrapper > .header {
+    height: 200px;
+}
+.main-raised {
+    margin: -60px 20px 0px;
+}
