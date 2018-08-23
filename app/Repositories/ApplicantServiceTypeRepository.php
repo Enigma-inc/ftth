@@ -13,7 +13,7 @@ use InfyOm\Generator\Common\BaseRepository;
  * @method ApplicantServiceType findWithoutFail($id, $columns = ['*'])
  * @method ApplicantServiceType find($id, $columns = ['*'])
  * @method ApplicantServiceType first($columns = ['*'])
-*/
+ */
 class ApplicantServiceTypeRepository extends BaseRepository
 {
     /**
@@ -37,9 +37,9 @@ class ApplicantServiceTypeRepository extends BaseRepository
     public function pushToDb(array $attributes)
     {
         $serviceTypeDetails = [
-                                'service_type' => $attributes['serviceType'], 'data_package' => $attributes['package'],
-                                'is_adsl_customer' => $attributes['adslCustomer'], 'adsl_number' => $attributes['adslNumber']
-                             ];
+            'service_type' => $attributes['serviceType'], 'data_package' => $attributes['package'],
+            'is_adsl_customer' => 0, 'adsl_number' => ''
+        ];
         return $this->create($serviceTypeDetails);
     }
 }

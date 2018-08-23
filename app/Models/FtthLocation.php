@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class FtthLocation
@@ -18,7 +19,7 @@ class FtthLocation extends Model
     use SoftDeletes;
 
     public $table = 'ftth_locations';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -28,15 +29,16 @@ class FtthLocation extends Model
         'description',
         'image'
     ];
+    public $appends = [
+        'image_path'
+    ];
 
     /**
      * The attributes that should be casted to native types.
      *
      * @var array
      */
-    protected $casts = [
-        
-    ];
+    protected $casts = [];
 
     /**
      * Validation rules
@@ -47,5 +49,10 @@ class FtthLocation extends Model
         'name' => 'required'
     ];
 
-    
+    public function getImagePathAttribute()
+    {
+        return Storage::Url($this->image);
+    }
+
+
 }

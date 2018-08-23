@@ -32,12 +32,12 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-4">
-                        <div class="form-group label-floating padding-right-10" :class="{ error: $v.basicDetails.phoneMobile.$invalid}">
+                        <div class="form-group label-floating padding-right-10" :class="{ error: $v.basicDetails.phone.$invalid}">
                             <label for="phone-mobile" class=" control-label">Phone<span class="required-star">*</span> </label>
     
                             <div class="">
-                                <input id="phone-mobile" type="text" class="form-control" @input="$v.basicDetails.phoneMobile.$touch()" v-model.trim="basicDetails.phoneMobile" name="phoneMobile" > 
-                                <span class="help-block"  v-if="$v.basicDetails.phoneMobile.$invalid && ($v.basicDetails.phoneMobile.$dirty || showStep1Errors)">
+                                <input id="phone-mobile" type="text" class="form-control" @input="$v.basicDetails.phone.$touch()" v-model.trim="basicDetails.phone" name="phone" > 
+                                <span class="help-block"  v-if="$v.basicDetails.phone.$invalid && ($v.basicDetails.phone.$dirty || showStep1Errors)">
                                     <span>This field is required</span>
                                 </span>
                             </div>
@@ -185,6 +185,7 @@ export default {
       showStep3Errors: false,
       accountTypes: ["Cheque", "Savings"],
       packageOptions: [],
+      unFilteredpackageOptions: [],
       selectedPackageOption: "",
       locations: [],
       selectedLocation: "",
@@ -197,7 +198,7 @@ export default {
       basicDetails: {
         name: "",
         surname: "",
-        phoneMobile: "",
+        phone: "",
         location: "",
         serviceType: "",
         package: ""
@@ -213,7 +214,7 @@ export default {
     basicDetails: {
       name: { required },
       surname: { required },
-      phoneMobile: { required },
+      phone: { required },
       package: { required },
       location: { required }
     },

@@ -28,20 +28,20 @@ class FtthApplication extends Model
 {
     use SoftDeletes;
 
-    public $table = 'ftth_applications';
+    public $table = 'applications';
 
 
     protected $dates = ['deleted_at'];
 
 
     public $fillable = [
+        'name',
+        'surname',
+        'email',
+        'phone',
         'user_id',
         'location_id',
-        'applicant_banking_details_id',
-        'applicant_service_type_id',
-        'applicant_personal_details_id',
-        'is_billing_agreed',
-        'amount'
+        'applicant_service_type_id'
     ];
 
     /**

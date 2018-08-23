@@ -2,8 +2,9 @@
 <div>
   <div  class="col-xs-12 col-sm-12">
     <div class="location-container" v-for="(location,i) in locations" :key="i">
-        <!-- <img v-img={title:location.name} width="80px" src="https://v-img.review/dist/i-1.jpg?9109cbe1b575cea87f570bbe6bbf9fae" alt=""> -->
-    <blockquote>
+        <img v-img={title:location.name} :src=location.image_path alt="">
+      <div class="blockquote">
+           <blockquote>
              <div class="title-container">
                 <p>
                   {{location.name}}
@@ -13,13 +14,10 @@
                     <apply :location="location.id"></apply>
                 </div>
                 <small v-if="location.description">{{location.description}}</small>
-     </blockquote>
+          </blockquote>
+        </div>
     </div>
   </div>
-  <!-- <div class="col-xs-12 col-sm-6">
-     <ftth-map></ftth-map>
-
-  </div> -->
 </div>
 </template>
 <script>
@@ -55,28 +53,45 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.location-container {
-  .title-container {
-    display: flex;
-    align-items: center;
-    p {
-      flex: 1;
-      font-size: 0.7em;
-      font-weight: 600;
-    }
-  }
-  small {
-    font-size: 0.7em;
-  }
+.flex-1 {
+  flex: 1;
+}
 
-  blockquote {
-    padding: 5px;
-    margin: 0 0 10px;
+.location-container {
+  display: flex;
+  img {
+    height: 70px;
   }
-  .image-placeholder {
-    //  margin:5px;
-    height: 100px;
-    width: 140px;
+  .blockquote {
+    display: flex;
+    width: 100%;
+
+    blockquote {
+      width: 100%;
+      .title-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        p {
+          flex: 1;
+          font-size: 0.7em;
+          font-weight: 600;
+        }
+      }
+    }
+    small {
+      font-size: 0.7em;
+    }
+
+    blockquote {
+      padding: 5px;
+      margin: 0 0 10px;
+    }
+    .image-placeholder {
+      //  margin:5px;
+      height: 100px;
+      width: 140px;
+    }
   }
 }
 </style>

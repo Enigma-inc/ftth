@@ -13,11 +13,16 @@ class RestructureApplicationsTable extends Migration
      */
     public function up()
     {
-        Schema::table('ftth_applications', function (Blueprint $table) {
-            if (Schema::hasColumn('ftth_applications', 'applicant_personal_info_id')) {
+        Schema::table('applications', function (Blueprint $table) {
+            if (Schema::hasColumn('applications', 'applicant_personal_info_id')) {
 
-                $table->dropColumn()('applicant_personal_info_id');
+                $table->dropColumn('applicant_personal_info_id');
             }
+            if (Schema::hasColumn('applications', 'applicant_banking_details_id')) {
+
+                $table->dropColumn('applicant_banking_details_id');
+            }
+        
 
             // $table->dropColumn('applicant_banking_details_id');
             $table->dropColumn('amount');

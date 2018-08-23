@@ -18,6 +18,7 @@
     <!-- CSS Files -->
     <link href="{{mix('css/all.css')}}" rel="stylesheet"/>
     <link href="{{mix('css/material-kit.css')}}" rel="stylesheet"/>
+    {{-- <link href="{{mix('css/tailwind.css')}}" rel="stylesheet"/> --}}
     <link href="{{mix('css/app.css')}}" rel="stylesheet"/>
 
     <script>

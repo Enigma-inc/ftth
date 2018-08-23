@@ -16,6 +16,8 @@ use App\Repositories\ApplicantBankingRepository;
 use App\Repositories\ApplicantPersonalDetailsRepository;
 use Illuminate\Support\Facades\Auth;
 use App\PackagesLookup;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class FtthApplicationController
@@ -54,26 +56,37 @@ class FtthApplicationAPIController extends AppBaseController
      * @return Response
      */
     public function store(CreateFtthApplicationAPIRequest $request)
-    {
-
+    { 
+        
+        //Register User
+        $user = User::firstOrCreate(['email' => $request->email], [
+            'name' => $request->name . ' ' . $request->surname,
+            'password' => Hash::make($request->password),
+            'email' => $request->email
+        ]);
         $package = PackagesLookup::findOrFail($request->package);
         if (!$package) {
             return $this->sendError('Package not found!');
         }
          //SAVE SERVICE TYPE
         $serviceTypeModel = [
-            'service_type' => $request->serviceType,
-            'data_package' => $package->data_bundle
+            'serviceType' => $request->serviceType,
+            'package' => $package->data_bundle
         ];
         $saveServiceTypeDetails = $this->serviceTypeRepository->pushToDb($serviceTypeModel);
 
-
+       
 
         //Extract Application Details
         $applicationDetails = [
-            'user_id' => 1,
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'user_id' => $user->id,
             'location_id' => $request->location,
-            'applicant_service_type_id' => $saveServiceTypeDetails->id
+            'applicant_service_type_id' => $saveServiceTypeDetails->id,
+
 
 
         ];
