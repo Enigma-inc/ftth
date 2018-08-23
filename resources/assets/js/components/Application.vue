@@ -1,8 +1,8 @@
 <template>
 <form-wizard title="Complete 2 Easy Steps Below" subtitle=""
              :finishButtonText="'Submit'" :color="'#eb443b'" 
-              @on-complete="placeApplication()"> 
-        <tab-content title="Package & Location Selection" >
+              @on-complete="placeApplication()" > 
+        <tab-content title="Package & Location Selection" :beforeChange="()=>validateStep1($v)">
             <div class="row">
                     <div class="col-xs-12 col-md-4 ">
                         <div class="form-group label-floating padding-right-10" :class="{ error: $v.basicDetails.name.$invalid }">
@@ -12,7 +12,7 @@
                             <div class="">
                                 <input  id="name" type="text" name="name" class="form-control" @input="$v.basicDetails.name.$touch()" v-model.trim="basicDetails.name"  >
                                 <span class="help-block"  v-if="$v.basicDetails.name.$invalid && ($v.basicDetails.name.$dirty || showStep1Errors)">
-                                    This field is required
+                                    Name is required
                                 </span>
                             </div>
                         </div>                       
@@ -26,7 +26,7 @@
                             <div class="">
                                 <input id="surname" type="text" class="form-control" name="surname"  @input="$v.basicDetails.surname.$touch()" v-model.trim="basicDetails.surname"  > 
                                     <span class="help-block" v-if="$v.basicDetails.surname.$invalid && ($v.basicDetails.surname.$dirty || showStep1Errors)">
-                                        This field is required 
+                                        Surname is required 
                                      </span>
                             </div>
                         </div>
@@ -38,17 +38,17 @@
                             <div class="">
                                 <input id="phone-mobile" type="text" class="form-control" @input="$v.basicDetails.phone.$touch()" v-model.trim="basicDetails.phone" name="phone" > 
                                 <span class="help-block"  v-if="$v.basicDetails.phone.$invalid && ($v.basicDetails.phone.$dirty || showStep1Errors)">
-                                    <span>This field is required</span>
+                                    <span>Phone is required</span>
                                 </span>
                             </div>
                         </div>
                     </div>
             </div>
 
-            <div class="row">
+            <div class="row margin-top-20">
                <div class="col-xs-12 col-md-8">
                    <div class="col-xs-6">
-                       <div class="form-group label-floating margin-top-0 service-type" >
+                       <div class="form-group label-floating margin-top-0 service-type" :class="{ error: $v.basicDetails.serviceType.$invalid }">
                           <label class="label-text">Service Type</label>                        
                            <div class="radio-container">
                                 <div class="radio margin-0">
@@ -66,6 +66,9 @@
                                     </label>
                                 </div>
                             </div>
+                          <div class="help-block" v-if="$v.basicDetails.serviceType.$invalid && showStep1Errors">
+                            <span>Select Service Type </span>
+                           </div>
                            </div>
                    </div>
                 <div class="col-xs-6">
@@ -75,16 +78,16 @@
 
                     <div class="">
                         <v-select label="data_bundle" :options="packageOptions"   v-model="selectedPackageOption" >
-                                <template slot="option" scope="option">
+                                <template slot="option" slot-scope="option">
                                     <span>{{option.data_bundle}}</span>
                                     <span>|</span>
                                     <span> M{{option.price}}</span>
                                 </template>
                         </v-select> 
 
-                        <span class="help-block" v-if="$v.basicDetails.package.$invalid && showStep2Errors">
+                        <div class="help-block" v-if="$v.basicDetails.package.$invalid && showStep1Errors">
                             <span>Select Package </span>
-                        </span>
+                        </div>
                     </div>
                      </div>
                 </div>
@@ -95,9 +98,9 @@
 
                     <div class="">
                             <v-select label="name"  :options="locations" v-model="selectedLocation"></v-select>
-                            <span class="help-block" v-if="$v.basicDetails.location.$invalid && ($v.basicDetails.location.$dirty || showStep1Errors)">
-                            <span>Select your Area</span>
-                        </span>
+                            <div class="help-block" v-if="$v.basicDetails.location.$invalid && ($v.basicDetails.location.$dirty || showStep1Errors)">
+                               <span>Select your Area</span>
+                             </div>
                     </div>
                 </div>
                </div>
@@ -108,8 +111,7 @@
     
             
         </tab-content>
-        <!-- :beforeChange="()=>validateStep2($v)" -->
-        <tab-content title="Account" >
+        <tab-content title="Account" :beforeChange="()=>validateStep2($v)">
          <div class="row">
               <div class="col-xs-12 col-md-12 ">
                   <div class="form-group label-floating padding-right-10" :class="{ error: $v.accountDetails.email.$invalid }">
@@ -118,8 +120,8 @@
 
                       <div class="">
                           <input  id="email" type="text" name="email" class="form-control"  v-model="accountDetails.email"  >
-                          <span class="help-block"  v-if="$v.accountDetails.email.$invalid && ($v.accountDetails.email.$dirty || showStep1Errors)">
-                              This field is required
+                          <span class="help-block"  v-if="$v.accountDetails.email.$invalid && ($v.accountDetails.email.$dirty || showStep2Errors)">
+                              Provide valid email address
                           </span>
                       </div>
                   </div>                       
@@ -127,7 +129,8 @@
               </div>
               
             </div>
-            <div class="row">
+
+            <div class="row margin-top-20 margin-bottom-20">
                 <div class="col-xs-12 col-md-6 ">
                   <div class="form-group label-floating padding-right-10" :class="{ error: $v.accountDetails.password.$invalid }">
                       <label for="password" class=" control-label">Password 
@@ -135,30 +138,30 @@
 
                       <div class="">
                           <input  id="password" type="password" name="password" class="form-control" v-model="accountDetails.password"  >
-                          <!-- <span class="help-block"  v-if="!$v.accountDetails.password.required">
+                          <span class="help-block"  v-if="!$v.accountDetails.password.required && ($v.accountDetails.password.$dirty || showStep2Errors)">
                               Password is required
                           </span>
                           <span class="help-block"  v-if="!$v.accountDetails.password.minLength">
                               Password must have at least 6 charecters.
-                          </span> -->
+                          </span>
                       </div>
                   </div>                      
 
               </div>
                 <div class="col-xs-12 col-md-6 ">
-                  <div class="form-group label-floating padding-right-10" :class="{ error: $v.accountDetails.repeatPassword.$invalid }">
+                  <div class="form-group label-floating padding-right-10 error" >
                       <label for="repeatPassword" class=" control-label">Confirm Password
                           <span class="required-star" v-if="$v.accountDetails.repeatPassword.$invalid ">*</span></label>
-
                       <div class="">
                           <input  id="repeatPassword" type="password" name="repeatPassword" class="form-control" v-model="accountDetails.repeatPassword"  >
-                          <span class="help-block"  v-if="$v.accountDetails.repeatPassword.$invalid && ($v.accountDetails.repeatPassword.$dirty || showStep1Errors)">
-                              This field is required
+                          <span class="help-block"  v-if="(!$v.accountDetails.password.$invalid && $v.accountDetails.password.$minLength) || passwordNotConfirmed">
+                              Not Matching
                           </span>
                       </div>
                   </div>                      
 
               </div>
+
             </div>
 
 
@@ -216,7 +219,8 @@ export default {
       surname: { required },
       phone: { required },
       package: { required },
-      location: { required }
+      location: { required },
+      serviceType: { required }
     },
     accountDetails: {
       email: { required },
@@ -226,6 +230,7 @@ export default {
         minLength: minLength(6)
       },
       repeatPassword: {
+        required,
         sameAsPassword: sameAs("password")
       }
     }
@@ -241,17 +246,39 @@ export default {
           Object.assign({}, this.basicDetails, this.accountDetails)
         )
         .then(response => {
-          console.log(response);
+          this.$swal({
+            type: "success",
+            title: "Success.",
+            text: "We have received your application"
+          });
+        })
+        .catch(error => {
+          this.$swal({
+            type: "error",
+            title: "Oops...",
+            text: "Something went wrong!"
+          });
         });
     },
     validateStep1($v) {
       this.showStep1Errors = true;
-      return true;
+      return (
+        !$v.basicDetails.name.$invalid &&
+        !$v.basicDetails.surname.$invalid &&
+        !$v.basicDetails.package.$invalid &&
+        !$v.basicDetails.location.$invalid &&
+        !$v.basicDetails.serviceType.$invalid
+      );
     },
     validateStep2($v) {
       this.showStep2Errors = true;
 
-      //   return !$v.basicDetails.package.$invalid;
+      return (
+        !$v.accountDetails.email.$invalid &&
+        !$v.accountDetails.password.$invalid &&
+        !$v.accountDetails.repeatPassword.$invalid &&
+        !this.passwordNotConfirmed
+      );
     },
 
     submitPersonalDetails(scope) {
@@ -321,6 +348,9 @@ export default {
     }
   },
   computed: {
+    passwordNotConfirmed() {
+      return this.accountDetails.password != this.accountDetails.repeatPassword;
+    },
     rules() {
       return this.basicDetails.adslCustomer ? "required" : "";
     }

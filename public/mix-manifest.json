@@ -1,10 +1,11 @@
 {
-  "/js/app.js": "/js/app.8c6341812a0cb51c5d53.js",
-  "/css/material-kit.css": "/css/material-kit.847171c78716133dcf59.css",
-  "/css/app.css": "/css/app.847171c78716133dcf59.css",
-  "/css/admin-theme.css": "/css/admin-theme.847171c78716133dcf59.css",
-  "/js/admin-app.js": "/js/admin-app.307aa33c0df828f89ceb.js",
-  "/js/bundle.js": "/js/bundle.1824c40860c32f92acd5.js",
+  "/js/app.js": "/js/app.8b4a230a0820d3633c06.js",
+  "/css/material-kit.css": "/css/material-kit.aca34f812451abff0c904af43a389b95.css",
+  "/css/app.css": "/css/app.b6962b721d154c394728e73ce6c5b235.css",
+  "/css/admin-theme.css": "/css/admin-theme.a733f0d65fae5011ce04e8ecb8fcad8e.css",
+  "/js/admin-app.js": "/js/admin-app.f16e2e17f73cfd6de899.js",
+  "/js/bundle.js": "/js/bundle.da7d9c45eee453066609.js",
   "/js/admin-bundle.js": "/js/admin-bundle.537ff098d68fadca74ef.js",
-  "/css/all.css": "/css/all.1b13975f572a16550ec24e23c5974615.css"
+  "/css/all.css": "/css/all.e85f13334fec025b325a21bbcd5e5819.css",
+  "/mix.js": "/mix.js"
 }

@@ -60,7 +60,7 @@ export default {
 .location-container {
   display: flex;
   img {
-    height: 70px;
+    height: 50px;
   }
   .blockquote {
     display: flex;
@@ -68,6 +68,7 @@ export default {
 
     blockquote {
       width: 100%;
+      min-height: 80px;
       .title-container {
         display: flex;
         align-items: center;

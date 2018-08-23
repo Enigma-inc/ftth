@@ -33,7 +33,8 @@
     "vee-validate": "^2.0.0-rc.3",
     "vue-form-wizard": "^0.8.2",
     "vue-select": "^2.4.0",
-    "vue2-google-maps": "^0.8.0",
+    "vue-snotify": "^3.2.1",
+    "vue-swal": "^0.1.0",
     "vuelidate": "^0.6.1",
     "vuetify": "^0.14.2",
     "yarn": "^1.4.0"
