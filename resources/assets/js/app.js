@@ -3,9 +3,11 @@ import VueFormWizard from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css';
 import Vuelidate from 'vuelidate';
 import vSelect from 'vue-select';
-import VueSwal from 'vue-swal'
 
-Vue.use(VueSwal)
+
+import VueNoty from 'vuejs-noty'
+
+Vue.use(VueNoty)
 
 Vue.use(Vuelidate);
 Vue.use(VueFormWizard);

@@ -22,6 +22,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
 mix.styles([
     //  'resources/assets/css/select2.min.css',
     'node_modules/sweetalert2/dist/sweetalert2.min.css',
+    'node_modules/vuejs-noty/dist/vuejs-noty.css',
     'resources/assets/css/bootstrap.min.css',
     'resources/assets/lib/smooth-div-scroll/css/smoothDivScroll.css',
 ], 'public/css/all.css')

@@ -78,7 +78,7 @@
 
                     <div class="">
                         <v-select label="data_bundle" :options="packageOptions"   v-model="selectedPackageOption" >
-                                <template slot="option" slot-scope="option">
+                                <template slot="option" scope="option">
                                     <span>{{option.data_bundle}}</span>
                                     <span>|</span>
                                     <span> M{{option.price}}</span>
@@ -246,17 +246,19 @@ export default {
           Object.assign({}, this.basicDetails, this.accountDetails)
         )
         .then(response => {
-          this.$swal({
-            type: "success",
-            title: "Success.",
-            text: "We have received your application"
-          });
+          this.$noty
+            .success("Application Placed! We shall get back to you.", {
+              theme: "metroui",
+              layout: "center"
+            })
+            .on("onClose", function() {
+              window.location.href = "../";
+            });
         })
         .catch(error => {
-          this.$swal({
-            type: "error",
-            title: "Oops...",
-            text: "Something went wrong!"
+          this.$noty.error("Oops! An error has occured. Please try again.", {
+            theme: "metroui",
+            layout: "center"
           });
         });
     },
