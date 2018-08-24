@@ -36,6 +36,11 @@ class RestructureApplicationsTable extends Migration
             //modify Columns
             $table->unsignedInteger('user_id')->nullable()->change();
 
+            if (!Schema::hasColumn('applications', 'location_id')) {
+
+                $table->unsignedInteger('location_id');
+            }
+
         });
 
         //remove tables
