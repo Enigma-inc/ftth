@@ -78,7 +78,7 @@
 
                     <div class="">
                         <v-select label="data_bundle" :options="packageOptions"   v-model="selectedPackageOption" >
-                                <template slot="option" scope="option">
+                                <template slot="option" slot-scope="option">
                                     <span>{{option.data_bundle}}</span>
                                     <span>|</span>
                                     <span> M{{option.price}}</span>
@@ -236,6 +236,7 @@ export default {
     }
   },
   mounted() {
+    this.setpackgeTypeFromParam();
     this.getLookups();
   },
   methods: {
@@ -282,30 +283,14 @@ export default {
         !this.passwordNotConfirmed
       );
     },
-
-    submitPersonalDetails(scope) {
-      axios
-        .post(
-          `./application/${
-            this.applicationMeta.applicationId
-          }/personal-details/${this.applicationMeta.personalDetailsId}`,
-          this.basicDetails
-        )
-        .then(res => {
-          EventBus.$emit("NEXT_STEP_MESSAGE", {
-            message: "Pick your prefered package on the next step"
-          });
-          this.applicationMeta.applicationId = res.data.application.id;
-          this.applicationMeta.personalDetailsId = res.data.basicDetails.id;
-          this.currentStep = 2;
-        })
-        .catch(error => {
-          EventBus.$emit("SUBMISION_ERROR");
-        });
-    },
     getPackagesFromServer() {
       axios.get(`/packages?type=`).then(resp => {
-        this.packageOptions = resp.data;
+        this.packageOptions = [];
+        resp.data.filter(item => {
+          if (item.type == this.basicDetails.serviceType) {
+            this.packageOptions.push(item);
+          }
+        });
         this.setSelectedPackgeFromParam();
       });
     },
@@ -338,6 +323,12 @@ export default {
         }
       });
     },
+    setpackgeTypeFromParam() {
+      let packageTypeParam = this.getParameterByName("type");
+      if (packageTypeParam) {
+        this.basicDetails.serviceType = packageTypeParam;
+      }
+    },
     setSelectedLocationFromParam() {
       this.packageOptions.forEach(item => {
         let locationParam = this.getParameterByName("location");
@@ -366,16 +357,16 @@ export default {
       }
     },
     selectedPackageOption: function(newValue, oldValue) {
-      if (newValue) {
+      if (newValue && newValue.id) {
         this.basicDetails.package = newValue.id;
-      } else {
+      } else if (oldValue && oldValue.id) {
         this.basicDetails.package = oldValue.id;
+      } else {
+        this.basicDetails.package = "";
       }
     },
     "basicDetails.serviceType": function(newValue, oldValue) {
-      return this.packageOptions.filter(pkg => {
-        return pkg.contract == "contract";
-      });
+      this.getPackagesFromServer();
     }
   }
 };

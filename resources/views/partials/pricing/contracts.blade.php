@@ -20,10 +20,10 @@
          }) as $package)
              
          <div class="contract-details">
-         <div class="contract"><span>M</span> {{$package->price}}</div>
+        <div class="contract"><span>M</span>{{number_format ( $package->price,2 ) }}</div>
              <div class="contract">{{$package->data_bundle}} <span>GB</span></div>
              <div class="contract"> 
-                 <apply-btn :package="{{$package->id}}"></apply-btn>    
+                 <apply-btn :package-type="'contract'" :package="{{$package->id}}"></apply-btn>    
             </div>
          </div>
          @endforeach
