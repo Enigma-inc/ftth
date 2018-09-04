@@ -95,7 +95,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-6" style="display:none">
 
                             <div class="form-group label-floating padding-right-10 {{ $errors->has('district') ? ' has-error' : '' }}">
                                 <label for="district" class="control-label ">Select District<span class="required-star">*</span></label>
