@@ -39,7 +39,7 @@ class FtthApplicationController extends AppBaseController
         $this->ftthApplicationRepository->pushCriteria(new RequestCriteria($request));
         $ftthApplications = $this->ftthApplicationRepository->all();
 
-        return view('ftth_applications.index')
+        return view('admin.ftth_applications.index')
             ->with('ftthApplications', $ftthApplications);
     }
 
@@ -50,7 +50,7 @@ class FtthApplicationController extends AppBaseController
      */
     public function create()
     {
-        return view('ftth_applications.create');
+        return view('admin.ftth_applications.create');
     }
 
     /**
@@ -89,7 +89,7 @@ class FtthApplicationController extends AppBaseController
             return redirect(route('ftthApplications.index'));
         }
 
-        return view('ftth_applications.show')->with('ftthApplication', $ftthApplication);
+        return view('admin.ftth_applications.show')->with('ftthApplication', $ftthApplication);
     }
 
     /**
@@ -109,7 +109,7 @@ class FtthApplicationController extends AppBaseController
             return redirect(route('ftthApplications.index'));
         }
 
-        return view('ftth_applications.edit')->with('ftthApplication', $ftthApplication);
+        return view('admin.ftth_applications.edit')->with('ftthApplication', $ftthApplication);
     }
 
     /**

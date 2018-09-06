@@ -32,7 +32,7 @@ class PackagesLookupController extends AppBaseController
         $this->packagesLookupRepository->pushCriteria(new RequestCriteria($request));
         $packagesLookups = $this->packagesLookupRepository->all();
 
-        return view('packages_lookups.index')
+        return view('admin.packages_lookups.index')
             ->with('packagesLookups', $packagesLookups);
     }
 
@@ -43,7 +43,7 @@ class PackagesLookupController extends AppBaseController
      */
     public function create()
     {
-        return view('packages_lookups.create');
+        return view('admin.packages_lookups.create');
     }
 
     /**
@@ -81,7 +81,7 @@ class PackagesLookupController extends AppBaseController
             return redirect(route('packagesLookups.index'));
         }
 
-        return view('packages_lookups.show')->with('packagesLookup', $packagesLookup);
+        return view('admin.packages_lookups.show')->with('packagesLookup', $packagesLookup);
     }
 
     /**
@@ -101,7 +101,7 @@ class PackagesLookupController extends AppBaseController
             return redirect(route('packagesLookups.index'));
         }
 
-        return view('packages_lookups.edit')->with('packagesLookup', $packagesLookup);
+        return view('admin.packages_lookups.edit')->with('packagesLookup', $packagesLookup);
     }
 
     /**

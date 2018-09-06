@@ -37,7 +37,7 @@ class FtthLocationController extends AppBaseController
         $this->ftthLocationRepository->pushCriteria(new RequestCriteria($request));
         $ftthLocations = $this->ftthLocationRepository->all();
 
-        return view('ftth_locations.index')
+        return view('admin.ftth_locations.index')
             ->with('ftthLocations', $ftthLocations);
     }
 
@@ -48,7 +48,7 @@ class FtthLocationController extends AppBaseController
      */
     public function create()
     {
-        return view('ftth_locations.create');
+        return view('admin.ftth_locations.create');
     }
 
     /**
@@ -99,7 +99,7 @@ class FtthLocationController extends AppBaseController
             return redirect(route('ftthLocations.index'));
         }
 
-        return view('ftth_locations.show')->with('ftthLocation', $ftthLocation);
+        return view('admin.ftth_locations.show')->with('ftthLocation', $ftthLocation);
     }
 
     /**
@@ -119,7 +119,7 @@ class FtthLocationController extends AppBaseController
             return redirect(route('ftthLocations.index'));
         }
 
-        return view('ftth_locations.edit')->with('ftthLocation', $ftthLocation);
+        return view('admin.ftth_locations.edit')->with('ftthLocation', $ftthLocation);
     }
 
     /**

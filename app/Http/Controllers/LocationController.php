@@ -32,7 +32,7 @@ class LocationController extends AppBaseController
         $this->locationRepository->pushCriteria(new RequestCriteria($request));
         $locations = $this->locationRepository->all();
 
-        return view('locations.index')
+        return view('admin.locations.index')
             ->with('locations', $locations);
     }
 
@@ -43,7 +43,7 @@ class LocationController extends AppBaseController
      */
     public function create()
     {
-        return view('locations.create');
+        return view('admin.locations.create');
     }
 
     /**
@@ -81,7 +81,7 @@ class LocationController extends AppBaseController
             return redirect(route('locations.index'));
         }
 
-        return view('locations.show')->with('location', $location);
+        return view('admin.locations.show')->with('location', $location);
     }
 
     /**
@@ -101,7 +101,7 @@ class LocationController extends AppBaseController
             return redirect(route('locations.index'));
         }
 
-        return view('locations.edit')->with('location', $location);
+        return view('admin.locations.edit')->with('location', $location);
     }
 
     /**
