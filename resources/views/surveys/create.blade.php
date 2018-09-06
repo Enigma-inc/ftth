@@ -1,7 +1,7 @@
 @extends('layouts.master') 
 @component('partials.inner-pages-banner')
  @slot('title')
-      <img src="{{url('images/fiber2hme-logo.png')}}" alt="FTTH" height="200">
+      <img src="{{url('images/fiber2hme-logo.png?v=2')}}" alt="FTTH" height="200">
     <h2>Request <strong>Econet Fibre </strong> For Your Area</h2>
 @endslot
  @endcomponent 
