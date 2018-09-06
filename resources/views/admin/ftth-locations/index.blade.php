@@ -59,14 +59,14 @@
                 </div>
             </div>    
         <div class="panel panel-primary">
-            <div class="panel-heading">List Of Ftth Locations</div>
+            <div class="panel-heading">Areas with access to Econet Fibre  </div>
 
             <div class="panel-body">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <td>
-                                Ftth Location
+                                Location
                             </td>
                             <td>
                                 Description

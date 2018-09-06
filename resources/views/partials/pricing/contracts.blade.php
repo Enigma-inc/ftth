@@ -33,8 +33,8 @@
     <div class="row info ">
         <div class="margin-top-50 ">
             <p >Dial <span>*100#</span> for more pricing on low end daily, weekly and monthly bundles</p>
-            <h2 class=" title  margin-top-20 margin-bottom-10">Promotions</h2>
-            <p>Click <a target="_blank" href="http://www.etl.co.ls/index.php?option=com_content&view=article&id=76:promotions&catid=10:deals&Itemid=105">here</a> to view current promotions</p>
+            {{-- <h2 class=" title  margin-top-20 margin-bottom-10">Promotions</h2>
+            <p>Click <a target="_blank" href="http://www.etl.co.ls/index.php?option=com_content&view=article&id=76:promotions&catid=10:deals&Itemid=105">here</a> to view current promotions</p> --}}
         </div>
 
     </div>

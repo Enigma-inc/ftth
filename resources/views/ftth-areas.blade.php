@@ -2,7 +2,7 @@
 @component('partials.inner-pages-banner')
     @slot('title')
         <img src="{{url('images/fiber2hme-logo.png')}}" alt="FTTH" height="200">
-        <h2>Areas with <strong>FTTH</strong></h2>
+        <h2>Areas access to <strong> Econet Fibre </strong></h2>
     @endslot
  @endcomponent 
 

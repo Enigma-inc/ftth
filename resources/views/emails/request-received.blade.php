@@ -1,5 +1,5 @@
 @component('mail::message')
-#FTTH request received from {{$survey->name}} 
+#Econet Fibre  request received from {{$survey->name}} 
 @component('mail::panel')
 Below are the details of submission
 @endcomponent

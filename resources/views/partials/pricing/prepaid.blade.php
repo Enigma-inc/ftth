@@ -2,7 +2,7 @@
     <div class="row text-left margin-left-10">
         <ul class="margin-top-50" style="font-size: 1.3em;font-weight:400">
             <li>Prices include Equipment fee of M999</li>
-            <li>Once off Connection Fee M500 has to be paid before installation</li>
+            <li>M199 for 4GB data Once off to be paid before installation</li>
         </ul>
         <hr>
     </div>
@@ -33,8 +33,8 @@
     <div class="row info ">
         <div class="margin-top-50 ">
             <p >Dial <span>*100#</span> for more pricing on low end daily, weekly and monthly bundles</p>
-            <h2 class=" title  margin-top-20 margin-bottom-10">Promotions</h2>
-            <p>Click <a target="_blank" href="http://www.etl.co.ls/index.php?option=com_content&view=article&id=76:promotions&catid=10:deals&Itemid=105">here</a> to view current promotions</p>
+            {{-- <h2 class=" title  margin-top-20 margin-bottom-10">Promotions</h2>
+            <p>Click <a target="_blank" href="http://www.etl.co.ls/index.php?option=com_content&view=article&id=76:promotions&catid=10:deals&Itemid=105">here</a> to view current promotions</p> --}}
         </div>
 
     </div>

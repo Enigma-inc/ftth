@@ -6,7 +6,7 @@
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
-    <title>Econet - FTTH</title>
+    <title> Econet Fibre </title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
 
@@ -39,7 +39,7 @@
 
 <div class="wrapper" id="app">
     @yield('banner')
-    <div class="main main-raised">
+    <div class="main">
         @yield('content')
 
     @if(Session::has('flash'))

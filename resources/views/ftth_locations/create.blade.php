@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Ftth Location
+             Econet Fibre  Location
         </h1>
     </section>
     <div class="content">

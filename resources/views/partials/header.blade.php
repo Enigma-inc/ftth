@@ -10,9 +10,6 @@
             <div class="logo margin-left-10">
                 <img class="" src="{{url('/images/logo.png')}}" alt="Econet Logo"  data-html="true">
             </div>
-            <!-- <div class="brand">
-                 ECONET - FTTH
-             </div>-->
 
 
         </div>
