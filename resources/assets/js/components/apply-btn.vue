@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-  props: ["package", "location"],
+  props: ["package", "location", "packageType"],
   data() {
     return {
       link: "../../application"
@@ -11,7 +11,6 @@ export default {
   },
   mounted() {
     if (this.package) {
-      console.log(this.package);
       this.link = this.link.concat(`?package=${this.package}`);
     }
     if (this.location) {
@@ -19,9 +18,18 @@ export default {
         ? (this.link = this.link.concat(`&location=${this.location}`))
         : (this.link = this.link.concat(`?location=${this.location}`));
     }
+
+    if (this.packageType) {
+      this.location || this.package
+        ? (this.link = this.link.concat(`&type=${this.packageType}`))
+        : (this.link = this.link.concat(`?type=${this.packageType}`));
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
+.btn {
+  margin: 3px;
+}
 </style>
 

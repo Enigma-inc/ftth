@@ -30,7 +30,7 @@
         .contract {
             font-weight: 600;
             color: rgba(0, 0, 0, 0.7);
-            font-size: 1.5em;
+            font-size: 1em;
         }
     }
     .contract-details {
@@ -38,28 +38,18 @@
         justify-content: space-between;
         align-items: center;
         border: rgba(0, 0, 0, 0.3) 1px solid;
-        padding: 10px;
+        padding: 2px 10px;
         .contract {
-            font-weight: 600;
+            font-weight: 300;
             color: rgba(0, 0, 0, 0.7);
-            font-size: 2em;
+            font-size: 1.4rem;
             span {
-                font-size: 0.6em;
+                font-weight: 700;
+                font-size: 0.9em;
             }
         }
     }
-    .contract-container {
-        margin-bottom: 20px;
-        .contract {
-            font-weight: 400;
-            color: rgba(0, 0, 0, 0.7);
-            font-size: 1.5em;
-            span {
-                font-size: 0.7em;
-                font-weight: 600;
-            }
-        }
-    }
+
     .info {
         display: inline;
         p {
@@ -93,11 +83,12 @@
 .nav-pills>li.active>a:focus,
 .nav-pills>li.active>a:hover {
     box-shadow: none !important;
-    background-color: rgba(255, 0, 0, 0.7);
+    background-color: rgba(#0d47a1, 1);
 }
 
 .nav-pills>li>a {
     border-radius: 0;
+    background-color: rgba(#0d47a1, 0.1);
 }
 
 .level {
@@ -149,4 +140,9 @@
 }
 .main-raised {
     margin: -60px 20px 0px;
+}
+.footer{
+    .copyright{
+            padding: 5px 0;
+    }
 }

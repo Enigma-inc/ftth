@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600,900);.tim-row {
+.tim-row {
   margin-bottom: 20px;
 }
 
@@ -146,7 +146,7 @@
 
 .logo-container .logo {
   overflow: hidden;
-  width: 100px;
+  width: 120px;
   float: left;
 }
 
@@ -1969,6 +1969,15 @@
   /* For IE8 and earlier */
 }
 
+.index-page .header-filter:after {
+  background: rgba(101, 47, 142, 0.64);
+  background: linear-gradient(5deg, rgba(255, 255, 255, 0.7) 10%, rgba(237, 28, 36, 0.45) 100%);
+}
+
+.footer {
+  background: whitesmoke;
+}
+
 .contracts-page {
   font-family: Raleway, sans-serif !important;
 }
@@ -2011,7 +2020,7 @@
 .contracts-page .contract-header .contract {
   font-weight: 600;
   color: rgba(0, 0, 0, 0.7);
-  font-size: 1.5em;
+  font-size: 1em;
 }
 
 .contracts-page .contract-details {
@@ -2022,32 +2031,18 @@
   -ms-flex-align: center;
       align-items: center;
   border: rgba(0, 0, 0, 0.3) 1px solid;
-  padding: 10px;
+  padding: 2px 10px;
 }
 
 .contracts-page .contract-details .contract {
-  font-weight: 600;
+  font-weight: 300;
   color: rgba(0, 0, 0, 0.7);
-  font-size: 2em;
+  font-size: 1.4rem;
 }
 
 .contracts-page .contract-details .contract span {
-  font-size: 0.6em;
-}
-
-.contracts-page .contract-container {
-  margin-bottom: 20px;
-}
-
-.contracts-page .contract-container .contract {
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 1.5em;
-}
-
-.contracts-page .contract-container .contract span {
-  font-size: 0.7em;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.9em;
 }
 
 .contracts-page .info {
@@ -2086,11 +2081,12 @@
 .nav-pills > li.active > a:focus,
 .nav-pills > li.active > a:hover {
   box-shadow: none !important;
-  background-color: rgba(255, 0, 0, 0.7);
+  background-color: #0d47a1;
 }
 
 .nav-pills > li > a {
   border-radius: 0;
+  background-color: rgba(13, 71, 161, 0.1);
 }
 
 .level {
@@ -2149,4 +2145,8 @@
 
 .main-raised {
   margin: -60px 20px 0px;
+}
+
+.footer .copyright {
+  padding: 5px 0;
 }

@@ -11,6 +11,8 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Http\Resources\LocationResource;
+// use App\FtthLocation;
 
 /**
  * Class FtthLocationController
@@ -36,9 +38,9 @@ class FtthLocationAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->ftthLocationRepository->pushCriteria(new RequestCriteria($request));
-        $this->ftthLocationRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $ftthLocations = $this->ftthLocationRepository->all();
+
+        $ftthLocations = FtthLocation::all();
+        // LocationResource::collection();
 
         return $ftthLocations;
     }

@@ -1,8 +1,8 @@
 <template>
 <form-wizard title="Complete 2 Easy Steps Below" subtitle=""
              :finishButtonText="'Submit'" :color="'#eb443b'" 
-              @on-complete="placeApplication()"> 
-        <tab-content title="Package & Location Selection" >
+              @on-complete="placeApplication()" > 
+        <tab-content title="Package & Location Selection" :beforeChange="()=>validateStep1($v)">
             <div class="row">
                     <div class="col-xs-12 col-md-4 ">
                         <div class="form-group label-floating padding-right-10" :class="{ error: $v.basicDetails.name.$invalid }">
@@ -12,7 +12,7 @@
                             <div class="">
                                 <input  id="name" type="text" name="name" class="form-control" @input="$v.basicDetails.name.$touch()" v-model.trim="basicDetails.name"  >
                                 <span class="help-block"  v-if="$v.basicDetails.name.$invalid && ($v.basicDetails.name.$dirty || showStep1Errors)">
-                                    This field is required
+                                    Name is required
                                 </span>
                             </div>
                         </div>                       
@@ -26,55 +26,81 @@
                             <div class="">
                                 <input id="surname" type="text" class="form-control" name="surname"  @input="$v.basicDetails.surname.$touch()" v-model.trim="basicDetails.surname"  > 
                                     <span class="help-block" v-if="$v.basicDetails.surname.$invalid && ($v.basicDetails.surname.$dirty || showStep1Errors)">
-                                        This field is required 
+                                        Surname is required 
                                      </span>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-4">
-                        <div class="form-group label-floating padding-right-10" :class="{ error: $v.basicDetails.phoneMobile.$invalid}">
+                        <div class="form-group label-floating padding-right-10" :class="{ error: $v.basicDetails.phone.$invalid}">
                             <label for="phone-mobile" class=" control-label">Phone<span class="required-star">*</span> </label>
     
                             <div class="">
-                                <input id="phone-mobile" type="text" class="form-control" @input="$v.basicDetails.phoneMobile.$touch()" v-model.trim="basicDetails.phoneMobile" name="phoneMobile" > 
-                                <span class="help-block"  v-if="$v.basicDetails.phoneMobile.$invalid && ($v.basicDetails.phoneMobile.$dirty || showStep1Errors)">
-                                    <span>This field is required</span>
+                                <input id="phone-mobile" type="text" class="form-control" @input="$v.basicDetails.phone.$touch()" v-model.trim="basicDetails.phone" name="phone" > 
+                                <span class="help-block"  v-if="$v.basicDetails.phone.$invalid && ($v.basicDetails.phone.$dirty || showStep1Errors)">
+                                    <span>Phone is required</span>
                                 </span>
                             </div>
                         </div>
                     </div>
             </div>
 
-            <div class="row">
-               <div class="col-xs-12 col-md-6">
-                <div class="form-group  label-floating padding-right-10" :class="{ error: $v.basicDetails.package.$invalid }">
+            <div class="row margin-top-20">
+               <div class="col-xs-12 col-md-8">
+                   <div class="col-xs-6">
+                       <div class="form-group label-floating margin-top-0 service-type" :class="{ error: $v.basicDetails.serviceType.$invalid }">
+                          <label class="label-text">Service Type</label>                        
+                           <div class="radio-container">
+                                <div class="radio margin-0">
+                                <label>
+                                    <input   v-bind:value="'contract'" v-model="basicDetails.serviceType"   type="radio" name="serviceType" checked>
+                                       <span class="circle"></span><span class="check"></span>
+                                        Contract
+                                </label>
+                            </div>
+                            <div class="radio margin-0">
+                                    <label>
+                                        <input  v-bind:value="'prepaid'" v-model="basicDetails.serviceType"   type="radio" name="serviceType">
+                                         <span class="circle"></span><span class="check"></span>
+                                        Prepaid
+                                    </label>
+                                </div>
+                            </div>
+                          <div class="help-block" v-if="$v.basicDetails.serviceType.$invalid && showStep1Errors">
+                            <span>Select Service Type </span>
+                           </div>
+                           </div>
+                   </div>
+                <div class="col-xs-6">
+                    <div class="form-group  label-floating padding-right-10" :class="{ error: $v.basicDetails.package.$invalid }">
 
                     <label for="package" class="control-label" style="text-transform:capitalize">Select {{basicDetails.serviceType}} package<span class="required-star">*</span></label>
 
                     <div class="">
                         <v-select label="data_bundle" :options="packageOptions"   v-model="selectedPackageOption" >
-                                <template slot="option" scope="option">
+                                <template slot="option" slot-scope="option">
                                     <span>{{option.data_bundle}}</span>
                                     <span>|</span>
                                     <span> M{{option.price}}</span>
                                 </template>
                         </v-select> 
 
-                        <span class="help-block" v-if="$v.basicDetails.package.$invalid && showStep2Errors">
+                        <div class="help-block" v-if="$v.basicDetails.package.$invalid && showStep1Errors">
                             <span>Select Package </span>
-                        </span>
+                        </div>
                     </div>
+                     </div>
                 </div>
                </div>
-               <div class="col-xs-12 col-md-6">
+               <div class="col-xs-12 col-md-4">
                     <div class="form-group label-floating padding-right-10 " :class="{ error: $v.basicDetails.location.$invalid}">
                     <label for="location" class="control-label ">Select Your Area<span class="required-star">*</span></label>
 
                     <div class="">
                             <v-select label="name"  :options="locations" v-model="selectedLocation"></v-select>
-                            <span class="help-block" v-if="$v.basicDetails.location.$invalid && ($v.basicDetails.location.$dirty || showStep1Errors)">
-                            <span>Select your Area</span>
-                        </span>
+                            <div class="help-block" v-if="$v.basicDetails.location.$invalid && ($v.basicDetails.location.$dirty || showStep1Errors)">
+                               <span>Select your Area</span>
+                             </div>
                     </div>
                 </div>
                </div>
@@ -85,8 +111,7 @@
     
             
         </tab-content>
-        <!-- :beforeChange="()=>validateStep2($v)" -->
-        <tab-content title="Account" >
+        <tab-content title="Account" :beforeChange="()=>validateStep2($v)">
          <div class="row">
               <div class="col-xs-12 col-md-12 ">
                   <div class="form-group label-floating padding-right-10" :class="{ error: $v.accountDetails.email.$invalid }">
@@ -95,8 +120,8 @@
 
                       <div class="">
                           <input  id="email" type="text" name="email" class="form-control"  v-model="accountDetails.email"  >
-                          <span class="help-block"  v-if="$v.accountDetails.email.$invalid && ($v.accountDetails.email.$dirty || showStep1Errors)">
-                              This field is required
+                          <span class="help-block"  v-if="$v.accountDetails.email.$invalid && ($v.accountDetails.email.$dirty || showStep2Errors)">
+                              Provide valid email address
                           </span>
                       </div>
                   </div>                       
@@ -104,7 +129,8 @@
               </div>
               
             </div>
-            <div class="row">
+
+            <div class="row margin-top-20 margin-bottom-20">
                 <div class="col-xs-12 col-md-6 ">
                   <div class="form-group label-floating padding-right-10" :class="{ error: $v.accountDetails.password.$invalid }">
                       <label for="password" class=" control-label">Password 
@@ -112,30 +138,30 @@
 
                       <div class="">
                           <input  id="password" type="password" name="password" class="form-control" v-model="accountDetails.password"  >
-                          <!-- <span class="help-block"  v-if="!$v.accountDetails.password.required">
+                          <span class="help-block"  v-if="!$v.accountDetails.password.required && ($v.accountDetails.password.$dirty || showStep2Errors)">
                               Password is required
                           </span>
                           <span class="help-block"  v-if="!$v.accountDetails.password.minLength">
                               Password must have at least 6 charecters.
-                          </span> -->
+                          </span>
                       </div>
                   </div>                      
 
               </div>
                 <div class="col-xs-12 col-md-6 ">
-                  <div class="form-group label-floating padding-right-10" :class="{ error: $v.accountDetails.repeatPassword.$invalid }">
+                  <div class="form-group label-floating padding-right-10 error" >
                       <label for="repeatPassword" class=" control-label">Confirm Password
                           <span class="required-star" v-if="$v.accountDetails.repeatPassword.$invalid ">*</span></label>
-
                       <div class="">
                           <input  id="repeatPassword" type="password" name="repeatPassword" class="form-control" v-model="accountDetails.repeatPassword"  >
-                          <span class="help-block"  v-if="$v.accountDetails.repeatPassword.$invalid && ($v.accountDetails.repeatPassword.$dirty || showStep1Errors)">
-                              This field is required
+                          <span class="help-block"  v-if="(!$v.accountDetails.password.$invalid && $v.accountDetails.password.$minLength) || passwordNotConfirmed">
+                              Not Matching
                           </span>
                       </div>
                   </div>                      
 
               </div>
+
             </div>
 
 
@@ -162,6 +188,7 @@ export default {
       showStep3Errors: false,
       accountTypes: ["Cheque", "Savings"],
       packageOptions: [],
+      unFilteredpackageOptions: [],
       selectedPackageOption: "",
       locations: [],
       selectedLocation: "",
@@ -174,8 +201,9 @@ export default {
       basicDetails: {
         name: "",
         surname: "",
-        phoneMobile: "",
+        phone: "",
         location: "",
+        serviceType: "",
         package: ""
       },
       accountDetails: {
@@ -189,9 +217,10 @@ export default {
     basicDetails: {
       name: { required },
       surname: { required },
-      phoneMobile: { required },
+      phone: { required },
       package: { required },
-      location: { required }
+      location: { required },
+      serviceType: { required }
     },
     accountDetails: {
       email: { required },
@@ -201,12 +230,13 @@ export default {
         minLength: minLength(6)
       },
       repeatPassword: {
+        required,
         sameAsPassword: sameAs("password")
       }
     }
   },
   mounted() {
-    console.log(this.getParameterByName("package"));
+    this.setpackgeTypeFromParam();
     this.getLookups();
   },
   methods: {
@@ -217,49 +247,50 @@ export default {
           Object.assign({}, this.basicDetails, this.accountDetails)
         )
         .then(response => {
-          console.log(response);
+          this.$noty
+            .success("Application Placed! We shall get back to you.", {
+              theme: "metroui",
+              layout: "center"
+            })
+            .on("onClose", function() {
+              window.location.href = "../";
+            });
+        })
+        .catch(error => {
+          this.$noty.error("Oops! An error has occured. Please try again.", {
+            theme: "metroui",
+            layout: "center"
+          });
         });
     },
     validateStep1($v) {
       this.showStep1Errors = true;
-      return true;
-      //   return (
-      //     !$v.basicDetails.name.$invalid &&
-      //     !$v.basicDetails.surname.$invalid &&
-      //     !$v.basicDetails.email.$invalid &&
-      //     !$v.basicDetails.phoneMobile.$invalid &&
-      //     !$v.basicDetails.location.$invalid
-      //   );
+      return (
+        !$v.basicDetails.name.$invalid &&
+        !$v.basicDetails.surname.$invalid &&
+        !$v.basicDetails.package.$invalid &&
+        !$v.basicDetails.location.$invalid &&
+        !$v.basicDetails.serviceType.$invalid
+      );
     },
     validateStep2($v) {
       this.showStep2Errors = true;
 
-      //   return !$v.basicDetails.package.$invalid;
-    },
-
-    submitPersonalDetails(scope) {
-      axios
-        .post(
-          `./application/${
-            this.applicationMeta.applicationId
-          }/personal-details/${this.applicationMeta.personalDetailsId}`,
-          this.basicDetails
-        )
-        .then(res => {
-          EventBus.$emit("NEXT_STEP_MESSAGE", {
-            message: "Pick your prefered package on the next step"
-          });
-          this.applicationMeta.applicationId = res.data.application.id;
-          this.applicationMeta.personalDetailsId = res.data.basicDetails.id;
-          this.currentStep = 2;
-        })
-        .catch(error => {
-          EventBus.$emit("SUBMISION_ERROR");
-        });
+      return (
+        !$v.accountDetails.email.$invalid &&
+        !$v.accountDetails.password.$invalid &&
+        !$v.accountDetails.repeatPassword.$invalid &&
+        !this.passwordNotConfirmed
+      );
     },
     getPackagesFromServer() {
       axios.get(`/packages?type=`).then(resp => {
-        this.packageOptions = resp.data;
+        this.packageOptions = [];
+        resp.data.filter(item => {
+          if (item.type == this.basicDetails.serviceType) {
+            this.packageOptions.push(item);
+          }
+        });
         this.setSelectedPackgeFromParam();
       });
     },
@@ -292,6 +323,12 @@ export default {
         }
       });
     },
+    setpackgeTypeFromParam() {
+      let packageTypeParam = this.getParameterByName("type");
+      if (packageTypeParam) {
+        this.basicDetails.serviceType = packageTypeParam;
+      }
+    },
     setSelectedLocationFromParam() {
       this.packageOptions.forEach(item => {
         let locationParam = this.getParameterByName("location");
@@ -304,6 +341,9 @@ export default {
     }
   },
   computed: {
+    passwordNotConfirmed() {
+      return this.accountDetails.password != this.accountDetails.repeatPassword;
+    },
     rules() {
       return this.basicDetails.adslCustomer ? "required" : "";
     }
@@ -317,11 +357,16 @@ export default {
       }
     },
     selectedPackageOption: function(newValue, oldValue) {
-      if (newValue) {
+      if (newValue && newValue.id) {
         this.basicDetails.package = newValue.id;
-      } else {
+      } else if (oldValue && oldValue.id) {
         this.basicDetails.package = oldValue.id;
+      } else {
+        this.basicDetails.package = "";
       }
+    },
+    "basicDetails.serviceType": function(newValue, oldValue) {
+      this.getPackagesFromServer();
     }
   }
 };
@@ -364,6 +409,17 @@ a:focus {
       font-weight: 500;
       color: rgba(0, 0, 0, 0.6);
     }
+  }
+}
+.service-type {
+  margin-top: 27px !important;
+  label {
+    font-size: 11px;
+  }
+  .radio-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
   }
 }
 </style>

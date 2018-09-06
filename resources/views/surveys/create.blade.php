@@ -1,8 +1,8 @@
 @extends('layouts.master') 
 @component('partials.inner-pages-banner')
  @slot('title')
-      <img src="{{url('images/fiber2hme-logo.png')}}" alt="FTTH" height="200">
-    <h2>Request <strong>FTTH</strong> For Your Area</h2>
+      <img src="{{url('images/fiber2hme-logo.png?v=2')}}" alt="FTTH" height="200">
+    <h2>Request <strong>Econet Fibre </strong> For Your Area</h2>
 @endslot
  @endcomponent 
  
@@ -95,7 +95,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-6" style="display:none">
 
                             <div class="form-group label-floating padding-right-10 {{ $errors->has('district') ? ' has-error' : '' }}">
                                 <label for="district" class="control-label ">Select District<span class="required-star">*</span></label>

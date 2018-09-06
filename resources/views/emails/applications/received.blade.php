@@ -1,5 +1,5 @@
 @component('mail::message')
- **{{$application->personalDetails->name.' '.$application->personalDetails->surname}}** has placed FTTH Application, 
+ **{{$application->personalDetails->name.' '.$application->personalDetails->surname}}** has placed Application for Econet Fibre , 
  below are the details.
 
 @component('mail::panel')

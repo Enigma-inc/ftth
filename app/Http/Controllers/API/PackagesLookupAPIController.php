@@ -11,6 +11,7 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+// use App\PackagesLookup;
 
 /**
  * Class PackagesLookupController
@@ -37,8 +38,9 @@ class PackagesLookupAPIController extends AppBaseController
     public function index(Request $request)
     {
         $this->packagesLookupRepository->pushCriteria(new RequestCriteria($request));
-        $this->packagesLookupRepository->pushCriteria(new LimitOffsetCriteria($request));
         $packagesLookups = $this->packagesLookupRepository->all();
+
+        return $packagesLookups;
 
         return $this->sendResponse($packagesLookups->toArray(), 'Packages Lookups retrieved successfully');
     }

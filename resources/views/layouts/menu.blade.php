@@ -15,9 +15,9 @@
 <li class="{{ Request::is('packagesLookups*') ? 'active' : '' }}">
     <a href="{!! route('packagesLookups.index') !!}"><i class="fa fa-cube"></i><span>Packages</span></a>
 </li>
-{{--  <li class="{{ Request::is('ftthApplications*') ? 'active' : '' }}">
+<li class="{{ Request::is('ftthApplications*') ? 'active' : '' }}">
     <a href="{!! route('ftthApplications.index') !!}"><i class="fa fa-wpforms"></i><span>Ftth Applications</span></a>
-</li>  --}}
+</li>
 
 
 @if(Auth::user()->is_admin)

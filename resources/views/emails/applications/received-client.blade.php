@@ -1,5 +1,5 @@
 @component('mail::message')
-  Hi {{$application->personalDetails->name}}, we have recieved your application for FTTH. 
+  Hi {{$application->personalDetails->name}}, we have recieved your application for Econet Fibre Wife. 
   Below are the details of your application.
 
 @component('mail::panel')

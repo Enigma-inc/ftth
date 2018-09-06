@@ -1766,6 +1766,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
   data: function data() {
@@ -1775,6 +1801,7 @@ exports.default = {
       showStep3Errors: false,
       accountTypes: ["Cheque", "Savings"],
       packageOptions: [],
+      unFilteredpackageOptions: [],
       selectedPackageOption: "",
       locations: [],
       selectedLocation: "",
@@ -1787,8 +1814,9 @@ exports.default = {
       basicDetails: {
         name: "",
         surname: "",
-        phoneMobile: "",
+        phone: "",
         location: "",
+        serviceType: "",
         package: ""
       },
       accountDetails: {
@@ -1803,9 +1831,10 @@ exports.default = {
     basicDetails: {
       name: { required: _validators.required },
       surname: { required: _validators.required },
-      phoneMobile: { required: _validators.required },
+      phone: { required: _validators.required },
       package: { required: _validators.required },
-      location: { required: _validators.required }
+      location: { required: _validators.required },
+      serviceType: { required: _validators.required }
     },
     accountDetails: (_accountDetails = {
       email: { required: _validators.required },
@@ -1814,55 +1843,52 @@ exports.default = {
       required: _validators.required,
       minLength: (0, _validators.minLength)(6)
     }), _defineProperty(_accountDetails, "repeatPassword", {
+      required: _validators.required,
       sameAsPassword: (0, _validators.sameAs)("password")
     }), _accountDetails)
   },
   mounted: function mounted() {
-    console.log(this.getParameterByName("package"));
+    this.setpackgeTypeFromParam();
     this.getLookups();
   },
 
   methods: {
     placeApplication: function placeApplication() {
+      var _this = this;
+
       axios.post("./api/place-application", Object.assign({}, this.basicDetails, this.accountDetails)).then(function (response) {
-        console.log(response);
+        _this.$noty.success("Application Placed! We shall get back to you.", {
+          theme: "metroui",
+          layout: "center"
+        }).on("onClose", function () {
+          window.location.href = "../";
+        });
+      }).catch(function (error) {
+        _this.$noty.error("Oops! An error has occured. Please try again.", {
+          theme: "metroui",
+          layout: "center"
+        });
       });
     },
     validateStep1: function validateStep1($v) {
       this.showStep1Errors = true;
-      return true;
-      //   return (
-      //     !$v.basicDetails.name.$invalid &&
-      //     !$v.basicDetails.surname.$invalid &&
-      //     !$v.basicDetails.email.$invalid &&
-      //     !$v.basicDetails.phoneMobile.$invalid &&
-      //     !$v.basicDetails.location.$invalid
-      //   );
+      return !$v.basicDetails.name.$invalid && !$v.basicDetails.surname.$invalid && !$v.basicDetails.package.$invalid && !$v.basicDetails.location.$invalid && !$v.basicDetails.serviceType.$invalid;
     },
     validateStep2: function validateStep2($v) {
       this.showStep2Errors = true;
 
-      //   return !$v.basicDetails.package.$invalid;
-    },
-    submitPersonalDetails: function submitPersonalDetails(scope) {
-      var _this = this;
-
-      axios.post("./application/" + this.applicationMeta.applicationId + "/personal-details/" + this.applicationMeta.personalDetailsId, this.basicDetails).then(function (res) {
-        EventBus.$emit("NEXT_STEP_MESSAGE", {
-          message: "Pick your prefered package on the next step"
-        });
-        _this.applicationMeta.applicationId = res.data.application.id;
-        _this.applicationMeta.personalDetailsId = res.data.basicDetails.id;
-        _this.currentStep = 2;
-      }).catch(function (error) {
-        EventBus.$emit("SUBMISION_ERROR");
-      });
+      return !$v.accountDetails.email.$invalid && !$v.accountDetails.password.$invalid && !$v.accountDetails.repeatPassword.$invalid && !this.passwordNotConfirmed;
     },
     getPackagesFromServer: function getPackagesFromServer() {
       var _this2 = this;
 
       axios.get("/packages?type=").then(function (resp) {
-        _this2.packageOptions = resp.data;
+        _this2.packageOptions = [];
+        resp.data.filter(function (item) {
+          if (item.type == _this2.basicDetails.serviceType) {
+            _this2.packageOptions.push(item);
+          }
+        });
         _this2.setSelectedPackgeFromParam();
       });
     },
@@ -1899,6 +1925,12 @@ exports.default = {
         }
       });
     },
+    setpackgeTypeFromParam: function setpackgeTypeFromParam() {
+      var packageTypeParam = this.getParameterByName("type");
+      if (packageTypeParam) {
+        this.basicDetails.serviceType = packageTypeParam;
+      }
+    },
     setSelectedLocationFromParam: function setSelectedLocationFromParam() {
       var _this5 = this;
 
@@ -1913,6 +1945,9 @@ exports.default = {
     }
   },
   computed: {
+    passwordNotConfirmed: function passwordNotConfirmed() {
+      return this.accountDetails.password != this.accountDetails.repeatPassword;
+    },
     rules: function rules() {
       return this.basicDetails.adslCustomer ? "required" : "";
     }
@@ -1926,11 +1961,16 @@ exports.default = {
       }
     },
     selectedPackageOption: function selectedPackageOption(newValue, oldValue) {
-      if (newValue) {
+      if (newValue && newValue.id) {
         this.basicDetails.package = newValue.id;
-      } else {
+      } else if (oldValue && oldValue.id) {
         this.basicDetails.package = oldValue.id;
+      } else {
+        this.basicDetails.package = "";
       }
+    },
+    "basicDetails.serviceType": function basicDetailsServiceType(newValue, oldValue) {
+      this.getPackagesFromServer();
     }
   }
 };
@@ -2013,7 +2053,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.form-group.error label.control-label[data-v-2bd5e1aa],\n.form-group.error .help-block[data-v-2bd5e1aa] {\n  color: #f44336;\n}\na[data-v-2bd5e1aa],\na[data-v-2bd5e1aa]:hover,\na[data-v-2bd5e1aa]:focus {\n  color: #b4cff9;\n}\n.container[data-v-2bd5e1aa] {\n  padding-top: 20px;\n}\n.section-container .section-title[data-v-2bd5e1aa] {\n  font-weight: 600;\n  font-size: 1.5rem;\n  color: rgba(0, 0, 0, 0.5);\n  margin-bottom: 5px;\n  margin-top: 15px;\n}\n.section-container .item-container[data-v-2bd5e1aa] {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: justify;\n      justify-content: space-between;\n  -ms-flex-align: center;\n      align-items: center;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.2);\n  padding: 5px 0;\n}\n.section-container .item-container .item-title[data-v-2bd5e1aa] {\n    font-size: 1.2rem;\n    font-weight: 300;\n    color: rgba(0, 0, 0, 0.5);\n}\n.section-container .item-container .item-content[data-v-2bd5e1aa] {\n    font-size: 1.2rem;\n    font-weight: 500;\n    color: rgba(0, 0, 0, 0.6);\n}\n", ""]);
+exports.push([module.i, "\n.form-group.error label.control-label[data-v-2bd5e1aa],\n.form-group.error .help-block[data-v-2bd5e1aa] {\n  color: #f44336;\n}\na[data-v-2bd5e1aa],\na[data-v-2bd5e1aa]:hover,\na[data-v-2bd5e1aa]:focus {\n  color: #b4cff9;\n}\n.container[data-v-2bd5e1aa] {\n  padding-top: 20px;\n}\n.section-container .section-title[data-v-2bd5e1aa] {\n  font-weight: 600;\n  font-size: 1.5rem;\n  color: rgba(0, 0, 0, 0.5);\n  margin-bottom: 5px;\n  margin-top: 15px;\n}\n.section-container .item-container[data-v-2bd5e1aa] {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: justify;\n      justify-content: space-between;\n  -ms-flex-align: center;\n      align-items: center;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.2);\n  padding: 5px 0;\n}\n.section-container .item-container .item-title[data-v-2bd5e1aa] {\n    font-size: 1.2rem;\n    font-weight: 300;\n    color: rgba(0, 0, 0, 0.5);\n}\n.section-container .item-container .item-content[data-v-2bd5e1aa] {\n    font-size: 1.2rem;\n    font-weight: 500;\n    color: rgba(0, 0, 0, 0.6);\n}\n.service-type[data-v-2bd5e1aa] {\n  margin-top: 27px !important;\n}\n.service-type label[data-v-2bd5e1aa] {\n    font-size: 11px;\n}\n.service-type .radio-container[data-v-2bd5e1aa] {\n    display: -ms-flexbox;\n    display: flex;\n    width: 100%;\n    -ms-flex-align: center;\n        align-items: center;\n}\n", ""]);
 
 // exports
 
@@ -11392,7 +11432,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('tab-content', {
     attrs: {
-      "title": "Package & Location Selection"
+      "title": "Package & Location Selection",
+      "beforeChange": function () { return _vm.validateStep1(_vm.$v); }
     }
   }, [_c('div', {
     staticClass: "row"
@@ -11442,7 +11483,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.$v.basicDetails.name.$invalid && (_vm.$v.basicDetails.name.$dirty || _vm.showStep1Errors)) ? _c('span', {
     staticClass: "help-block"
-  }, [_vm._v("\r\n                                    This field is required\r\n                                ")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\r\n                                    Name is required\r\n                                ")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-md-4"
   }, [_c('div', {
     staticClass: "form-group label-floating padding-right-10",
@@ -11488,12 +11529,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.$v.basicDetails.surname.$invalid && (_vm.$v.basicDetails.surname.$dirty || _vm.showStep1Errors)) ? _c('span', {
     staticClass: "help-block"
-  }, [_vm._v("\r\n                                        This field is required \r\n                                     ")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\r\n                                        Surname is required \r\n                                     ")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-md-4"
   }, [_c('div', {
     staticClass: "form-group label-floating padding-right-10",
     class: {
-      error: _vm.$v.basicDetails.phoneMobile.$invalid
+      error: _vm.$v.basicDetails.phone.$invalid
     }
   }, [_c('label', {
     staticClass: " control-label",
@@ -11506,8 +11547,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model.trim",
-      value: (_vm.basicDetails.phoneMobile),
-      expression: "basicDetails.phoneMobile",
+      value: (_vm.basicDetails.phone),
+      expression: "basicDetails.phone",
       modifiers: {
         "trim": true
       }
@@ -11516,28 +11557,96 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "phone-mobile",
       "type": "text",
-      "name": "phoneMobile"
+      "name": "phone"
     },
     domProps: {
-      "value": (_vm.basicDetails.phoneMobile)
+      "value": (_vm.basicDetails.phone)
     },
     on: {
       "input": [function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.basicDetails, "phoneMobile", $event.target.value.trim())
+        _vm.$set(_vm.basicDetails, "phone", $event.target.value.trim())
       }, function($event) {
-        _vm.$v.basicDetails.phoneMobile.$touch()
+        _vm.$v.basicDetails.phone.$touch()
       }],
       "blur": function($event) {
         _vm.$forceUpdate()
       }
     }
-  }), _vm._v(" "), (_vm.$v.basicDetails.phoneMobile.$invalid && (_vm.$v.basicDetails.phoneMobile.$dirty || _vm.showStep1Errors)) ? _c('span', {
+  }), _vm._v(" "), (_vm.$v.basicDetails.phone.$invalid && (_vm.$v.basicDetails.phone.$dirty || _vm.showStep1Errors)) ? _c('span', {
     staticClass: "help-block"
-  }, [_c('span', [_vm._v("This field is required")])]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
+  }, [_c('span', [_vm._v("Phone is required")])]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row margin-top-20"
   }, [_c('div', {
-    staticClass: "col-xs-12 col-md-6"
+    staticClass: "col-xs-12 col-md-8"
+  }, [_c('div', {
+    staticClass: "col-xs-6"
+  }, [_c('div', {
+    staticClass: "form-group label-floating margin-top-0 service-type",
+    class: {
+      error: _vm.$v.basicDetails.serviceType.$invalid
+    }
+  }, [_c('label', {
+    staticClass: "label-text"
+  }, [_vm._v("Service Type")]), _vm._v(" "), _c('div', {
+    staticClass: "radio-container"
+  }, [_c('div', {
+    staticClass: "radio margin-0"
+  }, [_c('label', [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.basicDetails.serviceType),
+      expression: "basicDetails.serviceType"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "serviceType",
+      "checked": ""
+    },
+    domProps: {
+      "value": 'contract',
+      "checked": _vm._q(_vm.basicDetails.serviceType, 'contract')
+    },
+    on: {
+      "change": function($event) {
+        _vm.$set(_vm.basicDetails, "serviceType", 'contract')
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "circle"
+  }), _c('span', {
+    staticClass: "check"
+  }), _vm._v("\r\n                                        Contract\r\n                                ")])]), _vm._v(" "), _c('div', {
+    staticClass: "radio margin-0"
+  }, [_c('label', [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.basicDetails.serviceType),
+      expression: "basicDetails.serviceType"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "serviceType"
+    },
+    domProps: {
+      "value": 'prepaid',
+      "checked": _vm._q(_vm.basicDetails.serviceType, 'prepaid')
+    },
+    on: {
+      "change": function($event) {
+        _vm.$set(_vm.basicDetails, "serviceType", 'prepaid')
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "circle"
+  }), _c('span', {
+    staticClass: "check"
+  }), _vm._v("\r\n                                        Prepaid\r\n                                    ")])])]), _vm._v(" "), (_vm.$v.basicDetails.serviceType.$invalid && _vm.showStep1Errors) ? _c('div', {
+    staticClass: "help-block"
+  }, [_c('span', [_vm._v("Select Service Type ")])]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-6"
   }, [_c('div', {
     staticClass: "form-group  label-floating padding-right-10",
     class: {
@@ -11571,10 +11680,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       expression: "selectedPackageOption"
     }
-  }), _vm._v(" "), (_vm.$v.basicDetails.package.$invalid && _vm.showStep2Errors) ? _c('span', {
+  }), _vm._v(" "), (_vm.$v.basicDetails.package.$invalid && _vm.showStep1Errors) ? _c('div', {
     staticClass: "help-block"
-  }, [_c('span', [_vm._v("Select Package ")])]) : _vm._e()], 1)])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-md-6"
+  }, [_c('span', [_vm._v("Select Package ")])]) : _vm._e()], 1)])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-4"
   }, [_c('div', {
     staticClass: "form-group label-floating padding-right-10 ",
     class: {
@@ -11599,11 +11708,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       expression: "selectedLocation"
     }
-  }), _vm._v(" "), (_vm.$v.basicDetails.location.$invalid && (_vm.$v.basicDetails.location.$dirty || _vm.showStep1Errors)) ? _c('span', {
+  }), _vm._v(" "), (_vm.$v.basicDetails.location.$invalid && (_vm.$v.basicDetails.location.$dirty || _vm.showStep1Errors)) ? _c('div', {
     staticClass: "help-block"
   }, [_c('span', [_vm._v("Select your Area")])]) : _vm._e()], 1)])])])]), _vm._v(" "), _c('tab-content', {
     attrs: {
-      "title": "Account"
+      "title": "Account",
+      "beforeChange": function () { return _vm.validateStep2(_vm.$v); }
     }
   }, [_c('div', {
     staticClass: "row"
@@ -11643,10 +11753,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.$set(_vm.accountDetails, "email", $event.target.value)
       }
     }
-  }), _vm._v(" "), (_vm.$v.accountDetails.email.$invalid && (_vm.$v.accountDetails.email.$dirty || _vm.showStep1Errors)) ? _c('span', {
+  }), _vm._v(" "), (_vm.$v.accountDetails.email.$invalid && (_vm.$v.accountDetails.email.$dirty || _vm.showStep2Errors)) ? _c('span', {
     staticClass: "help-block"
-  }, [_vm._v("\r\n                              This field is required\r\n                          ")]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
+  }, [_vm._v("\r\n                              Provide valid email address\r\n                          ")]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row margin-top-20 margin-bottom-20"
   }, [_c('div', {
     staticClass: "col-xs-12 col-md-6 "
   }, [_c('div', {
@@ -11683,13 +11793,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.$set(_vm.accountDetails, "password", $event.target.value)
       }
     }
-  })])])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), (!_vm.$v.accountDetails.password.required && (_vm.$v.accountDetails.password.$dirty || _vm.showStep2Errors)) ? _c('span', {
+    staticClass: "help-block"
+  }, [_vm._v("\r\n                              Password is required\r\n                          ")]) : _vm._e(), _vm._v(" "), (!_vm.$v.accountDetails.password.minLength) ? _c('span', {
+    staticClass: "help-block"
+  }, [_vm._v("\r\n                              Password must have at least 6 charecters.\r\n                          ")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-md-6 "
   }, [_c('div', {
-    staticClass: "form-group label-floating padding-right-10",
-    class: {
-      error: _vm.$v.accountDetails.repeatPassword.$invalid
-    }
+    staticClass: "form-group label-floating padding-right-10 error"
   }, [_c('label', {
     staticClass: " control-label",
     attrs: {
@@ -11719,9 +11830,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.$set(_vm.accountDetails, "repeatPassword", $event.target.value)
       }
     }
-  }), _vm._v(" "), (_vm.$v.accountDetails.repeatPassword.$invalid && (_vm.$v.accountDetails.repeatPassword.$dirty || _vm.showStep1Errors)) ? _c('span', {
+  }), _vm._v(" "), ((!_vm.$v.accountDetails.password.$invalid && _vm.$v.accountDetails.password.$minLength) || _vm.passwordNotConfirmed) ? _c('span', {
     staticClass: "help-block"
-  }, [_vm._v("\r\n                              This field is required\r\n                          ")]) : _vm._e()])])])])])], 1)
+  }, [_vm._v("\r\n                              Not Matching\r\n                          ")]) : _vm._e()])])])])])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

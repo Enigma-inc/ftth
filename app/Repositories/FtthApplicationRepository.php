@@ -13,7 +13,7 @@ use InfyOm\Generator\Common\BaseRepository;
  * @method FtthApplication findWithoutFail($id, $columns = ['*'])
  * @method FtthApplication find($id, $columns = ['*'])
  * @method FtthApplication first($columns = ['*'])
-*/
+ */
 class FtthApplicationRepository extends BaseRepository
 {
     /**
@@ -25,13 +25,7 @@ class FtthApplicationRepository extends BaseRepository
         'surname',
         'email',
         'phone_mobile',
-        'phone_home',
-        'phone_office',
-        'passport',
-        'postal_address',
-        'physical_address',
         'location_id',
-        'applicant_banking_details_id',
         'applicant_service_type_id'
     ];
 
@@ -45,6 +39,6 @@ class FtthApplicationRepository extends BaseRepository
 
     public function placeApplication(array $attributes)
     {
-          return $this->create($attributes);
+        return $this->create($attributes);
     }
 }
