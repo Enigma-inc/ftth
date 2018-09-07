@@ -126,7 +126,6 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
         $input =$request->all();
-        $input['password'] = bcrypt($request->password);
         $input['is_admin'] = $request->is_admin == null ? false : true;
 
         $user = $this->userRepository->update($input, $id);

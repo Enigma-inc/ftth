@@ -159,13 +159,16 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
     
-
-    @yield('scripts')
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.16/b-1.4.2/b-html5-1.4.2/cr-1.4.1/r-2.2.0/sc-1.4.3/datatables.min.js"></script>
+    
+    
     <!-- Scripts -->
     <script src="{{ mix('js/admin-bundle.js') }}"></script>
     
     <script src="{{ mix('js/app.js') }}"></script>
+    
+    @yield('scripts')
+    @yield('page-script')
 </body>
 </html>

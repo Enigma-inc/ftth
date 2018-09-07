@@ -13,12 +13,31 @@ use App\ApplicantServiceType;
 use App\ApplicantBankingDetail;
 use Auth;
 
+
 class ApplicationsController extends Controller
 {
     function __construct()
     {
         // $this->middleware(['auth']);
     }
+
+
+    /**
+     * Display a listing of the Applications.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function index(Request $request)
+    {
+
+       $applications=Application::all();
+
+    //    return $applications;
+        return view('admin.ftth_applications.index')
+            ->with('ftthApplications', $applications);
+    }
+
 
     public function create()
     {

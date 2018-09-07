@@ -23,4 +23,40 @@
         </div>
     </div>
 @endsection
+@section('page-script')
+<script type="text/javascript">
+    $(document).ready(function(){
+    $('#ftthLocations-table').DataTable({
+        "pageLength": 10,
+        dom: 'Bfrtip',
+        columnDefs: [{
+           targets:3,
+           render: function(data, type, full, meta){
+              if(type === 'display'){
+                 data = data + '<div class="links">' +'</div>';                     
+              }
+               
+              return data;
+           }
+        }],  
+        buttons: [
+            
+        ]
+    });
+
+    var searchInput= FindByAttributeValue('type','search','input');
+    searchInput.setAttribute("placeholder", "Enter search keyword here...");
+
+});
+
+        function FindByAttributeValue(attribute, value, element_type)    {
+        element_type = element_type || "*";
+        var All = document.getElementsByTagName(element_type);
+        for (var i = 0; i < All.length; i++)       {
+            if (All[i].getAttribute(attribute) == value) { return All[i]; }
+        }
+        }
+
+ </script>
+@endsection
 

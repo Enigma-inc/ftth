@@ -12,6 +12,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Repositories\ApplicantServiceTypeRepository;
 use App\Repositories\ApplicantBankingRepository;
+use App\Application;
 
 class FtthApplicationController extends AppBaseController
 {
@@ -36,6 +37,7 @@ class FtthApplicationController extends AppBaseController
      */
     public function index(Request $request)
     {
+
         $this->ftthApplicationRepository->pushCriteria(new RequestCriteria($request));
         $ftthApplications = $this->ftthApplicationRepository->all();
 

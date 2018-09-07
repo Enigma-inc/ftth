@@ -16,7 +16,7 @@
     <a href="{!! route('packagesLookups.index') !!}"><i class="fa fa-cube"></i><span>Packages</span></a>
 </li>
 <li class="{{ Request::is('ftthApplications*') ? 'active' : '' }}">
-    <a href="{!! route('ftthApplications.index') !!}"><i class="fa fa-wpforms"></i><span>Ftth Applications</span></a>
+    <a href="{!! route('ftthApplications.index') !!}"><i class="fa fa-wpforms"></i><span>Applications</span></a>
 </li>
 
 

@@ -1,39 +1,39 @@
 <div style="overflow-x:auto;">
-<table class="table table-responsive" id="ftthApplications-table">
-    <thead>
-        <tr>
-            <th>Title</th>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>Email</th>
-        <th>Phone Mobile</th>
-        <th>Phone Home</th>
-        <th>Phone Office</th>
-        <th>Passport</th>
-        <th>Postal Address</th>
-        <th>Physical Address</th>
-        <th>Location Id</th>
-        <th>Banking Id</th>
-        <th>Service Id</th>
-            <th class="text-right">Action</th>
+    <table class="table table-responsive" id="ftthApplications-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Email</th>
+                <th>Phone </th>
+                <th>Location</th>
+                <th>Service</th>
+                <th>Complete </th>
+                <th>Next step</th>
+                <th>Mail Send</th>
+                <th>Billing Agreed</th>
+                <th>Inspected</th>
+                <th>Approved</th>
+                <th>Installed</th>
+               <th class="text-right">Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($ftthApplications as $ftthApplication)
         <tr>
-            <td>{!! $ftthApplication->title !!}</td>
             <td>{!! $ftthApplication->name !!}</td>
             <td>{!! $ftthApplication->surname !!}</td>
             <td>{!! $ftthApplication->email !!}</td>
-            <td>{!! $ftthApplication->phone_mobile !!}</td>
-            <td>{!! $ftthApplication->phone_home !!}</td>
-            <td>{!! $ftthApplication->phone_office !!}</td>
-            <td>{!! $ftthApplication->passport !!}</td>
-            <td>{!! $ftthApplication->postal_address !!}</td>
-            <td>{!! $ftthApplication->physical_address !!}</td>
-            <td>{!! $ftthApplication->location_id !!}</td>
-            <td>{!! $ftthApplication->applicant_banking_details_id !!}</td>
-            <td>{!! $ftthApplication->applicant_service_type_id !!}</td>
+            <td>{!! $ftthApplication->phone !!}</td>
+            <td>{!! $ftthApplication->location->name !!}</td>
+            <td>{!!$ftthApplication->serviceType->service_type !!}: {!!$ftthApplication->serviceType->data_package !!}</td>
+            <td>{!! $ftthApplication->is_complete ?'YES':'NO'!!}</td>
+            <td>{!!$ftthApplication->next_step!!}</td>
+            <td>{!!$ftthApplication->mail_send  ?'YES':'NO'!!}</td>
+            <td>{!!$ftthApplication->is_billing_agreed?'YES':'NO'!!}</td>
+            <td>{!!$ftthApplication->is_inspected?'YES':'NO'!!}</td>
+            <td>{!!$ftthApplication->is_approved?'YES':'NO'!!}</td>
+            <td>{!!$ftthApplication->is_installed?'YES':'NO'!!}</td>
             <td>
                 {!! Form::open(['route' => ['ftthApplications.destroy', $ftthApplication->id], 'method' => 'delete']) !!}
                 <div class='btn-group pull-right '>

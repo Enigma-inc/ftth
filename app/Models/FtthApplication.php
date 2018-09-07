@@ -26,12 +26,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class FtthApplication extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
 
     public $table = 'applications';
 
 
-    protected $dates = ['deleted_at'];
+    // protected $dates = ['deleted_at'];
 
 
     public $fillable = [
