@@ -1,84 +1,62 @@
-@extends('layouts.app')  
+@extends('layouts.app')
 
- @section('content')
-<div class="container">
-    <div class="row">
-        <button class="btn btn-danger btn-xs pull-right" data-toggle="modal" data-target="#myModal">Add Location</button>
-        <div id="myModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
+@section('content')
+    <section class="content-header">
+        <h1 class="pull-left">Locations</h1>
+        <h1 class="pull-right">
+           <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('locations.create') !!}">Add New</a>
+        </h1>
+    </section>
+    <div class="content">
+        <div class="clearfix"></div>
 
-                        <!-- Modal content--> 
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Add Location</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" role="form" method="POST" action="{{route('location.store')}}">
-                                {{ csrf_field() }}
+        @include('flash::message')
 
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group label-floating padding-right-10 {{ $errors->has('name') ? ' has-error' : '' }}">
-                                        <label for="name" class=" control-label">Name</label>
-
-                                        <div class="">
-                                            <input required id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" autofocus> 
-                                            @if ($errors->has('name'))
-                                                <span class="help-block">
-                                                    <strong>{{ $errors->first('name') }}</strong>
-                                                </span> 
-                                            @endif
-                                        </div>
-                                    </div> 
-                                </div> 
-                                <div class="modal-footer-ftth">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                                  
-                                    </div>
-                                </div>
-                            </form>                                                                 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">List Of Locations</div>
-
-            <div class="panel-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <td>Location</td>
-                            <td>Action</td>  
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($locations as $location)
-                            <tr>
-                                <td>
-                                    {{ $location->name }}
-                                </td>
-                                <td>
-                                    <div class="col-xs-12 button-flex">
-                                        <a href="{{route('location.edit',$location->id)}}" class="btn btn-info btn-xs margin-right-5"><i class="material-icons icon-size">edit</i> Edit</a>
-                                        <form action="{{route('location.destroy',['id'=>$location->id])}}" method="POST">
-                                            {{csrf_field()}}
-                                            <input type="text" name="file-name"class="" value="{{$location->id}}" hidden>
-                                            <button type="submit" class="btn btn-danger btn-xs margin-right-5"><i class="material-icons icon-size">delete_forever</i> Remove</button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>   
-                <div class="row text-center">
-                    {{ $locations->links() }}
-                </div>         
+        <div class="clearfix"></div>
+        <div class="box box-primary">
+            <div class="box-body">
+                    @include('admin.locations.table')
             </div>
         </div>
+        <div class="text-center">
+        
+        </div>
     </div>
-</div>
+@endsection
+@section('page-script')
+<script type="text/javascript">
+    $(document).ready(function(){
+    $('#locations-table').DataTable({
+        "pageLength": 10,
+        dom: 'Bfrtip',
+        columnDefs: [{
+           targets:1,
+           render: function(data, type, full, meta){
+              if(type === 'display'){
+                 data = data + '<div class="links">' +'</div>';                     
+              }
+               
+              return data;
+           }
+        }],  
+        buttons: [
+            
+        ]
+    });
 
- @endsection
+    var searchInput= FindByAttributeValue('type','search','input');
+    searchInput.setAttribute("placeholder", "Enter search keyword here...");
+
+});
+
+        function FindByAttributeValue(attribute, value, element_type)    {
+        element_type = element_type || "*";
+        var All = document.getElementsByTagName(element_type);
+        for (var i = 0; i < All.length; i++)       {
+            if (All[i].getAttribute(attribute) == value) { return All[i]; }
+        }
+        }
+
+ </script>
+@endsection
+

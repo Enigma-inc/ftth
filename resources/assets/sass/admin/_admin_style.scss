@@ -1,19 +1,19 @@
-.button-flex{
-    display: flex;
-    justify-content: space-between;
-}
+// .button-flex{
+//     display: flex;
+//     justify-content: space-between;
+// }
 
-.modal-footer-ftth{
-    text-align: center;
-}
+// .modal-footer-ftth{
+//     text-align: center;
+// }
 
-.modal-header-ftth{
-    padding: 15px;
-}
+// .modal-header-ftth{
+//     padding: 15px;
+// }
 
-.icon-size{
-    font-size: 15px !important; 
-}
+// .icon-size{
+//     font-size: 15px !important; 
+// }
 
 .locations-thumbnail{
         display: block;
@@ -22,4 +22,32 @@
         padding: 1px;
         border-radius: 0;
         border: 1px solid #ddd;
+}
+
+.dt-buttons{
+    // left: 1140px;
+    top: 75px;
+    padding-bottom: 5px;
+}
+
+#locations-table_filter,#ftthLocations-table_filter,#ftthApplications-table_filter,#packagesLookups-table_filter,
+#users-table_filter
+{
+    label{
+            font-size: 1.7rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            text-align: left;
+            width: 100%;
+            color:#337ab7;
+            input{
+                  width: 90%;
+            }
+    }
+}
+
+.pagination{
+         float: right;
+         margin: 0;
+      
 }

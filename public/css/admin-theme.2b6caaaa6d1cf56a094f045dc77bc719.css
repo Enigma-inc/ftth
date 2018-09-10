@@ -1,0 +1,8 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);.locations-thumbnail {
+  display: block;
+  height: 50px;
+  width: auto;
+  padding: 1px;
+  border-radius: 0;
+  border: 1px solid #ddd;
+}

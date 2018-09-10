@@ -1,34 +1,23 @@
- @extends('layouts.app')
- @section('content')
-      <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Edit Location</div>
-                <div class="panel-body">
-                {!! Form::model($location,['method'=>'PATCH', 'route' => ['location.update', $location->id], 'class'=>'form-horizontal']) !!}
-                        {{ csrf_field() }}
+@extends('layouts.app')
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
+@section('content')
+    <section class="content-header">
+        <h1>
+            Location
+        </h1>
+   </section>
+   <div class="content">
+       @include('adminlte-templates::common.errors')
+       <div class="box box-primary">
+           <div class="box-body">
+               <div class="row">
+                   {!! Form::model($location, ['route' => ['locations.update', $location->id], 'method' => 'patch']) !!}
 
-                            <div class="col-md-6">
-                            {!! Form::text('name',null,['class' => 'form-control'])!!}
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>                        
-                        
-                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary col-xs-12">
-                                     Submit
-                                </button>
-                            </div>
-                        </div>
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-  @endsection
+                        @include('admin.locations.fields')
+
+                   {!! Form::close() !!}
+               </div>
+           </div>
+       </div>
+   </div>
+@endsection

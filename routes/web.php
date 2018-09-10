@@ -76,4 +76,26 @@ Route::delete('/admin/packages/{id}/destroy', 'PackagesLookupController@destroy'
 //Route::resource('locations', 'LocationController');
 //Route::resource('packagesLookups', 'PackagesLookupController');
 
-Route::resource('ftthApplications', 'FtthApplicationController');
+
+
+// Route::group(['middleware' => 'isAdmin'], function () {
+    
+    Route::resource('users', 'UserController');
+    Route::get('/users/{user}/resetpassword', 'UserController@editPassword')->name('users.editpassword');
+    Route::patch('/users/{user}/resetpassword', 'UserController@resetPassword')->name('users.resetpassword');
+    // });
+    
+    
+    Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+        
+    // Route::resource('ftthApplications', 'FtthApplicationController');
+
+    Route::resource('ftthApplications', 'ApplicationsController');
+    Route::get('/users/{user}/resetpassword', 'UserController@editPassword')->name('users.editpassword');
+    Route::patch('/users/{user}/resetpassword', 'UserController@resetPassword')->name('users.resetpassword');
+    
+        Route::group(['middleware' => 'isAdmin'], function () {
+        Route::resource('users', 'UserController');
+    });
+
+});

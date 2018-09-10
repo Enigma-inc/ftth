@@ -20,4 +20,5 @@ class Application extends Model
     {
         return $this->belongsTo(FtthLocation::class);
     }
+
 }

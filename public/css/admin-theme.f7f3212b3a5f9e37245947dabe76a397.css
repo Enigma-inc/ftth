@@ -1,0 +1,42 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);.locations-thumbnail {
+  display: block;
+  height: 50px;
+  width: auto;
+  padding: 1px;
+  border-radius: 0;
+  border: 1px solid #ddd;
+}
+
+.dt-buttons {
+  top: 75px;
+  padding-bottom: 5px;
+}
+
+#locations-table_filter label,
+#ftthLocations-table_filter label,
+#ftthApplications-table_filter label,
+#packagesLookups-table_filter label,
+#users-table_filter label {
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin-bottom: 30px;
+  text-align: left;
+  width: 100%;
+  color: #337ab7;
+}
+
+#locations-table_filter label input,
+#ftthLocations-table_filter label input,
+#ftthApplications-table_filter label input,
+#packagesLookups-table_filter label input,
+#users-table_filter label input {
+  width: 90%;
+}
+
+.pagination {
+  padding-left: 87% !important;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+}
