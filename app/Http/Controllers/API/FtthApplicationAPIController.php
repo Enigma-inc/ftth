@@ -64,6 +64,7 @@ class FtthApplicationAPIController extends AppBaseController
             'password' => Hash::make($request->password),
             'email' => $request->email
         ]);
+
         $package = PackagesLookup::findOrFail($request->package);
         if (!$package) {
             return $this->sendError('Package not found!');
@@ -93,6 +94,7 @@ class FtthApplicationAPIController extends AppBaseController
 
 
         $ftthApplication = $this->ftthApplicationRepository->placeApplication($applicationDetails);
+//AUthenticate User Here....
 
         return $this->sendResponse($ftthApplication->toArray(), 'Ftth Application saved successfully');
     }
