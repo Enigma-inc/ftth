@@ -24,3 +24,5 @@ Route::resource('packages_lookups', 'PackagesLookupAPIController');
 Route::post('place-application', 'FtthApplicationAPIController@store');
 
 Route::resource('users', 'UserAPIController');
+
+

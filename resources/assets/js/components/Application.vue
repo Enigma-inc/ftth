@@ -21,7 +21,7 @@
                     <div class="col-xs-12 col-md-4">
                             
                         <div class="form-group label-floating padding-right-10" :class="{ error: $v.basicDetails.surname.$invalid}">
-                            <label for="surname" class=" control-label">Surname<span class="required-star" v-if="$v.basicDetails.surname.$invalid">*</span></label>
+                             <label for="surname" class=" control-label">Surname<span class="required-star" v-if="$v.basicDetails.surname.$invalid">*</span></label>
     
                             <div class="">
                                 <input id="surname" type="text" class="form-control" name="surname"  @input="$v.basicDetails.surname.$touch()" v-model.trim="basicDetails.surname"  > 
@@ -243,7 +243,7 @@ export default {
     placeApplication() {
       axios
         .post(
-          `./api/place-application`,
+          `./place-application`,
           Object.assign({}, this.basicDetails, this.accountDetails)
         )
         .then(response => {
@@ -253,7 +253,9 @@ export default {
               layout: "center"
             })
             .on("onClose", function() {
-              window.location.href = "../";
+              window.location.href=`../admin/users/${response.data.user_id}/applications`
+
+
             });
         })
         .catch(error => {

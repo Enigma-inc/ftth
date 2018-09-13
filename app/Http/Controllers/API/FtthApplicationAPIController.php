@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Auth;
 use App\PackagesLookup;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 /**
  * Class FtthApplicationController
@@ -26,6 +28,8 @@ use Illuminate\Support\Facades\Hash;
 
 class FtthApplicationAPIController extends AppBaseController
 {
+    use AuthenticatesUsers;
+
     /** @var  FtthApplicationRepository */
     private $ftthApplicationRepository;
     private $serviceTypeRepository;
@@ -92,9 +96,24 @@ class FtthApplicationAPIController extends AppBaseController
         ];
 
 
+        // $credentials = $request->only('email', 'password');
+        // if (Auth::attempt($credentials)) {
+            // }
+            // Auth::loginUsingId($user->id);
+            
+        //     $login=Auth::login($user);
+        //     // dd("here .....", $login );
+
+        // return response()->json([
+        //     'auth' => true,
+        //     'intended' => '/users/1/applications'
+        // ]);
+        $this->login($request);
+
         $ftthApplication = $this->ftthApplicationRepository->placeApplication($applicationDetails);
 
-        return $this->sendResponse($ftthApplication->toArray(), 'Ftth Application saved successfully');
+    
+        // return $this->sendResponse($ftthApplication->toArray(), 'Ftth Application saved successfully');
     }
 
     /**

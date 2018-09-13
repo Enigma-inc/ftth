@@ -30,8 +30,7 @@ class FtthApplication extends Model
 
     public $table = 'applications';
 
-
-    // protected $dates = ['deleted_at'];
+   // protected $dates = ['deleted_at'];
 
 
     public $fillable = [
@@ -41,7 +40,20 @@ class FtthApplication extends Model
         'phone',
         'user_id',
         'location_id',
-        'applicant_service_type_id'
+        'applicant_service_type_id',
+        'postal_address',
+        'physical_address',
+        'id_number',
+        'is_complete',
+         'next_step',
+         'mail_send',
+         'is_installed',
+         'is_billing_agreed',
+         'is_inspected',
+         'is_approved',
+         'banking_details_id'
+
+       
     ];
 
     /**
@@ -50,7 +62,7 @@ class FtthApplication extends Model
      * @var array
      */
     protected $casts = [
-        'applicant_banking_details_id' => 'integer',
+        'banking_details_id' => 'integer',
         'applicant_service_type_id' => 'integer',
         'applicant_personal_details_id' => 'integer',
         'amount' => 'integer'
@@ -66,10 +78,30 @@ class FtthApplication extends Model
         'surname' => 'required',
         'email' => 'required',
         'phone' => 'required',
-        'location' => 'required',
-        'package' => 'required',
-        'serviceType' => 'required',
+       
     ];
+
+
+    public function serviceType()
+    {
+        return $this->hasOne(
+            ApplicantServiceType::class,
+            'id',
+            'applicant_service_type_id'
+        );
+    }
+    public function location()
+    {
+        return $this->belongsTo(FtthLocation::class);
+    }
+
+
+    public function banking()
+    {
+         return $this->hasOne(ApplicantBanking::class ,'id',
+            'banking_details_id'
+        );
+    }
 
 
 }

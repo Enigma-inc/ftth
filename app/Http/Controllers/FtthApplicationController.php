@@ -66,7 +66,6 @@ class FtthApplicationController extends AppBaseController
     {
         $input = $request->all();
 
-        $
         $ftthApplication = $this->ftthApplicationRepository->create($input);
 
         Flash::success('Ftth Application saved successfully.');
@@ -114,30 +113,30 @@ class FtthApplicationController extends AppBaseController
         return view('admin.ftth_applications.edit')->with('ftthApplication', $ftthApplication);
     }
 
-    /**
-     * Update the specified FtthApplication in storage.
-     *
-     * @param  int              $id
-     * @param UpdateFtthApplicationRequest $request
-     *
-     * @return Response
-     */
-    public function update($id, UpdateFtthApplicationRequest $request)
-    {
-        $ftthApplication = $this->ftthApplicationRepository->findWithoutFail($id);
+    // /**
+    //  * Update the specified FtthApplication in storage.
+    //  *
+    //  * @param  int              $id
+    //  * @param UpdateFtthApplicationRequest $request
+    //  *
+    //  * @return Response
+    //  */
+    // public function update($id, UpdateFtthApplicationRequest $request)
+    // {
+    //     $ftthApplication = $this->ftthApplicationRepository->findWithoutFail($id);
 
-        if (empty($ftthApplication)) {
-            Flash::error('Ftth Application not found');
+    //     if (empty($ftthApplication)) {
+    //         Flash::error('Ftth Application not found');
 
-            return redirect(route('ftthApplications.index'));
-        }
+    //         return redirect(route('ftthApplications.index'));
+    //     }
 
-        $ftthApplication = $this->ftthApplicationRepository->update($request->all(), $id);
+    //     $ftthApplication = $this->ftthApplicationRepository->update($request->all(), $id);
 
-        Flash::success('Ftth Application updated successfully.');
+    //     Flash::success('Ftth Application updated successfully.');
 
-        return redirect(route('ftthApplications.index'));
-    }
+    //     return redirect(route('ftthApplications.index'));
+    // }
 
     /**
      * Remove the specified FtthApplication from storage.

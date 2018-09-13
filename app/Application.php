@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Application extends Model
 {
     protected $guarded = ['id'];
-
+    
     public function serviceType()
     {
         return $this->hasOne(

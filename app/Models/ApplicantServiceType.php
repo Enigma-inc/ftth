@@ -17,12 +17,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ApplicantServiceType extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
 
     public $table = 'applicant_service_types';
     
-
-    protected $dates = ['deleted_at'];
+    //protected $dates = ['deleted_at'];
 
 
     public $fillable = [

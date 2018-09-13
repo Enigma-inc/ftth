@@ -60,11 +60,6 @@
 
 
 
-
-
-
-
-
 @yield('scripts')
 </body>
 

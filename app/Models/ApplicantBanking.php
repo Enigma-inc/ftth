@@ -18,12 +18,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ApplicantBanking extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
 
     public $table = 'applicant_banking_details';
     
 
-    protected $dates = ['deleted_at'];
+    // protected $dates = ['deleted_at'];
 
 
     public $fillable = [
@@ -60,6 +60,11 @@ class ApplicantBanking extends Model
         'account_name' => 'required',
         'account_type' => 'required'
     ];
+
+    public function application()
+    {
+        $this->belongsTo(Application::class);
+    }
 
     
 }

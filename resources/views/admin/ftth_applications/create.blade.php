@@ -22,3 +22,15 @@
         </div>
     </div>
 @endsection
+
+@section('page-script')
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+        var applicant_service_type_select=$('#applicant_service_type_select').select2();
+        var location_select=$('#location_select').select2();
+
+    })
+ </script>
+@endsection
